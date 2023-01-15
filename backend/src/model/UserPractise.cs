@@ -2,7 +2,10 @@ namespace teacherpractise.model
 {
     public class UserPractice
     {
-        private int practice_id { get; set; }
-        private int user_id { get; set; }
+        private int practiceId { get; set; }
+        private int userId { get; set; }
+
+        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Practice> Practices { get; set; }
     }
 }
