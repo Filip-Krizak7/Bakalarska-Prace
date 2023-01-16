@@ -4,6 +4,11 @@ namespace teacherpractise.model
 {
     public class Context : DbContext
     {
+        public Context(): base("SchoolDBConnectionString")
+        {
+            Database.SetInitializer<Context>(new DropCreateDatabaseIfModelChanges<Context>());
+        }
+
         public DbSet<School> Schools { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }

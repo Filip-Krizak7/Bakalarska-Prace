@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace teacherpractise.model
 {
     public class UserPractice
