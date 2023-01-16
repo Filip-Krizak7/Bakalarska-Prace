@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace teacherpractise.model
 {
@@ -19,18 +20,17 @@ namespace teacherpractise.model
         private bool locked { get; set; }
         private bool enabled { get; set; }
 
-        //schoolID is fake key to school.Id
         private int schoolId { get; set; }
-        [Required]
+        [ForeignKey("schoolId")]
         public School School { get; set; }
 
         private int teacher_practiceId { get; set; }
-        [Required]
+        [ForeignKey("teacher_practiceId")]
         public Practice Practice { get; set; }
 
 
         private int student_practiceId { get; set; }
-        [Required]
+        [ForeignKey("student_practiceId")]
         public UserPractice UserPractice { get; set; }
 
         public virtual ICollection<Review> Reviews { get; set; }

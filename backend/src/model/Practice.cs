@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace teacherpractise.model
 {
     public class Practice
     {
         private int Id { get; set; }
-        [Required]
+        [ForeignKey("Id")]
         public UserPractice UserPractice { get; set; }
 
         private DateTime date { get; set; }
@@ -17,11 +18,11 @@ namespace teacherpractise.model
 
         //subjectID is fake key to subject.Id
         private int subjectId { get; set; }
-        [Required]
+        [ForeignKey("subjectId")]
         public Subject Subject { get; set; }
 
         private int teacherId { get; set; }
-        [Required]
+        [ForeignKey("teacherId")]
         public User User { get; set; }
 
 

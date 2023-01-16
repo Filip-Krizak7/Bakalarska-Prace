@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace teacherpractise.model
 {
@@ -7,12 +8,11 @@ namespace teacherpractise.model
         private int Id { get; set; }
 
         private int userId { get; set; }
-        [Required]
+        [ForeignKey("userId")]
         public User User { get; set; }
 
-        [Required]
         private int practiceId { get; set; }
-        [Required]
+        [ForeignKey("practiceId")]
         public Practice Practice { get; set; }
 
         [Required]
