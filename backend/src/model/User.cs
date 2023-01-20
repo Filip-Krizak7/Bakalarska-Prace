@@ -1,36 +1,36 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace teacherpractise.model
+namespace TeacherPractise.Model
 {
     public class User
     {
         private int Id { get; set; }
         [Required]
-        private string? username { get; set; }
+        private string? Username { get; set; }
         [Required]
-        private string? password { get; set; }
+        private string? Password { get; set; }
         [Required]
-        private string? firstName { get; set; }
+        private string? FirstName { get; set; }
         [Required]
-        private string? secondName { get; set; }
+        private string? SecondName { get; set; }
         [Required]
-        private string? phoneNumber { get; set; }
-        private int role_id { get; set; }
-        private bool locked { get; set; }
-        private bool enabled { get; set; }
+        private string? PhoneNumber { get; set; }
+        private int Role_id { get; set; }
+        private bool Locked { get; set; }
+        private bool Enabled { get; set; }
 
-        private int schoolId { get; set; }
-        [ForeignKey("schoolId")]
+        private int SchoolId { get; set; }
+        [ForeignKey("SchoolId")]
         public School School { get; set; }
 
-        private int teacher_practiceId { get; set; }
-        [ForeignKey("teacher_practiceId")]
+        private int Teacher_PracticeId { get; set; }
+        [ForeignKey("Teacher_PracticeId")]
         public Practice Practice { get; set; }
 
 
-        private int student_practiceId { get; set; }
-        [ForeignKey("student_practiceId")]
+        private int Student_PracticeId { get; set; }
+        [ForeignKey("Student_PracticeId")]
         public UserPractice UserPractice { get; set; }
 
         public virtual ICollection<Review> Reviews { get; set; }

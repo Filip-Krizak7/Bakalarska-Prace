@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace teacherpractise.model
+namespace TeacherPractise.Model
 {
     public class UserPractice
     {
-        private int practiceId { get; set; }
-        private int userId { get; set; }
+        private int PracticeId { get; set; }
+        private int UserId { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<Practice> Practices { get; set; }

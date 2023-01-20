@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace teacherpractise.model
+namespace TeacherPractise.Model
 {
     public class Role
     {
         [Required]
-        private string? code { get; set; }
+        private string? Code { get; set; }
     }
 }

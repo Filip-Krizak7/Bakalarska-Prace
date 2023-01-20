@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace teacherpractise.model
+namespace TeacherPractise.Model
 {
     public class Practice
     {
@@ -9,20 +9,20 @@ namespace teacherpractise.model
         [ForeignKey("Id")]
         public UserPractice UserPractice { get; set; }
 
-        private DateTime date { get; set; }
-        private DateTime start { get; set; }
-        private DateTime end { get; set; }
+        private DateTime Date { get; set; }
+        private DateTime Start { get; set; }
+        private DateTime End { get; set; }
         [Required]
-        private string? note { get; set; }
-        private int capacity { get; set; }
+        private string? Note { get; set; }
+        private int Capacity { get; set; }
 
         //subjectID is fake key to subject.Id
-        private int subjectId { get; set; }
-        [ForeignKey("subjectId")]
+        private int SubjectId { get; set; }
+        [ForeignKey("SubjectId")]
         public Subject Subject { get; set; }
 
-        private int teacherId { get; set; }
-        [ForeignKey("teacherId")]
+        private int TeacherId { get; set; }
+        [ForeignKey("TeacherId")]
         public User User { get; set; }
 
 

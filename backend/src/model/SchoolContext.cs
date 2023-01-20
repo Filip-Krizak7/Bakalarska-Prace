@@ -1,6 +1,6 @@
 using System.Data.Entity;
 
-namespace teacherpractise.model
+namespace TeacherPractise.Model
 {
     public class Context : DbContext
     {
