@@ -5,31 +5,31 @@ namespace TeacherPractise.Model
 {
     public class User
     {
-        private int Id { get; set; }
+        public int Id { get; set; }
         [Required]
-        private string? Username { get; set; }
+        public string Username { get; set; }
         [Required]
-        private string? Password { get; set; }
+        public string Password { get; set; }
         [Required]
-        private string? FirstName { get; set; }
+        public string FirstName { get; set; }
         [Required]
-        private string? SecondName { get; set; }
+        public string SecondName { get; set; }
         [Required]
-        private string? PhoneNumber { get; set; }
-        private int Role_id { get; set; }
-        private bool Locked { get; set; }
-        private bool Enabled { get; set; }
+        public string PhoneNumber { get; set; }
+        public int Role_id { get; set; }
+        public bool Locked { get; set; }
+        public bool Enabled { get; set; }
 
-        private int SchoolId { get; set; }
+        public int SchoolId { get; set; }
         [ForeignKey("SchoolId")]
         public School School { get; set; }
 
-        private int Teacher_PracticeId { get; set; }
+        public int Teacher_PracticeId { get; set; }
         [ForeignKey("Teacher_PracticeId")]
         public Practice Practice { get; set; }
 
 
-        private int Student_PracticeId { get; set; }
+        public int Student_PracticeId { get; set; }
         [ForeignKey("Student_PracticeId")]
         public UserPractice UserPractice { get; set; }
 

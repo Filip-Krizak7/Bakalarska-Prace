@@ -5,23 +5,23 @@ namespace TeacherPractise.Model
 {
     public class Practice
     {
-        private int Id { get; set; }
+        public int Id { get; set; }
         [ForeignKey("Id")]
         public UserPractice UserPractice { get; set; }
 
-        private DateTime Date { get; set; }
-        private DateTime Start { get; set; }
-        private DateTime End { get; set; }
+        public DateTime Date { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
         [Required]
-        private string? Note { get; set; }
-        private int Capacity { get; set; }
+        public string Note { get; set; }
+        public int Capacity { get; set; }
 
         //subjectID is fake key to subject.Id
-        private int SubjectId { get; set; }
+        public int SubjectId { get; set; }
         [ForeignKey("SubjectId")]
         public Subject Subject { get; set; }
 
-        private int TeacherId { get; set; }
+        public int TeacherId { get; set; }
         [ForeignKey("TeacherId")]
         public User User { get; set; }
 

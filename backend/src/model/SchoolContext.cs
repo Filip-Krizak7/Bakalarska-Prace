@@ -4,9 +4,9 @@ namespace TeacherPractise.Model
 {
     public class Context : DbContext
     {
-        public Context(): base("SchoolDBConnectionString")
+        public Context(): base("name=SchoolDBConnectionString")
         {
-            Database.SetInitializer<Context>(new DropCreateDatabaseIfModelChanges<Context>());
+            Database.SetInitializer<Context>(new CreateDatabaseIfNotExists<Context>());
         }
 
         public DbSet<School> Schools { get; set; }

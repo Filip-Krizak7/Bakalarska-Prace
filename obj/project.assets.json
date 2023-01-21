@@ -1085,11 +1085,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "a:\\Projekty\\Bakalarska_prace\\Bakalarska-Prace\\Bakalarska-Prace\\Bakalarska-Prace.csproj",
+      "projectUniqueName": "A:\\Projekty\\Bakalarska_prace\\Bakalarska-Prace\\Bakalarska-Prace\\Bakalarska-Prace.csproj",
       "projectName": "Bakalarska-Prace",
-      "projectPath": "a:\\Projekty\\Bakalarska_prace\\Bakalarska-Prace\\Bakalarska-Prace\\Bakalarska-Prace.csproj",
+      "projectPath": "A:\\Projekty\\Bakalarska_prace\\Bakalarska-Prace\\Bakalarska-Prace\\Bakalarska-Prace.csproj",
       "packagesPath": "C:\\Users\\Všichni\\.nuget\\packages\\",
-      "outputPath": "a:\\Projekty\\Bakalarska_prace\\Bakalarska-Prace\\Bakalarska-Prace\\obj\\",
+      "outputPath": "A:\\Projekty\\Bakalarska_prace\\Bakalarska-Prace\\Bakalarska-Prace\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1103,6 +1103,8 @@
         "net7.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

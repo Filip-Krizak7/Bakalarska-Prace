@@ -4,8 +4,8 @@ namespace TeacherPractise.Model
 {
     public class UserPractice
     {
-        private int PracticeId { get; set; }
-        private int UserId { get; set; }
+        public int PracticeId { get; set; }
+        public int UserId { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<Practice> Practices { get; set; }

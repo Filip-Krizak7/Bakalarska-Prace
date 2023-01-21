@@ -5,17 +5,17 @@ namespace TeacherPractise.Model
 {
     public class Review
     {
-        private int Id { get; set; }
+        public int Id { get; set; }
 
-        private int UserId { get; set; }
+        public int UserId { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
 
-        private int PracticeId { get; set; }
+        public int PracticeId { get; set; }
         [ForeignKey("PracticeId")]
         public Practice Practice { get; set; }
 
         [Required]
-        private string? Text { get; set; }
+        public string Text { get; set; }
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TyvZBSlrXVMyq6M8xSrHzSL/T/U5R5UoAw/Zunyf/Tm1T+xasv0sv4dQ4f6HHF3yuyreHa9YlaVxdGHCNFd0UQ==",
+  "dgSpecHash": "bY4tuFsiYHyWLo7rZvyNArHjG1/rkB7lHxSEM2ApZiLSO69GkNiDC+l49PKqkVMFmzHc25MhLP0l/9FEhC4Sag==",
   "success": true,
-  "projectFilePath": "a:\\Projekty\\Bakalarska_prace\\Bakalarska-Prace\\Bakalarska-Prace\\Bakalarska-Prace.csproj",
+  "projectFilePath": "A:\\Projekty\\Bakalarska_prace\\Bakalarska-Prace\\Bakalarska-Prace\\Bakalarska-Prace.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Všichni\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\Všichni\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

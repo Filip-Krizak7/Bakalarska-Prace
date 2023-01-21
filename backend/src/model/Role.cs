@@ -5,6 +5,6 @@ namespace TeacherPractise.Model
     public class Role
     {
         [Required]
-        private string? Code { get; set; }
+        public string Code { get; set; }
     }
 }
