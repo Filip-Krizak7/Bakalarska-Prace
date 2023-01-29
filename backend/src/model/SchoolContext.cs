@@ -4,7 +4,8 @@ namespace TeacherPractise.Model
 {
     public class Context : DbContext
     {
-        public Context(): base("name=SchoolDBConnectionString")
+        //sql server - localhost/mssqlserver_bp
+        public Context(): base("SchoolDB")
         {
             Database.SetInitializer<Context>(new CreateDatabaseIfNotExists<Context>());
         }
@@ -17,9 +18,16 @@ namespace TeacherPractise.Model
         public DbSet<Practice> practices { get; set; }
         public DbSet<UserPractice> UserPractices { get; set; }
 
-        /*protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<School>().HasMany(s => s.Users).WithOne(u => u.School).IsRequired();
-        }*/
+            //setting composite primary key
+            modelBuilder.Entity<UserPractice>()
+                .HasKey(u => new { u.PracticeId, u.UserId });
+
+            /*modelBuilder.Entity<User>()
+                .HasRequired(u => u.Practice)
+                .WithMany(s => s.Users)
+                .HasForeignKey();*/
+        }
     }
 }

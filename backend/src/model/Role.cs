@@ -4,7 +4,7 @@ namespace TeacherPractise.Model
 {
     public class Role
     {
-        [Required]
+        [Key]
         public string Code { get; set; }
     }
 }
