@@ -26,11 +26,11 @@ namespace TeacherPractise.Model
 
             //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
-            modelBuilder.Entity<User>()
-                .HasRequired(u => u.Reviews).WithRequiredDependent().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Review>()
+                .HasRequired<User>(u => u.User).WithMany(r => r.Reviews).HasForeignKey<int>(f => f.UserId).WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Practice>()
-                .HasRequired(p => p.Reviews).WithRequiredDependent().WillCascadeOnDelete(false);
+            modelBuilder.Entity<Review>()
+                .HasRequired<Practice>(p => p.Practice).WithMany(r => r.Reviews).HasForeignKey<int>(f => f.PracticeId).WillCascadeOnDelete(false);
         }
     }
 }
