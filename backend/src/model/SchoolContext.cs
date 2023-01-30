@@ -20,14 +20,17 @@ namespace TeacherPractise.Model
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //setting composite primary key
-            modelBuilder.Entity<UserPractice>()
-                .HasKey(u => new { u.PracticeId, u.UserId });
+            //setting a composite primary key
+            /*modelBuilder.Entity<UserPractice>()
+                .HasKey(u => new { u.PracticeId, u.UserId });*/
 
-            /*modelBuilder.Entity<User>()
-                .HasRequired(u => u.Practice)
-                .WithMany(s => s.Users)
-                .HasForeignKey();*/
+            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+
+            modelBuilder.Entity<User>()
+                .HasRequired(u => u.Reviews).WithRequiredDependent().WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Practice>()
+                .HasRequired(p => p.Reviews).WithRequiredDependent().WillCascadeOnDelete(false);
         }
     }
 }

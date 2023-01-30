@@ -4,6 +4,8 @@ namespace TeacherPractise.Model
 {
     public class UserPractice
     {
+        [Key]
+        public int UserPracticeId { get; set; }
         public int PracticeId { get; set; }
         public int UserId { get; set; }
 
