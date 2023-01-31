@@ -1,4 +1,5 @@
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace TeacherPractise.Model
 {
@@ -20,17 +21,13 @@ namespace TeacherPractise.Model
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //setting a composite primary key
-            /*modelBuilder.Entity<UserPractice>()
-                .HasKey(u => new { u.PracticeId, u.UserId });*/
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
-            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-
-            modelBuilder.Entity<Review>()
+            /*modelBuilder.Entity<Review>()
                 .HasRequired<User>(u => u.User).WithMany(r => r.Reviews).HasForeignKey<int>(f => f.UserId).WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Review>()
-                .HasRequired<Practice>(p => p.Practice).WithMany(r => r.Reviews).HasForeignKey<int>(f => f.PracticeId).WillCascadeOnDelete(false);
+                .HasRequired<Practice>(p => p.Practice).WithMany(r => r.Reviews).HasForeignKey<int>(f => f.PracticeId).WillCascadeOnDelete(false);*/
         }
     }
 }
