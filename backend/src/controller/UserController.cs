@@ -1,5 +1,6 @@
 using TeacherPractise.Model;
 using TeacherPractise.Service;
+using TeacherPractise.Config;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -56,7 +57,7 @@ namespace TeacherPractise.Controller
     }
 
     [HttpGet("all")]
-    [Authorize(Roles = AppUser.ADMIN_ROLE_NAME)]
+    [Authorize(Roles = AppConfig.ADMIN_ROLE_NAME)]
     public IActionResult GetAll()
     {
       List<AppUser> ret = appUserService.GetUsers();

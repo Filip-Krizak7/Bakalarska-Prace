@@ -1,14 +1,15 @@
 using TeacherPractise.Model;
+using TeacherPractise.Config;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TeacherPractise.Service
 {
     public class AppUserService
     {
-        private readonly List<User> inner = new();
+        private readonly List<AppUser> inner = new();
         private readonly SecurityService securityService;
 
-        public AppUserService([Fromservice] SecurityService securityService)
+        public AppUserService(SecurityService securityService)
         {
             this.securityService = securityService;
         }
@@ -26,7 +27,7 @@ namespace TeacherPractise.Service
             string hash = this.securityService.HashPassword(user.password);
 
             AppUser ret = new(user.email, hash);
-            if (user.Role_id == 1) ret.Roles.Add(AppUser.ADMIN_ROLE_NAME);
+            if (user.Role == Roles.ROLE_TEACHER) ret.Roles.Add(Config.ADMIN_ROLE_NAME);
             this.inner.Add(ret);
 
             return ret;

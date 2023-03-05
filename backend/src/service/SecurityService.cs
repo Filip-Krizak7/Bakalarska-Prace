@@ -2,6 +2,7 @@ using TeacherPractise.Model;
 using TeacherPractise.Config;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
 using System.Buffers.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO.IsolatedStorage;
@@ -68,14 +69,5 @@ namespace TeacherPractise.Service
       string ret = BCrypt.Net.BCrypt.EnhancedHashPassword(password);
       return ret;
     }
-
-    // not required here, but an example how to generate salt using
-    // safe random number generator
-    //internal string GenerateSalt()
-    //{
-    //  var bytes = RandomNumberGenerator.GetBytes(SALT_LENGTH);
-    //  string ret = System.Convert.ToBase64String(bytes);
-    //  return ret;
-    //}
   }
 }

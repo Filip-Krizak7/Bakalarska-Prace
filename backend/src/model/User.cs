@@ -16,7 +16,7 @@ namespace TeacherPractise.Model
         public string SecondName { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
-        public int Role_id { get; set; }
+        public Roles Role { get; set; }
         public bool Locked { get; set; }
         public bool Enabled { get; set; }
 
