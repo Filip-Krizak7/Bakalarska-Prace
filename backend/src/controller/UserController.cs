@@ -42,7 +42,7 @@ namespace TeacherPractise.Controller
     public IActionResult GetUserNames()
     {
       List<string> ret = appUserService.GetUsers()
-        .Select(q => q.Email[..q.Email.IndexOf("@")])
+        .Select(q => q.Username[..q.Username.IndexOf("@")])
         .ToList();
       return Ok(ret);
     }
@@ -51,7 +51,7 @@ namespace TeacherPractise.Controller
     public IActionResult GetUserEmails()
     {
       List<string> ret = appUserService.GetUsers()
-        .Select(q => q.Email)
+        .Select(q => q.Username)
         .ToList();
       return Ok(ret);
     }

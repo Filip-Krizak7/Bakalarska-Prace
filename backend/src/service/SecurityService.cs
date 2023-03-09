@@ -38,8 +38,8 @@ namespace TeacherPractise.Service
       {
         Subject = new ClaimsIdentity(new[]
           {
-        new Claim(JwtRegisteredClaimNames.Sub, appUser.Email),
-        new Claim(JwtRegisteredClaimNames.Email, appUser.Email),
+        new Claim(JwtRegisteredClaimNames.Sub, appUser.Username),
+        new Claim(JwtRegisteredClaimNames.Email, appUser.Username),
         new Claim(JwtRegisteredClaimNames.Aud, configuration["Jwt:Audience"]),
         new Claim(JwtRegisteredClaimNames.Iss, configuration["Jwt:Issuer"]),
         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())

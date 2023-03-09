@@ -16,18 +16,18 @@ namespace TeacherPractise.Service
 
         public AppUser Create(User user)
         {
-            EnsureNotNull(user.email, nameof(user.email));
-            EnsureNotNull(user.password, nameof(user.password));
+            EnsureNotNull(user.Username, nameof(user.Username));
+            EnsureNotNull(user.Password, nameof(user.Password));
 
-            user.email = user.email.ToLower();
+            user.Username = user.Username.ToLower();
 
-            if (inner.Any(q => q.Email == user.email))
-                throw CreateException($"Email {user.email} already exists.", null);
+            if (inner.Any(q => q.Username == user.Username))
+                throw CreateException($"Username {user.Username} already exists.", null);
 
-            string hash = this.securityService.HashPassword(user.password);
+            string hash = this.securityService.HashPassword(user.Password);
 
-            AppUser ret = new(user.email, hash);
-            if (user.Role == Roles.ROLE_TEACHER) ret.Roles.Add(Config.ADMIN_ROLE_NAME);
+            AppUser ret = new(user.Username, hash);
+            if (user.Role == Roles.ROLE_TEACHER) ret.Roles.Add(AppConfig.ADMIN_ROLE_NAME);
             this.inner.Add(ret);
 
             return ret;
@@ -38,13 +38,13 @@ namespace TeacherPractise.Service
             return this.inner.ToList();
         }
 
-        public AppUser GetUserByCredentials(string email, string password)
+        public AppUser GetUserByCredentials(string username, string password)
         {
-            EnsureNotNull(email, nameof(email));
+            EnsureNotNull(username, nameof(username));
             EnsureNotNull(password, nameof(password));
 
-            AppUser appUser = inner.FirstOrDefault(q => q.Email == email.ToLower())
-                ?? throw CreateException($"Email {email} does not exist.");
+            AppUser appUser = inner.FirstOrDefault(q => q.Username == username.ToLower())
+                ?? throw CreateException($"Username {username} does not exist.");
 
             if (!this.securityService.VerifyPassword(password, appUser.PasswordHash))
                 throw CreateException($"Credentials are not valid.");
