@@ -8967,7 +8967,8 @@
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 7.0.3",
       "Microsoft.AspNetCore.Mvc >= 2.2.0",
       "Microsoft.Extensions.Configuration >= 7.0.0",
-      "Microsoft.Extensions.DependencyInjection >= 7.0.0"
+      "Microsoft.Extensions.DependencyInjection >= 7.0.0",
+      "System.Linq >= 4.3.0"
     ]
   },
   "packageFolders": {
@@ -9038,6 +9039,10 @@
           "Microsoft.Extensions.DependencyInjection": {
             "target": "Package",
             "version": "[7.0.0, )"
+          },
+          "System.Linq": {
+            "target": "Package",
+            "version": "[4.3.0, )"
           }
         },
         "imports": [

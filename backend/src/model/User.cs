@@ -35,5 +35,16 @@ namespace TeacherPractise.Model
 
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Practice> Practices { get; set; }
+
+        public User(string username, string password, string firstName, string secondName, string phoneNumber, School school, Roles role)
+        {
+            this.Username = username;
+            this.Password = password;
+            this.FirstName = firstName;
+            this.SecondName = secondName;
+            this.PhoneNumber = phoneNumber;
+            this.School = school;
+            this.Role = role;
+        }
     }
 }

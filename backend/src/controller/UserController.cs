@@ -57,21 +57,21 @@ namespace TeacherPractise.Controller
     }
 
     [HttpGet("all")]
-    [Authorize(Roles = AppConfig.ADMIN_ROLE_NAME)]
+    //[Authorize(Role = AppConfig.ADMIN_ROLE_NAME)]
     public IActionResult GetAll()
     {
-      List<AppUser> ret = appUserService.GetUsers();
+      List<User> ret = appUserService.GetUsers();
       return Ok(ret);
     }
 
     [HttpPost]
     [AllowAnonymous]
-    public IActionResult Login(string email, string password)
+    public IActionResult Login(string username, string password)
     {
-      AppUser appUser;
+      User appUser;
       try
       {
-        appUser = this.appUserService.GetUserByCredentials(email, password);
+        appUser = this.appUserService.GetUserByCredentials(username, password);
       }
       catch (Exception ex)
       {

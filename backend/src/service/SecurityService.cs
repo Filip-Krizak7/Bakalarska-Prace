@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System.Buffers.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO.IsolatedStorage;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -22,17 +23,24 @@ namespace TeacherPractise.Service
       this.configuration = configuration;
     }
 
-    public string BuildJwtToken(AppUser appUser)
+    public string BuildJwtToken(User appUser)
     {
       // key from configuration:
       //var key = Encoding.ASCII.GetBytes(configuration["Jwt:Key"]);
       // ... or unique key per app start
       var key = this.Key;
 
-      Dictionary<string, object> roleClaims = appUser.Roles
-        .ToDictionary(
-          q => ClaimTypes.Role,
-          q => (object)q.ToUpper());
+      //List<string> roleList = appUser.Role.ToList();
+
+      /*Dictionary<string, object> roleClaims = roleList.ToDictionary(
+          q => ClaimTypes.Roles,
+          q => (object)q.ToUpper());*/
+
+      string userRole = appUser.Role.ToString();
+      Dictionary<string, object> roleClaims = new Dictionary<string, object>();    //netusim
+      roleClaims.Add(ClaimTypes.Role, (object)appUser.Username);
+
+      //var claims = await GetValidClaims(appUser);
 
       var tokenDescriptor = new SecurityTokenDescriptor
       {

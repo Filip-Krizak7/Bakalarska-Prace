@@ -6,7 +6,7 @@ namespace TeacherPractise.Service
 {
     public class AppUserService
     {
-        private readonly List<AppUser> inner = new();
+        private readonly List<User> inner = new();
         private readonly SecurityService securityService;
 
         public AppUserService(SecurityService securityService)
@@ -14,7 +14,7 @@ namespace TeacherPractise.Service
             this.securityService = securityService;
         }
 
-        public AppUser Create(User user)
+        public User Create(User user)
         {
             EnsureNotNull(user.Username, nameof(user.Username));
             EnsureNotNull(user.Password, nameof(user.Password));
@@ -25,28 +25,27 @@ namespace TeacherPractise.Service
                 throw CreateException($"Username {user.Username} already exists.", null);
 
             string hash = this.securityService.HashPassword(user.Password);
+            user.Password = hash;
 
-            AppUser ret = new(user.Username, hash);
-            if (user.Role == Roles.ROLE_TEACHER) ret.Roles.Add(AppConfig.ADMIN_ROLE_NAME);
-            this.inner.Add(ret);
+            this.inner.Add(user);
 
-            return ret;
+            return user;
         }
 
-        public List<AppUser> GetUsers()
+        public List<User> GetUsers()
         {
             return this.inner.ToList();
         }
 
-        public AppUser GetUserByCredentials(string username, string password)
+        public User GetUserByCredentials(string username, string password)
         {
             EnsureNotNull(username, nameof(username));
             EnsureNotNull(password, nameof(password));
 
-            AppUser appUser = inner.FirstOrDefault(q => q.Username == username.ToLower())
+            User appUser = inner.FirstOrDefault(q => q.Username == username.ToLower())
                 ?? throw CreateException($"Username {username} does not exist.");
 
-            if (!this.securityService.VerifyPassword(password, appUser.PasswordHash))
+            if (!this.securityService.VerifyPassword(password, appUser.Password))
                 throw CreateException($"Credentials are not valid.");
 
             return appUser;
