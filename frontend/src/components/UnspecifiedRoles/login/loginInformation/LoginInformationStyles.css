@@ -1,0 +1,5 @@
+@media (max-width: 725px) {
+    .login-info{
+        display: none;
+    }
+}
