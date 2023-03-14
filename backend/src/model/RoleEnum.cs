@@ -4,6 +4,7 @@ namespace TeacherPractise.Model
     {
         ROLE_STUDENT,
         ROLE_TEACHER,
-        ROLE_COORDINATOR
+        ROLE_COORDINATOR,
+        ROLE_ADMIN
     }
 }

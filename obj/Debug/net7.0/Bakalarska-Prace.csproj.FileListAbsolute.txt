@@ -52,3 +52,7 @@ A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\
 A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\Newtonsoft.Json.dll
 A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
 A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\Microsoft.OpenApi.dll
+A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll

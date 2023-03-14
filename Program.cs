@@ -19,8 +19,14 @@ using System;
             SecurityService securityService = new(builder.Configuration);
             builder.Services.AddSingleton<SecurityService>(securityService);
             builder.Services.AddSingleton<AppUserService>();
-
             builder.Services.AddControllers();
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1",
+                new() { Title="Teacher practice API", Version="v1"});
+            });
+
             builder.Services.AddAuthorization();
             builder.Services.AddAuthentication(opt =>
                 {
@@ -48,6 +54,11 @@ using System;
             var app = builder.Build();
 
             app.UseRouting();
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            app.UseDeveloperExceptionPage();
+            
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
