@@ -14,27 +14,38 @@ namespace TeacherPractise.Service
             this.securityService = securityService;
         }
 
-        public User Create(User user)
+        public User Create(string username, string firstName, string lastName, School school,
+            string phoneNumber, string password, Roles role)
         {
-            EnsureNotNull(user.Username, nameof(user.Username));
-            EnsureNotNull(user.Password, nameof(user.Password));
+            EnsureNotNull(username, nameof(username));
+            EnsureNotNull(username, nameof(username));
 
-            user.Username = user.Username.ToLower();
+            username = username.ToLower();
 
-            if (inner.Any(q => q.Username == user.Username))
-                throw CreateException($"Username {user.Username} already exists.", null);
+            User temp = new User(username, firstName, lastName, school, phoneNumber, password, role);
 
-            string hash = this.securityService.HashPassword(user.Password);
-            user.Password = hash;
+            string hash = this.securityService.HashPassword(password);
+            temp.Password = hash;
 
-            this.inner.Add(user);
+            using (var ctx = new Context())
+            {
+                if (ctx.Users.ToList().Any(q => q.Username == username))
+                throw CreateException($"Username {username} already exists.", null);
 
-            return user;
+                ctx.Users.Add(temp);
+                ctx.SaveChanges();
+            }
+
+            return temp;
         }
 
         public List<User> GetUsers()
         {
-            return this.inner.ToList();
+            using (var ctx = new Context())
+            {
+                return ctx.Users.ToList();     
+            }
+            //return this.inner.ToList();
         }
 
         public User GetUserByCredentials(string username, string password)
@@ -42,7 +53,7 @@ namespace TeacherPractise.Service
             EnsureNotNull(username, nameof(username));
             EnsureNotNull(password, nameof(password));
 
-            User appUser = inner.FirstOrDefault(q => q.Username == username.ToLower())
+            User appUser = inner.FirstOrDefault(q => q.Username == username.ToLower()) // -----------------------predelat na cteni z databaze
                 ?? throw CreateException($"Username {username} does not exist.");
 
             if (!this.securityService.VerifyPassword(password, appUser.Password))

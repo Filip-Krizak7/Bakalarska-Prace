@@ -22,13 +22,14 @@ namespace TeacherPractise.Controller
       this.securityService = securityService;
     }
 
-    [HttpPut]
+    [HttpPut("register")]
     [AllowAnonymous]
-    public IActionResult Create(User user)
+    public IActionResult Create(string username, string firstName, string lastName, School school,
+      string phoneNumber, string password, Roles role)
     {
       try
       {
-        this.appUserService.Create(user);
+        this.appUserService.Create(username, firstName, lastName, school, phoneNumber, password, role);
       }
       catch (Exception ex)
       {
@@ -58,13 +59,14 @@ namespace TeacherPractise.Controller
 
     [HttpGet("all")]
     //[Authorize(Role = AppConfig.ADMIN_ROLE_NAME)]
+    [AllowAnonymous]
     public IActionResult GetAll()
     {
       List<User> ret = appUserService.GetUsers();
       return Ok(ret);
     }
 
-    [HttpPost]
+    [HttpPost("login")]
     [AllowAnonymous]
     public IActionResult Login(string username, string password)
     {
