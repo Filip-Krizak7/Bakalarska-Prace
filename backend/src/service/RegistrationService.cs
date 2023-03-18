@@ -10,6 +10,7 @@ namespace TeacherPractise.Service
     public class RegistrationService
     {
         private AppUserService appUserService;
+        private SchoolService schoolService;
         
         public String register(RegistrationDto request)
         {
@@ -45,7 +46,7 @@ namespace TeacherPractise.Service
                     firstName = request.firstName;
                     lastName = request.lastName;
                     phoneNumber = request.phoneNumber;
-                    school = null; //nacti skolu - get school by ID(request.school)
+                    school = schoolService.getSchoolById(request.school); 
                     role = Roles.ROLE_TEACHER;
                     locked = false;
                     enabled = true;

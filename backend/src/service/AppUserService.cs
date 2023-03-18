@@ -79,7 +79,7 @@ namespace TeacherPractise.Service
                 throw CreateException($"Parameter {parameterName} cannot be null.");
         }
 
-        private static ServiceException CreateException(string message, Exception? innerException = null) =>
+        public static ServiceException CreateException(string message, Exception? innerException = null) =>
             new(typeof(AppUserService), message, innerException);
     }
 }
