@@ -37,7 +37,7 @@ namespace TeacherPractise.Service
           q => (object)q.ToUpper());*/
 
       string userRole = appUser.Role.ToString();
-      Dictionary<string, object> roleClaims = new Dictionary<string, object>();    //netusim
+      Dictionary<string, object> roleClaims = new Dictionary<string, object>();    //mozna se bude muset predelat ------------------
       roleClaims.Add(ClaimTypes.Role, (object)appUser.Role);
 
       //var claims = await GetValidClaims(appUser);

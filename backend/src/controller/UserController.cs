@@ -22,7 +22,7 @@ namespace TeacherPractise.Controller
       this.securityService = securityService;
     }
 
-    [HttpPut("register")]
+   /* [HttpPut("register")]
     [AllowAnonymous]
     public IActionResult Create(string username, string firstName, string lastName, School school,
       string phoneNumber, string password, Roles role)
@@ -36,7 +36,7 @@ namespace TeacherPractise.Controller
         return BadRequest(ex.Message);
       }
       return Ok();
-    }
+    }*/
 
     [HttpGet]
     [AllowAnonymous]
