@@ -47,6 +47,18 @@ namespace TeacherPractise.Model
             this.Role = role;
         }
 
+        public User(string username, string password, string firstName, string lastName, School school, string phoneNumber, Roles role, bool locked)
+        {
+            this.Username = username;
+            this.Password = password;
+            this.FirstName = firstName;
+            this.SecondName = lastName;
+            this.School = school;
+            this.PhoneNumber = phoneNumber;
+            this.Role = role;
+            this.Locked = locked;
+        }
+
         public User(string username, string password, string firstName, string lastName, School school, string phoneNumber, Roles role, bool locked, bool enabled)
         {
             this.Username = username;

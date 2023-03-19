@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TeacherPractise.Controller
 {
-    [Route("api/register")]
+    [Route("register")]
     [AllowAnonymous]
     [ApiController]
     public class RegistrationController : ControllerBase

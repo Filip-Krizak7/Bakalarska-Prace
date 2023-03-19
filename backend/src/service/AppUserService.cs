@@ -22,15 +22,13 @@ namespace TeacherPractise.Service
 
             String username = user.Username.ToLower();
 
-            //User temp = new User(username, firstName, lastName, school, phoneNumber, password, role);
-
-            /*string hash = this.securityService.HashPassword(password);
-            temp.Password = hash;*/
-
             using (var ctx = new Context())
             {
                 if (ctx.Users.ToList().Any(q => q.Username == username))
                 throw CreateException($"Username {username} already exists.", null);
+
+                string hash = this.securityService.HashPassword(user.Password);
+                user.Password = hash;
 
                 ctx.Users.Add(user);
                 ctx.SaveChanges();
@@ -43,7 +41,7 @@ namespace TeacherPractise.Service
         {
             Create(user);
 
-            String token = securityService.BuildJwtToken(user); //dodelat --------------------------------------
+            String token = this.securityService.BuildJwtToken(user);
 
             return token;
         }
