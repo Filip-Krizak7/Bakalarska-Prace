@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const LOGIN_URL = `${process.env.REACT_APP_AXIOS_URL}/login`;
+const LOGIN_URL = `${process.env.REACT_APP_AXIOS_URL}/api/user/login`;
 const REGISTER_URL = `${process.env.REACT_APP_AXIOS_URL}/register`;
 const REGISTER_COORDINATOR_URL = `${process.env.REACT_APP_AXIOS_URL}/coordinator/registerCoordinator`;
 const CONFIRMATION_URL = `${process.env.REACT_APP_AXIOS_URL}/register/confirm?`;

@@ -1,4 +1,6 @@
 ﻿using TeacherPractise.Service;
+using TeacherPractise.Model;
+using TeacherPractise.Dto.Request;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,7 +52,27 @@ using System;
                         ClockSkew = TimeSpan.Zero
                     };
                 });
+            
+            using (var ctx = new Context())
+            {
+                RegistrationService regService = new RegistrationService();
 
+                RegistrationDto request = new RegistrationDto("r20382@student.osu.cz", "Filip", "Křižák", 1, "123456789", "secret_passwd123", "teacher"); 
+                //regService.register(request);
+
+                List<User> us = ctx.Users.ToList();         //error ------------ vyhazuje chybu u enum role
+                foreach(User usobj in us)
+                {
+                    System.Console.WriteLine("{0} {1}", usobj.Username, usobj.FirstName);
+                }       
+
+                List<School> sch = ctx.Schools.ToList();
+                foreach(School schobj in sch)
+                {
+                    System.Console.WriteLine("{0} {1}", schobj.Id, schobj.Name);
+                }  
+            }
+            
             var app = builder.Build();
 
             app.UseRouting();
