@@ -8,11 +8,16 @@ namespace TeacherPractise.Service
     public class AppUserService
     {
         //private readonly List<User> inner = new();
-        private readonly SecurityService securityService;
+        private readonly SecurityService securityService = new SecurityService();
     
         public AppUserService(SecurityService securityService)
         {
             this.securityService = securityService;
+        }
+
+        public AppUserService()
+        {
+
         }
 
         public User Create(User user)

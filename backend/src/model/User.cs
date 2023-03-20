@@ -71,5 +71,9 @@ namespace TeacherPractise.Model
             this.Locked = locked;
             this.Enabled = enabled;
         }
+
+        public User()
+        {
+        }
     }
 }

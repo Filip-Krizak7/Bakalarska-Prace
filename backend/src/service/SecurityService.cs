@@ -23,6 +23,11 @@ namespace TeacherPractise.Service
       this.configuration = configuration;
     }
 
+    public SecurityService()
+    {
+      
+    }
+
     public string BuildJwtToken(User appUser)
     {
       // key from configuration:

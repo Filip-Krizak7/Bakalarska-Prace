@@ -13,6 +13,7 @@ namespace TeacherPractise.Service
                 throw AppUserService.CreateException($"School with ID: {id} does not exists.", null);
 
                 School sch = ctx.Schools.ToList().Find(q => q.Id == (int)id);
+                //School sch = new School(schEntity.Id, schEntity.Name);
 
                 return sch; 
             }

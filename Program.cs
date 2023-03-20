@@ -1,6 +1,7 @@
 ﻿using TeacherPractise.Service;
 using TeacherPractise.Model;
 using TeacherPractise.Dto.Request;
+using TeacherPractise.Dto.Response;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,21 +57,31 @@ using System;
             using (var ctx = new Context())
             {
                 RegistrationService regService = new RegistrationService();
+                SchoolService schService = new SchoolService();
+                AppUserService appService = new AppUserService();
 
-                RegistrationDto request = new RegistrationDto("r20382@student.osu.cz", "Filip", "Křižák", 1, "123456789", "secret_passwd123", "teacher"); 
-                //regService.register(request);
+                RegistrationDto request = new RegistrationDto("r20382@student.osu.cz", "Filip", "Křižák", 1, "123456789", "secret_passwd123", "teacher");
+                regService.register(request);
 
-                List<User> us = ctx.Users.ToList();         //error ------------ vyhazuje chybu u enum role
+                /*User u1 = new User("r20382@student.osu.cz", "Filip", "Křižák", schService.getSchoolById(request.school), "123456789", "secret_passwd123", Roles.ROLE_TEACHER);
+                appService.Create(u1);*/
+
+                List<User> us = ctx.Users.ToList();
                 foreach(User usobj in us)
                 {
                     System.Console.WriteLine("{0} {1}", usobj.Username, usobj.FirstName);
-                }       
+                }      
+
+                System.Console.WriteLine("-------------------------------------");
 
                 List<School> sch = ctx.Schools.ToList();
                 foreach(School schobj in sch)
                 {
                     System.Console.WriteLine("{0} {1}", schobj.Id, schobj.Name);
                 }  
+
+                School schM = schService.getSchoolById(request.school);
+                System.Console.WriteLine(schM.Name);
             }
             
             var app = builder.Build();

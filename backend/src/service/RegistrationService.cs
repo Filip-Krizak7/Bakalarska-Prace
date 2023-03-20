@@ -9,8 +9,8 @@ namespace TeacherPractise.Service
 {
     public class RegistrationService
     {
-        private AppUserService appUserService;
-        private SchoolService schoolService;
+        private AppUserService appUserService = new AppUserService();
+        private SchoolService schoolService = new SchoolService();
         
         public String register(RegistrationDto request)
         {
@@ -23,7 +23,7 @@ namespace TeacherPractise.Service
             AppUserService.EnsureNotNull(request.role, nameof(request.role));
 
             String email, password, firstName, lastName, phoneNumber;
-            School school;
+            School sch;
             Roles role;
             bool locked, enabled;
 
@@ -35,7 +35,7 @@ namespace TeacherPractise.Service
                     firstName = request.firstName;
                     lastName = request.lastName;
                     phoneNumber = null;
-                    school = null;
+                    sch = null;
                     role = Roles.ROLE_STUDENT;
                     locked = false;
                     enabled = true;
@@ -46,7 +46,7 @@ namespace TeacherPractise.Service
                     firstName = request.firstName;
                     lastName = request.lastName;
                     phoneNumber = request.phoneNumber;
-                    school = schoolService.getSchoolById(request.school); 
+                    sch = this.schoolService.getSchoolById(request.school); 
                     role = Roles.ROLE_TEACHER;
                     locked = false;
                     enabled = true;
@@ -57,7 +57,7 @@ namespace TeacherPractise.Service
                     firstName = request.firstName;
                     lastName = request.lastName;
                     phoneNumber = request.phoneNumber;
-                    school = null; 
+                    sch = null; 
                     role = Roles.ROLE_COORDINATOR;
                     locked = false;
                     enabled = true;
@@ -68,7 +68,7 @@ namespace TeacherPractise.Service
                     firstName = request.firstName;
                     lastName = request.lastName;
                     phoneNumber = request.phoneNumber;
-                    school = null;
+                    sch = null;
                     role = Roles.ROLE_ADMIN;
                     locked = false;
                     enabled = true;
@@ -77,7 +77,7 @@ namespace TeacherPractise.Service
                     throw new Exception("Incorrect role that cannot be converted to enum.");
             }
 
-            String token = appUserService.SignUpUser(new User(email, password, firstName, lastName, school, phoneNumber, role, locked, enabled));
+            String token = appUserService.SignUpUser(new User(email, password, firstName, lastName, sch, phoneNumber, role, locked, enabled));
 
             /*
             poslani emailu s potvrzenim
