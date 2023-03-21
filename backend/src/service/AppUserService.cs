@@ -2,12 +2,13 @@ using TeacherPractise.Model;
 using TeacherPractise.Service;
 using TeacherPractise.Config;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Text.RegularExpressions;
 
 namespace TeacherPractise.Service
 {
     public class AppUserService
     {
-        //private readonly List<User> inner = new();
         private readonly SecurityService securityService = new SecurityService();
     
         public AppUserService(SecurityService securityService)
@@ -23,7 +24,7 @@ namespace TeacherPractise.Service
         public User Create(User user)
         {
             EnsureNotNull(user.Username, nameof(user.Username));
-            EnsureNotNull(user.Username, nameof(user.Username));
+            EnsureNotNull(user.Password, nameof(user.Password));
 
             String username = user.Username.ToLower();
 
@@ -84,5 +85,22 @@ namespace TeacherPractise.Service
 
         public static ServiceException CreateException(string message, Exception? innerException = null) =>
             new(typeof(AppUserService), message, innerException);
+
+        public bool checkEmail(string email, Roles role)
+        {
+            string patternStudent = @"^[A-Za-z0-9._%+-]+@student.osu.cz$";
+            string patternTeacher = @"^(.+)@(.+)$";
+            
+            if(role == Roles.ROLE_STUDENT)
+            {
+                Match m = Regex.Match(email, patternStudent, RegexOptions.IgnoreCase);
+                return m.Success;
+            }
+            else
+            {
+                Match m = Regex.Match(email, patternTeacher, RegexOptions.IgnoreCase);
+                return m.Success;
+            }
+        }
     }
 }

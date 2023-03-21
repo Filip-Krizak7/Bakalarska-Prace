@@ -22,12 +22,6 @@ namespace TeacherPractise.Model
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-
-            /*modelBuilder.Entity<Review>()
-                .HasRequired<User>(u => u.User).WithMany(r => r.Reviews).HasForeignKey<int>(f => f.UserId).WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Review>()
-                .HasRequired<Practice>(p => p.Practice).WithMany(r => r.Reviews).HasForeignKey<int>(f => f.PracticeId).WillCascadeOnDelete(false);*/
         }
     }
 }

@@ -2,6 +2,7 @@
 using TeacherPractise.Model;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Dto.Response;
+using System.Data.Entity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,12 +11,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System;
 
-/*namespace TeacherPractise.Model
-{
-    class Demo
-    {
-        static void Main(string[] args)
-        {*/
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
@@ -54,22 +49,23 @@ using System;
                     };
                 });
             
-            using (var ctx = new Context())
+            /*using (var ctx = new Context())
             {
                 RegistrationService regService = new RegistrationService();
                 SchoolService schService = new SchoolService();
                 AppUserService appService = new AppUserService();
 
-                RegistrationDto request = new RegistrationDto("r20382@student.osu.cz", "Filip", "Křižák", 1, "123456789", "secret_passwd123", "teacher");
-                regService.register(request);
+                var school1 = new School() { Id = 2, Name = "ZŠ Dobrá" };
+                ctx.Schools.Add(school1);
+                ctx.SaveChanges();
 
-                /*User u1 = new User("r20382@student.osu.cz", "Filip", "Křižák", schService.getSchoolById(request.school), "123456789", "secret_passwd123", Roles.ROLE_TEACHER);
-                appService.Create(u1);*/
+                RegistrationDto request = new RegistrationDto("r54321@student@osu.cz", "TestStudent", "Křižák", 2, "123456789", "secret_passwd123", "teacher");
+                //regService.register(request);
 
                 List<User> us = ctx.Users.ToList();
                 foreach(User usobj in us)
                 {
-                    System.Console.WriteLine("{0} {1}", usobj.Username, usobj.FirstName);
+                    System.Console.WriteLine("{0} | {1} | {2}", usobj.Id, usobj.Username, usobj.SchoolId);
                 }      
 
                 System.Console.WriteLine("-------------------------------------");
@@ -79,10 +75,7 @@ using System;
                 {
                     System.Console.WriteLine("{0} {1}", schobj.Id, schobj.Name);
                 }  
-
-                School schM = schService.getSchoolById(request.school);
-                System.Console.WriteLine(schM.Name);
-            }
+            }*/
             
             var app = builder.Build();
 
@@ -96,24 +89,4 @@ using System;
             app.UseAuthorization();
             app.MapControllers();
             app.Run();
-            /*using (var ctx = new Context())
-            {
-                var school1 = new School() { Id = 1, Name = "School1" }; //Id is autoincrementing --> no need to enter here
-                var school2 = new School() { Id = 2, Name = "School2" };
         
-                ctx.Schools.Add(school1);
-                ctx.Schools.Add(school2);
-                ctx.SaveChanges();  
-            }
-
-            using (var ctx = new Context())
-            {
-                List<School> sch = ctx.Schools.ToList();
-                foreach(School schobj in sch)
-                {
-                    System.Console.WriteLine("{0} {1}", schobj.Id, schobj.Name);
-                }            
-            }*/
-        /*}
-    }
-}*/

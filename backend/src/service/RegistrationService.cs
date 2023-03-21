@@ -4,6 +4,7 @@ using TeacherPractise.Dto.Request;
 using TeacherPractise.Service;
 using TeacherPractise.Model;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace TeacherPractise.Service
 {
@@ -22,8 +23,11 @@ namespace TeacherPractise.Service
             AppUserService.EnsureNotNull(request.password, nameof(request.password));
             AppUserService.EnsureNotNull(request.role, nameof(request.role));
 
+            schoolService.checkSchoolById(request.school);
+
             String email, password, firstName, lastName, phoneNumber;
-            School sch;
+            Nullable<int> schNull = null;
+            int schId = (int)request.school;
             Roles role;
             bool locked, enabled;
 
@@ -35,7 +39,7 @@ namespace TeacherPractise.Service
                     firstName = request.firstName;
                     lastName = request.lastName;
                     phoneNumber = null;
-                    sch = null;
+                    schId = (int)schNull;
                     role = Roles.ROLE_STUDENT;
                     locked = false;
                     enabled = true;
@@ -46,7 +50,8 @@ namespace TeacherPractise.Service
                     firstName = request.firstName;
                     lastName = request.lastName;
                     phoneNumber = request.phoneNumber;
-                    sch = this.schoolService.getSchoolById(request.school); 
+                    //sch = this.schoolService.getSchoolById(request.school); 
+                    schId = (int)request.school;
                     role = Roles.ROLE_TEACHER;
                     locked = false;
                     enabled = true;
@@ -57,7 +62,7 @@ namespace TeacherPractise.Service
                     firstName = request.firstName;
                     lastName = request.lastName;
                     phoneNumber = request.phoneNumber;
-                    sch = null; 
+                    schId = (int)schNull; 
                     role = Roles.ROLE_COORDINATOR;
                     locked = false;
                     enabled = true;
@@ -68,7 +73,7 @@ namespace TeacherPractise.Service
                     firstName = request.firstName;
                     lastName = request.lastName;
                     phoneNumber = request.phoneNumber;
-                    sch = null;
+                    schId = (int)schNull;
                     role = Roles.ROLE_ADMIN;
                     locked = false;
                     enabled = true;
@@ -77,7 +82,10 @@ namespace TeacherPractise.Service
                     throw new Exception("Incorrect role that cannot be converted to enum.");
             }
 
-            String token = appUserService.SignUpUser(new User(email, password, firstName, lastName, sch, phoneNumber, role, locked, enabled));
+            if(!(appUserService.checkEmail(email, role)))
+            throw AppUserService.CreateException($"Email is in the wrong format.", null);
+
+            String token = appUserService.SignUpUser(new User(email, password, firstName, lastName, schId, phoneNumber, role, locked, enabled));
 
             /*
             poslani emailu s potvrzenim
