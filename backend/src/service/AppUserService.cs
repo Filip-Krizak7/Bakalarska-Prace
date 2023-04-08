@@ -1,7 +1,9 @@
 using TeacherPractise.Model;
 using TeacherPractise.Service;
 using TeacherPractise.Config;
+using TeacherPractise.Dto.Request;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Text.RegularExpressions;
 
@@ -101,6 +103,28 @@ namespace TeacherPractise.Service
                 Match m = Regex.Match(email, patternTeacher, RegexOptions.IgnoreCase);
                 return m.Success;
             }
+        }
+
+        public void Login(UserLoginDto request)
+        {
+            User appUser;
+
+            try
+            {
+                appUser = GetUserByCredentials(request.username, request.password);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+            string token = securityService.BuildJwtToken(appUser);
+
+            HttpContext.Response.Cookies.Append(SecurityConfig.COOKIE_NAME, token, new CookieOptions  // --> chyba 
+            {
+                Expires = DateTime.Now.AddSeconds(SecurityConfig.COOKIE_EXPIRATION_SECONDS),
+                HttpOnly = SecurityConfig.COOKIE_HTTP_ONLY,
+                Secure = SecurityConfig.COOKIE_SECURE,
+            });
         }
     }
 }

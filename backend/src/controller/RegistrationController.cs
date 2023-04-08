@@ -17,8 +17,16 @@ namespace TeacherPractise.Controller
         [AllowAnonymous]
         public IActionResult Register(RegistrationDto request)
         {
-            string ret = regService.register(request);
-            Console.WriteLine(ret);
+            string ret;
+            try
+            {
+                ret = regService.register(request);
+                Console.WriteLine(ret);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
             return Ok(ret);
         }
     }

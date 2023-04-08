@@ -22,22 +22,6 @@ namespace TeacherPractise.Controller
       this.securityService = securityService;
     }
 
-   /* [HttpPut("register")]
-    [AllowAnonymous]
-    public IActionResult Create(string username, string firstName, string lastName, School school,
-      string phoneNumber, string password, Roles role)
-    {
-      try
-      {
-        this.appUserService.Create(username, firstName, lastName, school, phoneNumber, password, role);
-      }
-      catch (Exception ex)
-      {
-        return BadRequest(ex.Message);
-      }
-      return Ok();
-    }*/
-
     [HttpGet]
     [AllowAnonymous]
     public IActionResult GetUserNames()

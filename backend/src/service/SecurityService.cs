@@ -35,17 +35,12 @@ namespace TeacherPractise.Service
       // ... or unique key per app start
       var key = this.Key;
 
-      //List<string> roleList = appUser.Role.ToList();
+      List<string> roleList = new List<string>();
+      roleList.Add(appUser.Role.ToString());
 
-      /*Dictionary<string, object> roleClaims = roleList.ToDictionary(
-          q => ClaimTypes.Roles,
-          q => (object)q.ToUpper());*/
-
-      string userRole = appUser.Role.ToString();
-      Dictionary<string, object> roleClaims = new Dictionary<string, object>();
-      roleClaims.Add(ClaimTypes.Role, (object)appUser.Role);
-
-      //var claims = await GetValidClaims(appUser);
+      Dictionary<string, object> roleClaims = roleList.ToDictionary(
+          q => ClaimTypes.Role,
+          q => (object)q.ToUpper());
 
       var tokenDescriptor = new SecurityTokenDescriptor
       {
