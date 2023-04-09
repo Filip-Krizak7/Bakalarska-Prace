@@ -58,6 +58,7 @@ namespace TeacherPractise.Service
         {
             using (var ctx = new Context())
             {
+                //ctx.Configuration.LazyLoadingEnabled = false;
                 return ctx.Users.ToList();     
             }
         }
@@ -105,7 +106,7 @@ namespace TeacherPractise.Service
             }
         }
 
-        public void Login(UserLoginDto request)
+        public void Login(UserLoginDto request, HttpContext context)
         {
             User appUser;
 
@@ -119,7 +120,7 @@ namespace TeacherPractise.Service
             }
             string token = securityService.BuildJwtToken(appUser);
 
-            HttpContext.Response.Cookies.Append(SecurityConfig.COOKIE_NAME, token, new CookieOptions  // --> chyba 
+            context.Response.Cookies.Append(SecurityConfig.COOKIE_NAME, token, new CookieOptions
             {
                 Expires = DateTime.Now.AddSeconds(SecurityConfig.COOKIE_EXPIRATION_SECONDS),
                 HttpOnly = SecurityConfig.COOKIE_HTTP_ONLY,

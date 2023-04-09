@@ -24,7 +24,7 @@ namespace TeacherPractise.Controller
 
     [HttpGet]
     [AllowAnonymous]
-    public IActionResult GetUserNames()
+    public IActionResult GetUserNames() 
     {
       List<string> ret = appUserService.GetUsers()
         .Select(q => q.Username[..q.Username.IndexOf("@")])
@@ -33,7 +33,7 @@ namespace TeacherPractise.Controller
     }
 
     [HttpGet("emails")]
-    public IActionResult GetUserEmails()
+    public IActionResult GetUserEmails() 
     {
       List<string> ret = appUserService.GetUsers()
         .Select(q => q.Username)
@@ -42,7 +42,7 @@ namespace TeacherPractise.Controller
     }
 
     [HttpGet("all")]
-    //[Authorize(Role = AppConfig.ADMIN_ROLE_NAME)]
+    //[Authorize(Role = AppConfig.ADMIN_ROLE_NAME)] 
     [AllowAnonymous]
     public IActionResult GetAll()
     {

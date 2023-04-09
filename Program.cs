@@ -49,9 +49,9 @@ using System;
                     };
                 });
             
-            /*using (var ctx = new Context())
+            using (var ctx = new Context())
             {
-                RegistrationService regService = new RegistrationService();
+                /*RegistrationService regService = new RegistrationService();
                 SchoolService schService = new SchoolService();
                 AppUserService appService = new AppUserService();
 
@@ -60,7 +60,7 @@ using System;
                 ctx.SaveChanges();
 
                 RegistrationDto request = new RegistrationDto("r54321@student@osu.cz", "TestStudent", "Křižák", 2, "123456789", "secret_passwd123", "teacher");
-                //regService.register(request);
+                //regService.register(request);*/
 
                 List<User> us = ctx.Users.ToList();
                 foreach(User usobj in us)
@@ -75,7 +75,7 @@ using System;
                 {
                     System.Console.WriteLine("{0} {1}", schobj.Id, schobj.Name);
                 }  
-            }*/
+            }
             
             var app = builder.Build();
 

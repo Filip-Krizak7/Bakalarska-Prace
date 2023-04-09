@@ -9,6 +9,7 @@ namespace TeacherPractise.Model
         public Context(): base("SchoolDB")
         {
             Database.SetInitializer<Context>(new DropCreateDatabaseIfModelChanges<Context>());
+            Configuration.LazyLoadingEnabled = false;
         }
 
         public DbSet<School> Schools { get; set; }
