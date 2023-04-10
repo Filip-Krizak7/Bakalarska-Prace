@@ -1,7 +1,7 @@
 namespace TeacherPractise.Dto.Request
 {
     public class UserLoginDto {
-        public String username;
-        public String password;
+        public String username { get; set; }
+        public String password { get; set; }
     }
 }

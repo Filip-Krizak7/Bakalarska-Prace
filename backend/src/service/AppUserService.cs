@@ -106,7 +106,7 @@ namespace TeacherPractise.Service
             }
         }
 
-        public void Login(UserLoginDto request, HttpContext context)
+        public void login(UserLoginDto request, HttpContext context)
         {
             User appUser;
 

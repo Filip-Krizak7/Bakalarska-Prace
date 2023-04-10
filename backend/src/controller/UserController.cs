@@ -50,7 +50,7 @@ namespace TeacherPractise.Controller
       return Ok(ret);
     }
 
-    [HttpPost("login")]
+    /*[HttpPost("login")]
     [AllowAnonymous]
     public IActionResult Login(string username, string password)
     {
@@ -66,6 +66,6 @@ namespace TeacherPractise.Controller
 
       string token = securityService.BuildJwtToken(appUser);
       return Ok(token);
-    }
+    }*/
   }
 }
