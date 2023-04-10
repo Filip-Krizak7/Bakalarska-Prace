@@ -15,7 +15,7 @@ namespace TeacherPractise.Controller
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Login([FromBody] UserLoginDto request)
+        public IActionResult Login(UserLoginDto request)
         {
             try
             {

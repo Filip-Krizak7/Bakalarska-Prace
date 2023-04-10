@@ -4,7 +4,11 @@ using TeacherPractise.Config;
 using TeacherPractise.Dto.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+
 using System;
+using System.IO;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace TeacherPractise.Service
@@ -106,7 +110,7 @@ namespace TeacherPractise.Service
             }
         }
 
-        public void login(UserLoginDto request, HttpContext context)
+        public async void login(UserLoginDto request, HttpContext context)
         {
             User appUser;
 
@@ -126,6 +130,10 @@ namespace TeacherPractise.Service
                 HttpOnly = SecurityConfig.COOKIE_HTTP_ONLY,
                 Secure = SecurityConfig.COOKIE_SECURE,
             });
+
+            context.Response.ContentType = "application/json";
+            var responseJson = JsonConvert.SerializeObject(new Dictionary<string, object> { { "role", appUser.Role } });
+            await context.Response.WriteAsync(responseJson);
         }
     }
 }
