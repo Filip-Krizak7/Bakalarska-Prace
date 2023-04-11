@@ -15,16 +15,11 @@ namespace TeacherPractise.Service
 {
     public class AppUserService
     {
-        private readonly SecurityService securityService = new SecurityService();
+        private readonly SecurityService securityService;
     
-        public AppUserService(SecurityService securityService)
+        public AppUserService([FromServices] SecurityService securityService)
         {
             this.securityService = securityService;
-        }
-
-        public AppUserService()
-        {
-
         }
 
         public User Create(User user)
@@ -62,7 +57,6 @@ namespace TeacherPractise.Service
         {
             using (var ctx = new Context())
             {
-                //ctx.Configuration.LazyLoadingEnabled = false;
                 return ctx.Users.ToList();     
             }
         }

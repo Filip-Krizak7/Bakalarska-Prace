@@ -11,7 +11,19 @@ namespace TeacherPractise.Controller
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly SecurityService securityService;
+        private readonly RegistrationService regService;
         private readonly AppUserService appUserService;
+
+        public AuthController(
+        [FromServices] AppUserService appUserService,
+        [FromServices] SecurityService securityService,
+        [FromServices] RegistrationService regService)
+        {
+            this.appUserService = appUserService;
+            this.securityService = securityService;
+            this.regService = regService;
+        }
 
         [HttpPost]
         [AllowAnonymous]
@@ -23,6 +35,7 @@ namespace TeacherPractise.Controller
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return BadRequest(ex.Message);
             }
             return Ok();

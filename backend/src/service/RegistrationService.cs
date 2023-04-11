@@ -10,8 +10,14 @@ namespace TeacherPractise.Service
 {
     public class RegistrationService
     {
-        private AppUserService appUserService = new AppUserService();
-        private SchoolService schoolService = new SchoolService();
+        private readonly AppUserService appUserService;
+        private readonly SchoolService schoolService;
+
+        public RegistrationService([FromServices] AppUserService appUserService, [FromServices] SchoolService schoolService)
+        {
+            this.appUserService = appUserService;
+            this.schoolService = schoolService;
+        }
         
         public String register(RegistrationDto request)
         {

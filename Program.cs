@@ -1,4 +1,4 @@
-﻿using TeacherPractise.Service;
+using TeacherPractise.Service;
 using TeacherPractise.Model;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Dto.Response;
@@ -11,12 +11,18 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System;
 
+using System.Linq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
             SecurityService securityService = new(builder.Configuration);
             builder.Services.AddSingleton<SecurityService>(securityService);
             builder.Services.AddSingleton<AppUserService>();
+            builder.Services.AddSingleton<RegistrationService>();
+            builder.Services.AddSingleton<SchoolService>();
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
@@ -51,18 +57,39 @@ using System;
             
             using (var ctx = new Context())
             {
-                /*RegistrationService regService = new RegistrationService();
-                SchoolService schService = new SchoolService();
-                AppUserService appService = new AppUserService();
+                //private readonly RegistrationService regService;
+                /*RegistrationService regService;
+                SchoolService schService;
+                AppUserService appService;*/
 
-                var school1 = new School() { Id = 2, Name = "ZŠ Dobrá" };
+                /*var school1 = new School() { Id = 2, Name = "ZŠ Dobrá" };
                 ctx.Schools.Add(school1);
-                ctx.SaveChanges();
+                ctx.SaveChanges();*/
 
-                RegistrationDto request = new RegistrationDto("r54321@student@osu.cz", "TestStudent", "Křižák", 2, "123456789", "secret_passwd123", "teacher");
-                //regService.register(request);*/
+                //RegistrationDto request = new RegistrationDto("r73123@student.osu.cz", "Testing", "Tester", 2, "123456789", "secret_passwd123", "teacher");
+                //UserLoginDto req = new UserLoginDto("r93452@student.osu.cz", "secret_passwd123");
+                //appService.login(req, HttpContext);
+                //regService.register(request);
+                /*User appUser = new User("r31252@student.osu.cz", "secret_passwd123", "Testing", "Tester", 2, "123456789", Roles.ROLE_TEACHER, false, true);
 
-                List<User> us = ctx.Users.ToList();
+                List<string> roleList = new List<string>();
+                roleList.Add(appUser.Role.ToString());
+
+                Dictionary<string, object> roleClaims = roleList.ToDictionary(
+                    q => ClaimTypes.Role,
+                    q => (object)q.ToUpper());
+
+                foreach (var item in roleList)
+                {
+                    Console.WriteLine(item);
+                }
+
+                foreach (var item in roleClaims)
+                {
+                    Console.WriteLine("Key: {0}, Value: {1}", item.Key, item.Value);
+                }*/
+
+                /*List<User> us = ctx.Users.ToList();
                 foreach(User usobj in us)
                 {
                     System.Console.WriteLine("{0} | {1} | {2}", usobj.Id, usobj.Username, usobj.SchoolId);
@@ -74,7 +101,7 @@ using System;
                 foreach(School schobj in sch)
                 {
                     System.Console.WriteLine("{0} {1}", schobj.Id, schobj.Name);
-                }  
+                }  */
             }
             
             var app = builder.Build();

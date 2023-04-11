@@ -23,17 +23,12 @@ namespace TeacherPractise.Service
       this.configuration = configuration;
     }
 
-    public SecurityService()
-    {
-      
-    }
-
     public string BuildJwtToken(User appUser)
     {
       // key from configuration:
-      //var key = Encoding.ASCII.GetBytes(configuration["Jwt:Key"]);
       // ... or unique key per app start
       var key = this.Key;
+      //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
 
       List<string> roleList = new List<string>();
       roleList.Add(appUser.Role.ToString());
@@ -42,27 +37,37 @@ namespace TeacherPractise.Service
           q => ClaimTypes.Role,
           q => (object)q.ToUpper());
 
-      var tokenDescriptor = new SecurityTokenDescriptor
+      try
       {
-        Subject = new ClaimsIdentity(new[]
-          {
-        new Claim(JwtRegisteredClaimNames.Sub, appUser.Username),
-        new Claim(JwtRegisteredClaimNames.Email, appUser.Username),
-        new Claim(JwtRegisteredClaimNames.Aud, configuration["Jwt:Audience"]),
-        new Claim(JwtRegisteredClaimNames.Iss, configuration["Jwt:Issuer"]),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-      }),
-        Expires = DateTime.UtcNow.AddSeconds(AppConfig.TOKEN_EXPIRATION_IN_SECONDS),
-        SigningCredentials = new SigningCredentials
-          (new SymmetricSecurityKey(key),
-          SecurityAlgorithms.HmacSha512Signature),
-        Claims = roleClaims
-      };
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+          Subject = new ClaimsIdentity(new[]
+            {
+          new Claim(JwtRegisteredClaimNames.Sub, appUser.Username),
+          new Claim(JwtRegisteredClaimNames.Email, appUser.Username),
+          new Claim(JwtRegisteredClaimNames.Aud, configuration["Jwt:Audience"]),
+          new Claim(JwtRegisteredClaimNames.Iss, configuration["Jwt:Issuer"]),
+          new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        }),
+          Expires = DateTime.UtcNow.AddSeconds(AppConfig.TOKEN_EXPIRATION_IN_SECONDS),
+          SigningCredentials = new SigningCredentials
+            (new SymmetricSecurityKey(key),
+            SecurityAlgorithms.HmacSha512Signature),
+          Claims = roleClaims
+        };
 
-      var tokenHandler = new JwtSecurityTokenHandler();
-      var token = tokenHandler.CreateToken(tokenDescriptor);
-      var ret = tokenHandler.WriteToken(token);
-      return ret;
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        var ret = tokenHandler.WriteToken(token);
+        return ret;
+      }
+      catch(NullReferenceException ex)
+      {
+        Console.WriteLine(ex);
+        Console.WriteLine("Došlo k výjimce NullReferenceException: {0}", ex.Message);
+      }
+
+      return "fail";
     }
 
     public bool VerifyPassword(string password, string passwordHash)
