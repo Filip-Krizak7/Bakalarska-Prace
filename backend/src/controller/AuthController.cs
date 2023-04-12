@@ -3,6 +3,9 @@ using TeacherPractise.Dto.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using TeacherPractise.Config;
+using TeacherPractise.Model;
+using Newtonsoft.Json;
 
 namespace TeacherPractise.Controller
 {
@@ -27,18 +30,28 @@ namespace TeacherPractise.Controller
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Login(UserLoginDto request)
+        public async Task<IActionResult> Login(UserLoginDto request)
         {
-            try
+            User appUser = appUserService.login(request);
+            string token = securityService.BuildJwtToken(appUser);
+
+            HttpContext.Response.Cookies.Append(SecurityConfig.COOKIE_NAME, token, new CookieOptions
             {
-                appUserService.login(request, HttpContext);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return BadRequest(ex.Message);
-            }
-            return Ok();
+                Expires = DateTime.Now.AddSeconds(SecurityConfig.COOKIE_EXPIRATION_SECONDS),
+                HttpOnly = SecurityConfig.COOKIE_HTTP_ONLY,
+                Secure = SecurityConfig.COOKIE_SECURE,
+            });
+
+            HttpContext.Response.ContentType = "application/json";
+
+            var responseJson = JsonConvert.SerializeObject(new Dictionary<string, string> { { "role", appUser.Role.ToString() } });
+
+            await HttpContext.Response.WriteAsync(responseJson);
+
+            Console.WriteLine("Prošlo to ---------------------------------------------");
+            Console.WriteLine(appUser.Role);
+            Console.WriteLine(responseJson);
+            return new EmptyResult();
         }
     }
 }

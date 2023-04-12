@@ -25,6 +25,8 @@ using Microsoft.AspNetCore.Http;
             builder.Services.AddSingleton<SchoolService>();
             builder.Services.AddControllers();
 
+            Console.WriteLine(new SymmetricSecurityKey(securityService.Key)); 
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1",
@@ -40,9 +42,6 @@ using Microsoft.AspNetCore.Http;
                 })
                 .AddJwtBearer(opt =>
                 {
-                // key from config
-                //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]));
-                // or random key each app-start
                     var key = new SymmetricSecurityKey(securityService.Key);
                     opt.TokenValidationParameters = new TokenValidationParameters()
                     {

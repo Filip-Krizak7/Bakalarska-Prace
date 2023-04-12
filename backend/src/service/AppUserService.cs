@@ -104,7 +104,7 @@ namespace TeacherPractise.Service
             }
         }
 
-        public async void login(UserLoginDto request, HttpContext context)
+        public User login(UserLoginDto request)
         {
             User appUser;
 
@@ -116,18 +116,8 @@ namespace TeacherPractise.Service
             {
                 throw new Exception(ex.Message, ex);
             }
-            string token = securityService.BuildJwtToken(appUser);
 
-            context.Response.Cookies.Append(SecurityConfig.COOKIE_NAME, token, new CookieOptions
-            {
-                Expires = DateTime.Now.AddSeconds(SecurityConfig.COOKIE_EXPIRATION_SECONDS),
-                HttpOnly = SecurityConfig.COOKIE_HTTP_ONLY,
-                Secure = SecurityConfig.COOKIE_SECURE,
-            });
-
-            context.Response.ContentType = "application/json";
-            var responseJson = JsonConvert.SerializeObject(new Dictionary<string, object> { { "role", appUser.Role } });
-            await context.Response.WriteAsync(responseJson);
+            return appUser;
         }
     }
 }
