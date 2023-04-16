@@ -15,6 +15,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
+            //var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";  
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
@@ -25,13 +26,27 @@ using Microsoft.AspNetCore.Http;
             builder.Services.AddSingleton<SchoolService>();
             builder.Services.AddControllers();
 
-            Console.WriteLine(new SymmetricSecurityKey(securityService.Key)); 
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1",
                 new() { Title="Teacher practice API", Version="v1"});
             });
+            
+            builder.Services.AddCors();
+            builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
+
+            /*builder.Services.AddCors(options =>  
+            {  
+                options.AddPolicy(name: MyAllowSpecificOrigins,  
+                                policy  =>  
+                                {  
+                                    policy.WithOrigins("http://localhost:5000") // add the allowed origins  
+                                    .AllowAnyHeader()
+                                                            .AllowAnyMethod();
+                                });  
+            }); */
+
 
             builder.Services.AddAuthorization();
             builder.Services.AddAuthentication(opt =>
@@ -105,12 +120,18 @@ using Microsoft.AspNetCore.Http;
             
             var app = builder.Build();
 
-            app.UseRouting();
+            app.UseCors(
+                options => options.WithOrigins("http://localhost:5000").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin()
+            );
+            app.UseRouting(); //.AllowCredentials()
 
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseDeveloperExceptionPage();
-            
+
+            //app.UseCors(MyAllowSpecificOrigins); 
+            app.UseMvc();
+
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();

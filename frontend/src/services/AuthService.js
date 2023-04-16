@@ -13,9 +13,10 @@ class AuthService {
         const formData = JSON.stringify({username, password});
         return axios({
             url: LOGIN_URL,
-            withCredentials: true,
+            withCredentials: false,
             method: "POST",
             data: formData,
+            headers: {'Content-Type': 'application/json'},
         }).then((response) => {
             if (response) {
                 localStorage.setItem("user", JSON.stringify(response.data));
