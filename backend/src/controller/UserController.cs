@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TeacherPractise.Controller
 {
-  [Route("api/user")]
+  [Route("user")]
   [Authorize]
   [ApiController]
   public class UserController : ControllerBase
@@ -24,48 +24,30 @@ namespace TeacherPractise.Controller
 
     [HttpGet]
     [AllowAnonymous]
-    public IActionResult GetUserNames() 
+    public IActionResult getUserNames() 
     {
-      List<string> ret = appUserService.GetUsers()
+      List<string> ret = appUserService.getUsers()
         .Select(q => q.Username[..q.Username.IndexOf("@")])
         .ToList();
       return Ok(ret);
     }
 
-    [HttpGet("emails")]
-    public IActionResult GetUserEmails() 
+    [Authorize]
+    [HttpGet("data")]
+    public IActionResult getUserData() 
     {
-      List<string> ret = appUserService.GetUsers()
-        .Select(q => q.Username)
-        .ToList();
+      string username = User.Identity.Name;
+      User ret = appUserService.getUserByUsername(username);
       return Ok(ret);
     }
 
     [HttpGet("all")]
     //[Authorize(Role = AppConfig.ADMIN_ROLE_NAME)] 
     [AllowAnonymous]
-    public IActionResult GetAll()
+    public IActionResult getAll()
     {
-      List<User> ret = appUserService.GetUsers();
+      List<User> ret = appUserService.getUsers();
       return Ok(ret);
     }
-
-    /*[HttpPost("login")]
-    [AllowAnonymous]
-    public IActionResult Login(string username, string password)
-    {
-      User appUser;
-      try
-      {
-        appUser = this.appUserService.GetUserByCredentials(username, password);
-      }
-      catch (Exception ex)
-      {
-        return BadRequest(ex.Message);
-      }
-
-      string token = securityService.BuildJwtToken(appUser);
-      return Ok(token);
-    }*/
   }
 }

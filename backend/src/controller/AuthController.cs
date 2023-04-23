@@ -30,7 +30,7 @@ namespace TeacherPractise.Controller
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(UserLoginDto request)
+        public async Task<IActionResult> login(UserLoginDto request)
         {
             User appUser = appUserService.login(request);
             string token = securityService.BuildJwtToken(appUser);
@@ -48,9 +48,6 @@ namespace TeacherPractise.Controller
 
             await HttpContext.Response.WriteAsync(responseJson);
 
-            Console.WriteLine("Prošlo to ---------------------------------------------");
-            Console.WriteLine(appUser.Role);
-            Console.WriteLine(responseJson);
             return new EmptyResult();
         }
     }

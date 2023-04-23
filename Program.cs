@@ -36,18 +36,6 @@ using Microsoft.AspNetCore.Http;
             builder.Services.AddCors();
             builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
 
-            /*builder.Services.AddCors(options =>  
-            {  
-                options.AddPolicy(name: MyAllowSpecificOrigins,  
-                                policy  =>  
-                                {  
-                                    policy.WithOrigins("http://localhost:5000") // add the allowed origins  
-                                    .AllowAnyHeader()
-                                                            .AllowAnyMethod();
-                                });  
-            }); */
-
-
             builder.Services.AddAuthorization();
             builder.Services.AddAuthentication(opt =>
                 {

@@ -1,5 +1,6 @@
 using TeacherPractise.Model;
 using Microsoft.AspNetCore.Mvc;
+using TeacherPractise.Dto.Response;
 
 namespace TeacherPractise.Service
 {
@@ -24,6 +25,14 @@ namespace TeacherPractise.Service
             {
                 if (!(ctx.Schools.ToList().Exists(q => q.Id == (int)id)))
                 throw AppUserService.CreateException($"School with ID: {id} does not exists.", null);
+            }
+        }
+
+        public List<School> getSchools()
+        {
+            using (var ctx = new Context())
+            {
+                return ctx.Schools.ToList();     
             }
         }
     }

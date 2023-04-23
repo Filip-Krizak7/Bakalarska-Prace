@@ -1,5 +1,4 @@
 using TeacherPractise.Model;
-using TeacherPractise.Service;
 using TeacherPractise.Config;
 using TeacherPractise.Dto.Request;
 using Microsoft.AspNetCore.Mvc;
@@ -22,10 +21,10 @@ namespace TeacherPractise.Service
             this.securityService = securityService;
         }
 
-        public User Create(User user)
+        public User create(User user)
         {
-            EnsureNotNull(user.Username, nameof(user.Username));
-            EnsureNotNull(user.Password, nameof(user.Password));
+            ensureNotNull(user.Username, nameof(user.Username));
+            ensureNotNull(user.Password, nameof(user.Password));
 
             String username = user.Username.ToLower();
 
@@ -44,16 +43,16 @@ namespace TeacherPractise.Service
             return user;
         }
 
-        public String SignUpUser(User user)
+        public String signUpUser(User user)
         {
-            Create(user);
+            create(user);
 
             String token = this.securityService.BuildJwtToken(user);
 
             return token;
         }
 
-        public List<User> GetUsers()
+        public List<User> getUsers()
         {
             using (var ctx = new Context())
             {
@@ -61,10 +60,23 @@ namespace TeacherPractise.Service
             }
         }
 
-        public User GetUserByCredentials(string username, string password)
+        public User getUserByUsername(string username)
         {
-            EnsureNotNull(username, nameof(username));
-            EnsureNotNull(password, nameof(password));
+            ensureNotNull(username, nameof(username));
+
+            using (var ctx = new Context())
+	        {
+		        User appUser = ctx.Users.ToList().FirstOrDefault(q => q.Username == username.ToLower())
+                	?? throw CreateException($"Username {username} does not exist.");
+
+            	return appUser;
+            }
+        }
+
+        public User getUserByCredentials(string username, string password)
+        {
+            ensureNotNull(username, nameof(username));
+            ensureNotNull(password, nameof(password));
 
             using (var ctx = new Context())
 	        {
@@ -78,7 +90,7 @@ namespace TeacherPractise.Service
             }
         }
 
-        public static void EnsureNotNull(string value, string parameterName)
+        public static void ensureNotNull(string value, string parameterName)
         {
             if (value == null)
                 throw CreateException($"Parameter {parameterName} cannot be null.");
@@ -110,7 +122,7 @@ namespace TeacherPractise.Service
 
             try
             {
-                appUser = GetUserByCredentials(request.username, request.password);
+                appUser = getUserByCredentials(request.username, request.password);
             }
             catch (Exception ex)
             {

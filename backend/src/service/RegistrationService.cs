@@ -1,7 +1,6 @@
 using TeacherPractise.Config;
 using TeacherPractise.Dto.Response;
 using TeacherPractise.Dto.Request;
-using TeacherPractise.Service;
 using TeacherPractise.Model;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,15 +20,15 @@ namespace TeacherPractise.Service
         
         public String register(RegistrationDto request)
         {
-            AppUserService.EnsureNotNull(request.email, nameof(request.email));
-            AppUserService.EnsureNotNull(request.firstName, nameof(request.firstName));
-            AppUserService.EnsureNotNull(request.lastName, nameof(request.lastName));
-            AppUserService.EnsureNotNull(request.school.ToString(), nameof(request.school));
-            AppUserService.EnsureNotNull(request.phoneNumber, nameof(request.phoneNumber));
-            AppUserService.EnsureNotNull(request.password, nameof(request.password));
-            AppUserService.EnsureNotNull(request.role, nameof(request.role));
+            AppUserService.ensureNotNull(request.email, nameof(request.email));
+            AppUserService.ensureNotNull(request.firstName, nameof(request.firstName));
+            AppUserService.ensureNotNull(request.lastName, nameof(request.lastName));
+            //AppUserService.ensureNotNull(request.school.ToString(), nameof(request.school));
+            //AppUserService.ensureNotNull(request.phoneNumber, nameof(request.phoneNumber));
+            AppUserService.ensureNotNull(request.password, nameof(request.password));
+            //AppUserService.ensureNotNull(request.role, nameof(request.role));
 
-            schoolService.checkSchoolById(request.school);
+            //schoolService.checkSchoolById(request.school);
 
             String email, password, firstName, lastName, phoneNumber;
             Nullable<int> schNull = null;
@@ -91,7 +90,7 @@ namespace TeacherPractise.Service
             if(!(appUserService.checkEmail(email, role)))
             throw AppUserService.CreateException($"Email is in the wrong format.", null);
 
-            String token = appUserService.SignUpUser(new User(email, password, firstName, lastName, schId, phoneNumber, role, locked, enabled));
+            String token = appUserService.signUpUser(new User(email, password, firstName, lastName, schId, phoneNumber, role, locked, enabled));
 
             /*
             poslani emailu s potvrzenim
