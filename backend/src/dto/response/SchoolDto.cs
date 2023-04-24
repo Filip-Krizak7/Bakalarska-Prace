@@ -1,7 +1,7 @@
 namespace TeacherPractise.Dto.Response
 {
     public class SchoolDto {
-        public long id;
-        public String name;
+        public long id { get; set; }
+        public String name { get; set; }
     }
 }

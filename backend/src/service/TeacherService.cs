@@ -1,8 +1,13 @@
+using AutoMapper;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using TeacherPractise.Dto.Response;
+using TeacherPractise.Dto.Request;
 using TeacherPractise.Config;
+using TeacherPractise.Mapper;
+using TeacherPractise.Model;
 
 namespace TeacherPractise.Service
 {
@@ -10,6 +15,7 @@ namespace TeacherPractise.Service
     {
         private readonly AppUserService appUserService;
         private readonly SchoolService schoolService;
+        private readonly IMapper mapper;
 
         public TeacherService([FromServices] AppUserService appUserService, [FromServices] SchoolService schoolService)
         {
@@ -19,9 +25,19 @@ namespace TeacherPractise.Service
 
         public long addPractice(string teacherUsername, NewPracticeDto newPracticeDto)
         {
-            long id = 1;
+            using (var ctx = new Context())
+	        {
+		        User teacher = ctx.Users.ToList().FirstOrDefault(q => q.Username == teacherUsername.ToLower())
+                	?? throw AppUserService.CreateException($"Učitel {teacherUsername} nenalezen.");
 
-            return id;
+            	Subject subject = ctx.Subjects.ToList().FirstOrDefault(q => q.Id == newPracticeDto.subject.id)
+                	?? throw AppUserService.CreateException($"Předmět {newPracticeDto.subject.name} nenalezen.");
+
+                Practice practice = mapper.Map<NewPracticeDto, Practice>(newPracticeDto);
+                practice.TeacherId = teacher.Id;
+
+                return practice.Id;
+            }
         }
     }
 }    

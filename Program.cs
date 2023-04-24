@@ -24,8 +24,10 @@ using Microsoft.AspNetCore.Http;
             SecurityService securityService = new(builder.Configuration);
             builder.Services.AddSingleton<SecurityService>(securityService);
             builder.Services.AddSingleton<AppUserService>();
+            builder.Services.AddSingleton<TeacherService>();
             builder.Services.AddSingleton<RegistrationService>();
             builder.Services.AddSingleton<SchoolService>();
+            builder.Services.AddSingleton<CoordinatorService>();
             builder.Services.AddControllers();
 
 

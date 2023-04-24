@@ -1,4 +1,4 @@
-namespace TeacherPractise.Dto.Request
+namespace TeacherPractise.Dto.Response
 {
     public class SubjectDto {
         public long id { get; set; }
