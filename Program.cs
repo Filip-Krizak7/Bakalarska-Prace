@@ -2,6 +2,7 @@ using TeacherPractise.Service;
 using TeacherPractise.Model;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Dto.Response;
+using TeacherPractise.Mapper;
 using System.Data.Entity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System;
+using AutoMapper;
 
 using System.Linq;
 using System.Security.Claims;
@@ -35,6 +37,7 @@ using Microsoft.AspNetCore.Http;
             
             builder.Services.AddCors();
             builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
             builder.Services.AddAuthorization();
             builder.Services.AddAuthentication(opt =>

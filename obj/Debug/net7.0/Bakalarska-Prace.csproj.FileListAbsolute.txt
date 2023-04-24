@@ -56,3 +56,5 @@ A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\
 A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
 A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\AutoMapper.dll
+A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
