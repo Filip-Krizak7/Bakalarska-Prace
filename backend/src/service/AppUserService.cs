@@ -1,5 +1,6 @@
 using TeacherPractise.Model;
 using TeacherPractise.Config;
+using TeacherPractise.Service.FileManagement;
 using TeacherPractise.Dto.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -130,6 +131,65 @@ namespace TeacherPractise.Service
             }
 
             return appUser;
+        }
+
+        public string getPracticeReport(long id)
+        {
+            using (var ctx = new Context())
+            {
+                var practice = ctx.Practices.FirstOrDefault(p => p.Id == id);  //neexistuje practices? 
+
+                if (practice != null)
+                {
+                    var folderPath = $"{FileUtil.reportsFolderPath}{id}";
+                    var files = Directory.GetFiles(folderPath);
+
+                    if (files.Length > 0)
+                    {
+                        return Path.GetFileName(files[0]);
+                    }
+
+                    return null;
+                }
+                else
+                {
+                    throw CreateException("Praxe nebyla nalezena.");
+                } 
+            }
+        }
+
+        public List<string> getTeacherFiles(string teacherEmail)
+        {
+            using (var ctx = new Context())
+	        {
+		        long id = ctx.Users.ToList().FirstOrDefault(q => q.Username == teacherEmail.ToLower()).Id
+
+                if (id != null)
+                {
+                    string folderPath = Path.Combine(FileUtil.folderPath, id.ToString());
+                    DirectoryInfo folder = new DirectoryInfo(folderPath);
+
+                    if (!folder.Exists)
+                        return new List<string>();
+
+                    var files = folder.GetFiles();
+
+                    List<string> list = new List<string>();
+                    foreach (var file in files)
+                    {
+                        if (file.Exists)
+                        {
+                            list.Add(file.Name);
+                        }
+                    }
+
+                    return list;
+                }           
+                else
+                {
+                    throw CreateException($"Učitel s mailem {teacherEmail} nenalezen.");
+                }
+            }
         }
     }
 }

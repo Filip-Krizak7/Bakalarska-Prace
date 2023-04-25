@@ -1,6 +1,7 @@
 using AutoMapper;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Dto.Response;
+using TeacherPractise.Domain;
 using TeacherPractise.Model;
 
 namespace TeacherPractise.Mapper
@@ -16,13 +17,13 @@ namespace TeacherPractise.Mapper
             CreateMap<SchoolDto, School>();
             CreateMap<School, SchoolDto>();
             CreateMap<List<School>, List<SchoolDto>>();
-            //CreateMap<Practice, PracticeDomain>();
-            //CreateMap<List<Practice>, List<PracticeDomain>>();
+            CreateMap<Practice, PracticeDomain>();
+            CreateMap<List<Practice>, List<PracticeDomain>>();
             CreateMap<List<User>, List<UserDto>>();
             CreateMap<UserDto, User>();
             CreateMap<User, UserDto>();
-            //CreateMap<PracticeDomain, StudentPracticeDto>();
-            //CreateMap<List<PracticeDomain>, List<StudentPracticeDto>>();
+            CreateMap<PracticeDomain, StudentPracticeDto>();
+            CreateMap<List<PracticeDomain>, List<StudentPracticeDto>>();
             //CreateMap<ReviewDto, Review>();
             //CreateMap<Review, ReviewDto>();
             //CreateMap<List<Review>, List<ReviewDto>>();

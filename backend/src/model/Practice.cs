@@ -28,15 +28,15 @@ namespace TeacherPractise.Model
 
         public virtual ICollection<Review> Reviews { get; set; }
 
-        /*public Practice(int id, string firstName, string lastName, School school, string phoneNumber, string password, Roles role)
+        public Practice(DateTime date, DateTime start, DateTime end, string note, int capacity, int subjectId, int teacherId)
         {
-            this.Username = username;
-            this.Password = password;
-            this.FirstName = firstName;
-            this.SecondName = lastName;
-            this.PhoneNumber = phoneNumber;
-            this.School = school;
-            this.Role = role;
-        }*/
+            this.Date = date;
+            this.Start = start;
+            this.End = end;
+            this.Note = note;
+            this.Capacity = capacity;
+            this.SubjectId = subjectId;
+            this.TeacherId = teacherId;
+        }
     }
 }

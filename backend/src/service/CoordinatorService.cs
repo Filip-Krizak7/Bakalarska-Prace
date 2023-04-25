@@ -15,7 +15,6 @@ namespace TeacherPractise.Service
     public class CoordinatorService
     {
         private readonly AppUserService appUserService;
-        private readonly IMapper mapper;
 
         public CoordinatorService([FromServices] AppUserService appUserService)
         {
@@ -34,7 +33,7 @@ namespace TeacherPractise.Service
                 }
                 else
                 {
-                    Subject subject = mapper.Map<SubjectDto, Subject>(subjectDto);
+                    Subject subject = new Subject((int)subjectDto.id, subjectDto.name);
                     ctx.Subjects.Add(subject);
                     ctx.SaveChanges();
                 }
@@ -55,7 +54,7 @@ namespace TeacherPractise.Service
                 }
                 else
                 {
-                    School school = mapper.Map<SchoolDto, School>(schoolDto);
+                    School school = new School((int)schoolDto.id, schoolDto.name);
                     ctx.Schools.Add(school);
                     ctx.SaveChanges();
                 }

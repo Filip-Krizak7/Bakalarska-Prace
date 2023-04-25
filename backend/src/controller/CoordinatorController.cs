@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace TeacherPractise.Controller
 {
     [Route("cordinator")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class CoordinatorController : ControllerBase
     {

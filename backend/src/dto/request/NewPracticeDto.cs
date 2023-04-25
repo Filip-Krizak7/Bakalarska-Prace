@@ -6,7 +6,7 @@ namespace TeacherPractise.Dto.Request
         public DateTime date { get; set; }
         public DateTime start { get; set; }
         public DateTime end { get; set; }
-        public String note { get; set; }
+        public string note { get; set; }
         public int capacity { get; set; }
         public SubjectDto subject { get; set; }
 

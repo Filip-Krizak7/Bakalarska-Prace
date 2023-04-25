@@ -39,7 +39,7 @@ using Microsoft.AspNetCore.Http;
             
             builder.Services.AddCors();
             builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
-            builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             builder.Services.AddAuthorization();
             builder.Services.AddAuthentication(opt =>
@@ -73,7 +73,7 @@ using Microsoft.AspNetCore.Http;
                 ctx.Schools.Add(school1);
                 ctx.SaveChanges();*/
 
-                //RegistrationDto request = new RegistrationDto("r73123@student.osu.cz", "Testing", "Tester", 2, "123456789", "secret_passwd123", "teacher");
+                //RegistrationDto request = new RegistrationDto("coordinator@student.osu.cz", "Testing", "Tester", 2, "123456789", "secret_passwd123", "coordinator");
                 //UserLoginDto req = new UserLoginDto("r93452@student.osu.cz", "secret_passwd123");
                 //appService.login(req, HttpContext);
                 //regService.register(request);
@@ -102,13 +102,13 @@ using Microsoft.AspNetCore.Http;
                     System.Console.WriteLine("{0} | {1} | {2}", usobj.Id, usobj.Username, usobj.SchoolId);
                 }      
 
-                System.Console.WriteLine("-------------------------------------");
+                System.Console.WriteLine("-------------------------------------");*/
 
-                List<School> sch = ctx.Schools.ToList();
-                foreach(School schobj in sch)
+                List<Subject> sbj = ctx.Subjects.ToList();
+                foreach(Subject sbobj in sbj)
                 {
-                    System.Console.WriteLine("{0} {1}", schobj.Id, schobj.Name);
-                }  */
+                    System.Console.WriteLine("{0} {1}", sbobj.Id, sbobj.Name);
+                }
             }
             
             var app = builder.Build();

@@ -9,5 +9,14 @@ namespace TeacherPractise.Model
         public string Name { get; set; }
 
         public virtual ICollection<Practice> Practices { get; set; }
+
+        public Subject(int id, string name)
+        {
+            this.Id = id;
+            this.Name = name;
+        }
+
+        public Subject()
+        {}
     }
 }

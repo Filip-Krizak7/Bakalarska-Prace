@@ -31,7 +31,6 @@ namespace TeacherPractise.Service
             //schoolService.checkSchoolById(request.school);
 
             String email, password, firstName, lastName, phoneNumber;
-            Nullable<int> schNull = null;
             int schId = (int)request.school;
             Roles role;
             bool locked, enabled;
@@ -44,7 +43,6 @@ namespace TeacherPractise.Service
                     firstName = request.firstName;
                     lastName = request.lastName;
                     phoneNumber = null;
-                    schId = (int)schNull;
                     role = Roles.ROLE_STUDENT;
                     locked = false;
                     enabled = true;
@@ -67,7 +65,6 @@ namespace TeacherPractise.Service
                     firstName = request.firstName;
                     lastName = request.lastName;
                     phoneNumber = request.phoneNumber;
-                    schId = (int)schNull; 
                     role = Roles.ROLE_COORDINATOR;
                     locked = false;
                     enabled = true;
@@ -78,7 +75,6 @@ namespace TeacherPractise.Service
                     firstName = request.firstName;
                     lastName = request.lastName;
                     phoneNumber = request.phoneNumber;
-                    schId = (int)schNull;
                     role = Roles.ROLE_ADMIN;
                     locked = false;
                     enabled = true;
