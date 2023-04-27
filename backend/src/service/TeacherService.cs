@@ -38,12 +38,15 @@ namespace TeacherPractise.Service
 
                 Practice practice = new Practice(newPracticeDto.date, newPracticeDto.start, newPracticeDto.end, 
                     newPracticeDto.note, newPracticeDto.capacity, (int)newPracticeDto.subject.id, teacher.Id);
+                    
+                ctx.practices.Add(practice);
+                ctx.SaveChanges();
 
                 return practice.Id;
             }
         }
 
-        /*public List<StudentPracticeDto> GetPracticesList(string teacherUsername, DateTime date, long subjectId, int pageNumber, int pageSize)
+        /*public List<StudentPracticeDto> getPracticesList(string teacherUsername, DateTime date, long subjectId, int pageNumber, int pageSize)
         {
             using (var ctx = new Context())
 	        {
@@ -53,7 +56,7 @@ namespace TeacherPractise.Service
                 var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == teacher.Id); //date, subjectId, teacher.Id, pageNumber, pageSize
                 practices.Sort((p1, p2) => p1.Date.CompareTo(p2.Date));
 
-                var practicesDomain = mapper.Map<List<Practice>, List<PracticeDomain>>(practices);
+                var practicesDomain = mapper.Map<List<PracticeDomain>>(practices);
                 var toDelete = new List<PracticeDomain>();
 
                 foreach (var practiceDomain in practicesDomain)
@@ -74,7 +77,7 @@ namespace TeacherPractise.Service
                     practicesDomain.Remove(practiceDomain);
                 }
 
-                return mapper.Map<List<PracticeDomain>, List<StudentPracticeDto>>(practicesDomain);
+                return mapper.Map<List<StudentPracticeDto>>(practicesDomain);
             }           
         }
 

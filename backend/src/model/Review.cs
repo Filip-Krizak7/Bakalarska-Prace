@@ -17,5 +17,8 @@ namespace TeacherPractise.Model
 
         [Required]
         public string Text { get; set; }
+
+        public Review()
+        {}
     }
 }

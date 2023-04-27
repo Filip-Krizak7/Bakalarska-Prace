@@ -137,7 +137,7 @@ namespace TeacherPractise.Service
         {
             using (var ctx = new Context())
             {
-                var practice = ctx.Practices.FirstOrDefault(p => p.Id == id);  //neexistuje practices? 
+                var practice = ctx.practices.FirstOrDefault(p => p.Id == id);  //neexistuje practices? 
 
                 if (practice != null)
                 {
@@ -162,7 +162,7 @@ namespace TeacherPractise.Service
         {
             using (var ctx = new Context())
 	        {
-		        long id = ctx.Users.ToList().FirstOrDefault(q => q.Username == teacherEmail.ToLower()).Id
+		        long id = ctx.Users.ToList().FirstOrDefault(q => q.Username == teacherEmail.ToLower()).Id;
 
                 if (id != null)
                 {

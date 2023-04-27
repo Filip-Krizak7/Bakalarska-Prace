@@ -38,5 +38,8 @@ namespace TeacherPractise.Model
             this.SubjectId = subjectId;
             this.TeacherId = teacherId;
         }
+
+        public Practice()
+        {}
     }
 }

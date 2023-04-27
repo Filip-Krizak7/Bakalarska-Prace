@@ -10,22 +10,17 @@ namespace TeacherPractise.Mapper
     {
         public AutoMapperProfile()
         {
-            CreateMap<NewPracticeDto, Practice>();
-            CreateMap<SubjectDto, Subject>();
-            CreateMap<Subject, SubjectDto>();
+            /*
+
             CreateMap<List<Subject>, List<SubjectDto>>();
-            CreateMap<SchoolDto, School>();
-            CreateMap<School, SchoolDto>();
+
             CreateMap<List<School>, List<SchoolDto>>();
-            CreateMap<Practice, PracticeDomain>();
+
             CreateMap<List<Practice>, List<PracticeDomain>>();
             CreateMap<List<User>, List<UserDto>>();
-            CreateMap<UserDto, User>();
-            CreateMap<User, UserDto>();
-            CreateMap<PracticeDomain, StudentPracticeDto>();
-            CreateMap<List<PracticeDomain>, List<StudentPracticeDto>>();
-            //CreateMap<ReviewDto, Review>();
-            //CreateMap<Review, ReviewDto>();
+
+            CreateMap<List<PracticeDomain>, List<StudentPracticeDto>>();*/
+
             //CreateMap<List<Review>, List<ReviewDto>>();
         }
     }

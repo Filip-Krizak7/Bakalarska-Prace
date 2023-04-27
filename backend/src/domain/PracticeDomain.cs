@@ -106,5 +106,8 @@ namespace TeacherPractise.Domain
             this.studentNames = studentNames;
             this.studentEmails = studentEmails;
         }
+
+        public PracticeDomain()
+        {}
     }
 }

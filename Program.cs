@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Http;
 
             //var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";  
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
             SecurityService securityService = new(builder.Configuration);
@@ -39,7 +40,6 @@ using Microsoft.AspNetCore.Http;
             
             builder.Services.AddCors();
             builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
-            builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             builder.Services.AddAuthorization();
             builder.Services.AddAuthentication(opt =>

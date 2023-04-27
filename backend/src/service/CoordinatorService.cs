@@ -1,9 +1,6 @@
 using AutoMapper;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using TeacherPractise.Dto.Response;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Config;
@@ -15,10 +12,12 @@ namespace TeacherPractise.Service
     public class CoordinatorService
     {
         private readonly AppUserService appUserService;
+        private readonly IMapper mapper;
 
-        public CoordinatorService([FromServices] AppUserService appUserService)
+        public CoordinatorService([FromServices] AppUserService appUserService,[FromServices] IMapper mapper)
         {
             this.appUserService = appUserService;
+            this.mapper = mapper;
         }
 
         public string addSubject(SubjectDto subjectDto)
@@ -34,6 +33,7 @@ namespace TeacherPractise.Service
                 else
                 {
                     Subject subject = new Subject((int)subjectDto.id, subjectDto.name);
+                    //Subject subject = mapper.Map<Subject>(subjectDto);
                     ctx.Subjects.Add(subject);
                     ctx.SaveChanges();
                 }
@@ -55,6 +55,7 @@ namespace TeacherPractise.Service
                 else
                 {
                     School school = new School((int)schoolDto.id, schoolDto.name);
+                    //School school = mapper.Map<School>(schoolDto);
                     ctx.Schools.Add(school);
                     ctx.SaveChanges();
                 }
