@@ -63,8 +63,6 @@ namespace TeacherPractise.Service
 
         public User getUserByUsername(string username)
         {
-            ensureNotNull(username, nameof(username));
-
             using (var ctx = new Context())
 	        {
 		        User appUser = ctx.Users.ToList().FirstOrDefault(q => q.Username == username.ToLower())
@@ -189,6 +187,17 @@ namespace TeacherPractise.Service
                 {
                     throw CreateException($"Učitel s mailem {teacherEmail} nenalezen.");
                 }
+            }
+        }
+
+        public User getUserById(long id)
+        {
+            using (var ctx = new Context())
+	        {
+		        User appUser = ctx.Users.ToList().FirstOrDefault(q => q.Id == (int)id)
+                	?? throw CreateException($"Uživatel s ID {id} neexistuje.");
+
+            	return appUser;
             }
         }
     }

@@ -1,5 +1,6 @@
 using TeacherPractise.Service;
 using TeacherPractise.Model;
+using TeacherPractise.Mapper;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Dto.Response;
 using TeacherPractise.Mapper;
@@ -11,7 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System;
-using AutoMapper;
 
 using System.Linq;
 using System.Security.Claims;
@@ -19,13 +19,13 @@ using Microsoft.AspNetCore.Http;
 
             //var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";  
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
             SecurityService securityService = new(builder.Configuration);
             builder.Services.AddSingleton<SecurityService>(securityService);
             builder.Services.AddSingleton<AppUserService>();
             builder.Services.AddSingleton<TeacherService>();
+            //builder.Services.AddSingleton<CustomMapper>();
             builder.Services.AddSingleton<RegistrationService>();
             builder.Services.AddSingleton<SchoolService>();
             builder.Services.AddSingleton<CoordinatorService>();

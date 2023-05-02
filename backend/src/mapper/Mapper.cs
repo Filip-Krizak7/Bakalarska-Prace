@@ -6,7 +6,7 @@ using TeacherPractise.Service;
 
 namespace TeacherPractise.Mapper
 {
-    public class Mapper
+    public class CustomMapper
     {
         private readonly SchoolService schoolService;
 
@@ -132,6 +132,32 @@ namespace TeacherPractise.Mapper
             //reviews
 
             return studentPracticeDto;
+        }
+
+        public List<PracticeDomain> practicesToPracticesDomain(List<Practice> practices)
+        {
+            List<PracticeDomain> practiceDomains = new List<PracticeDomain>();
+
+            foreach (Practice practice in practices)
+            {
+                PracticeDomain practiceDomain = practiceToPracticeDomain(practice);
+                practiceDomains.Add(practiceDomain);
+            }
+
+            return practiceDomains;
+        }
+
+        public List<StudentPracticeDto> practicesDomainToStudentPracticesDto(List<PracticeDomain> practiceDomains)
+        {
+            List<StudentPracticeDto> studentPracticeDtos = new List<StudentPracticeDto>();
+
+            foreach (PracticeDomain practiceDomain in practiceDomains)
+            {
+                StudentPracticeDto studentPracticeDto = practiceDomainToStudentPracticeDto(practiceDomain);
+                studentPracticeDtos.Add(studentPracticeDto);
+            }
+
+            return studentPracticeDtos;
         }
     }
 }
