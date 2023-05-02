@@ -75,19 +75,54 @@ namespace TeacherPractise.Service
                 foreach (PracticeDomain p in practicesDomain)
                 {
                     p.SetNumberOfReservedStudents();
-                    p.studentNames = getStudentNamesByPractice(p, pageNumber, pageSize);
-                    p.studentEmails = getStudentEmailsByPractice(p, pageNumber, pageSize);
-                    p.fileNames = appUserService.getTeacherFiles(p.teacher.username);
+                    p.SetStudentNames(getStudentNamesByPractice(p, pageNumber, pageSize));
+                    p.SetFileNames(appUserService.getTeacherFiles(p.teacher.username));
+                    p.SetStudentEmails(getStudentEmailsByPractice(p, pageNumber, pageSize));
+                    toDelete.Add(p);
+                }
 
-                    if (p.RemoveNotPassedPractices())
+                foreach (PracticeDomain practiceDomain in toDelete)
+                {
+                    if (practiceDomain.RemovePassedPractices())
                     {
-                        toDelete.Add(p);
+                        practicesDomain.Remove(practiceDomain);
                     }
                 }
 
-                foreach (PracticeDomain p in toDelete)
+                return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
+            }           
+        }
+
+        public List<StudentPracticeDto> getPracticesListPast(string teacherUsername, DateTime date, long subjectId, int pageNumber, int pageSize)
+        {
+            using (var ctx = new Context())
+	        {
+                User teacher = ctx.Users.ToList().FirstOrDefault(q => q.Username == teacherUsername.ToLower())
+                	?? throw AppUserService.CreateException($"Učitel {teacherUsername} nenalezen.");
+
+                var practices = ctx.practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == teacher.Id); //date, subjectId, teacher.Id, pageNumber, pageSize
+                practices.OrderBy(p => p.Date);
+
+                var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
+                var toDelete = new List<PracticeDomain>();
+
+                foreach (PracticeDomain p in practicesDomain)
                 {
-                    practicesDomain.Remove(p);
+                    p.SetNumberOfReservedStudents();
+                    p.SetStudentNames(getStudentNamesByPractice(p, pageNumber, pageSize));
+                    p.SetFileNames(appUserService.getTeacherFiles(p.teacher.username));
+                    p.SetStudentEmails(getStudentEmailsByPractice(p, pageNumber, pageSize));
+                    string report = appUserService.getPracticeReport(p.id);
+                    p.SetReport(report);
+                    toDelete.Add(p);
+                }
+
+                foreach (PracticeDomain practiceDomain in toDelete)
+                {
+                    if (practiceDomain.RemovePassedPractices())
+                    {
+                        practicesDomain.Remove(practiceDomain);
+                    }
                 }
 
                 return mapper.practicesDomainToStudentPracticesDto(practicesDomain);

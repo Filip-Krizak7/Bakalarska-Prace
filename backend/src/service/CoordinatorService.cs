@@ -65,14 +65,41 @@ namespace TeacherPractise.Service
             return "Škola byla přidána.";
         }
 
+        public List<StudentPracticeDto> getPracticesList(DateTime date, long subjectId, int pageNumber, int pageSize)
+        {
+            using (var ctx = new Context())
+	        {
+                var practices = ctx.practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId);
+                practices.OrderBy(p => p.Date);
+
+                List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
+                List<PracticeDomain> toDelete = new List<PracticeDomain>();
+
+                foreach (PracticeDomain p in practicesDomain)
+                {
+                    p.SetNumberOfReservedStudents();
+                    p.SetStudentNames(teacherService.getStudentNamesByPractice(p, pageNumber, pageSize));
+                    p.SetFileNames(appUserService.getTeacherFiles(p.teacher.username));
+                    p.SetStudentEmails(teacherService.getStudentEmailsByPractice(p, pageNumber, pageSize));
+                    toDelete.Add(p);
+                }
+
+                foreach (PracticeDomain practiceDomain in toDelete)
+                {
+                    if (practiceDomain.RemovePassedPractices())
+                    {
+                        practicesDomain.Remove(practiceDomain);
+                    }
+                }
+
+                return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
+            }
+        }
+
         public List<StudentPracticeDto> getPracticesListPast(DateTime date, long subjectId, int pageNumber, int pageSize)
         {
             using (var ctx = new Context())
 	        {
-                /*List<Practice> practices = practiceRepository.FindAllByParamsAsList(date, subjectId, int pageNumber, int pageSize); //----------
-                // sort practices by date
-                practices.Sort((p1, p2) => p1.Date.CompareTo(p2.Date));*/
-
                 var practices = ctx.practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId);
                 practices.OrderBy(p => p.Date);
 

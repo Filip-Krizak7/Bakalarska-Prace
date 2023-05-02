@@ -2,8 +2,10 @@ using System.Net;
 using TeacherPractise.Model;
 using TeacherPractise.Service;
 using TeacherPractise.Dto.Request;
+using TeacherPractise.Dto.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace TeacherPractise.Controller
 {
@@ -26,6 +28,30 @@ namespace TeacherPractise.Controller
         {
             var identity = HttpContext.User.Identity;
             return Ok(teacherService.addPractice(identity.Name, newPracticeDto));
+        }
+
+        [HttpGet("/practices-list")]
+        [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
+        public IActionResult getPracticesList(
+            [FromQuery(Name = "date")] [DataType(DataType.Date)] DateTime date,
+            [FromQuery(Name = "subjectId")] long subjectId,
+            [FromQuery(Name = "pageNumber")] int pageNumber,
+            [FromQuery(Name = "pageSize")] int pageSize)
+        {
+            var identity = HttpContext.User.Identity;
+            return Ok(teacherService.getPracticesList(identity.Name, date, subjectId, pageNumber, pageSize));
+        }
+
+        [HttpGet("/practices-list-past")]
+        [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
+        public IActionResult getPracticesListPast(
+            [FromQuery(Name = "date")] [DataType(DataType.Date)] DateTime date,
+            [FromQuery(Name = "subjectId")] long subjectId,
+            [FromQuery(Name = "pageNumber")] int pageNumber,
+            [FromQuery(Name = "pageSize")] int pageSize)
+        {
+            var identity = HttpContext.User.Identity;
+            return Ok(teacherService.getPracticesListPast(identity.Name, date, subjectId, pageNumber, pageSize));
         }
     }
 }
