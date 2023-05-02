@@ -38,7 +38,18 @@ using Microsoft.AspNetCore.Http;
                 new() { Title="Teacher practice API", Version="v1"});
             });
             
-            builder.Services.AddCors();
+            //builder.Services.AddCors();
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder => 
+                {
+                    builder.WithOrigins("http://localhost")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
+
             builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
 
             builder.Services.AddAuthorization();
@@ -113,9 +124,10 @@ using Microsoft.AspNetCore.Http;
             
             var app = builder.Build();
 
-            app.UseCors(
-                options => options.WithOrigins("http://localhost:5000").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin()
-            );
+            /*app.UseCors(
+                options => options.WithOrigins("http://localhost:5000").AllowAnyMethod().AllowAnyHeader().AllowCredentials()
+            );*/
+            app.UseCors();
             app.UseRouting(); //.AllowCredentials()
 
             app.UseSwagger();

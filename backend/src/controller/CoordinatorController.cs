@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TeacherPractise.Controller
 {
-    [Route("cordinator")]
+    [Route("coordinator")]
     [Authorize]
     [ApiController]
     public class CoordinatorController : ControllerBase
@@ -37,7 +37,7 @@ namespace TeacherPractise.Controller
             return Ok(coordinatorService.addSubject(newSubjectDto));
         }
 
-        [HttpGet("/practices-list")] //v originale pageable misto pageNumber a pageSize
+        /*[HttpGet("/practices-list")] //v originale pageable misto pageNumber a pageSize
         [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
         public IActionResult getPracticesList(
             [FromQuery(Name = "date")] [DataType(DataType.Date)] DateTime date,
@@ -58,6 +58,6 @@ namespace TeacherPractise.Controller
             [FromQuery(Name = "pageSize")] int pageSize)
         {
             return Ok(coordinatorService.getPracticesListPast(date, subjectId, pageNumber, pageSize));
-        }
+        }*/
     }
 }

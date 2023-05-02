@@ -30,7 +30,7 @@ namespace TeacherPractise.Controller
             return Ok(teacherService.addPractice(identity.Name, newPracticeDto));
         }
 
-        [HttpGet("/practices-list")]
+        /*[HttpGet("/practices-list")]
         [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
         public IActionResult getPracticesList(
             [FromQuery(Name = "date")] [DataType(DataType.Date)] DateTime date,
@@ -52,6 +52,6 @@ namespace TeacherPractise.Controller
         {
             var identity = HttpContext.User.Identity;
             return Ok(teacherService.getPracticesListPast(identity.Name, date, subjectId, pageNumber, pageSize));
-        }
+        }*/
     }
 }
