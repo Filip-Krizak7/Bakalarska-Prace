@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using TeacherPractise.Config;
 using TeacherPractise.Model;
 using Newtonsoft.Json;
+//using System.Web.Http.Cors;
+using Microsoft.AspNetCore.Cors;
 
 namespace TeacherPractise.Controller
 {
@@ -28,6 +30,7 @@ namespace TeacherPractise.Controller
             this.regService = regService;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> login(UserLoginDto request)

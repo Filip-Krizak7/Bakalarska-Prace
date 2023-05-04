@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const LOGIN_URL = `${process.env.REACT_APP_AXIOS_URL}/login`; //const LOGIN_URL = `${process.env.REACT_APP_AXIOS_URL}/api/user/login`;
+const LOGIN_URL = `${process.env.REACT_APP_AXIOS_URL}/login`;
 const REGISTER_URL = `${process.env.REACT_APP_AXIOS_URL}/register`;
 const REGISTER_COORDINATOR_URL = `${process.env.REACT_APP_AXIOS_URL}/coordinator/registerCoordinator`;
 const CONFIRMATION_URL = `${process.env.REACT_APP_AXIOS_URL}/register/confirm?`;
@@ -13,10 +13,10 @@ class AuthService {
         const formData = JSON.stringify({username, password});
         return axios({
             url: LOGIN_URL,
-            withCredentials: false,
+            withCredentials: true,
             method: "POST",
             data: formData,
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost'},
         }).then((response) => {
             if (response) {
                 localStorage.setItem("user", JSON.stringify(response.data));

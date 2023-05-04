@@ -56,3 +56,7 @@ A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\
 A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
 A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\System.Web.Cors.dll
+A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\System.Net.Http.Formatting.dll
+A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\System.Web.Http.dll
+A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\System.Web.Http.Cors.dll

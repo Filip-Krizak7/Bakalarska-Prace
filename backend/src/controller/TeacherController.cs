@@ -15,11 +15,14 @@ namespace TeacherPractise.Controller
     public class TeacherController : ControllerBase
     {
         private readonly TeacherService teacherService;
+        private readonly AppUserService appUserService;
 
         public TeacherController(
-        [FromServices] TeacherService teacherService)
+        [FromServices] TeacherService teacherService,
+        [FromServices] AppUserService appUserService)
         {
             this.teacherService = teacherService;
+            this.appUserService = appUserService;
         }
 
         [HttpPost("practice")]
@@ -30,7 +33,7 @@ namespace TeacherPractise.Controller
             return Ok(teacherService.addPractice(identity.Name, newPracticeDto));
         }
 
-        /*[HttpGet("/practices-list")]
+        [HttpGet("practices-list")]
         [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
         public IActionResult getPracticesList(
             [FromQuery(Name = "date")] [DataType(DataType.Date)] DateTime date,
@@ -42,7 +45,7 @@ namespace TeacherPractise.Controller
             return Ok(teacherService.getPracticesList(identity.Name, date, subjectId, pageNumber, pageSize));
         }
 
-        [HttpGet("/practices-list-past")]
+        [HttpGet("practices-list-past")]
         [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
         public IActionResult getPracticesListPast(
             [FromQuery(Name = "date")] [DataType(DataType.Date)] DateTime date,
@@ -52,6 +55,12 @@ namespace TeacherPractise.Controller
         {
             var identity = HttpContext.User.Identity;
             return Ok(teacherService.getPracticesListPast(identity.Name, date, subjectId, pageNumber, pageSize));
-        }*/
+        }
+
+        [HttpGet("getAllReviews")]
+        public IDictionary<long, string> getAllReviews()
+        {
+            return appUserService.getAllReviews();
+        }
     }
 }

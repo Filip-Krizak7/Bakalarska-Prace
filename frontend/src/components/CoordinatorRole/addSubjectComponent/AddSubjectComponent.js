@@ -188,7 +188,7 @@ export const AddSubjectComponent = () => {
                 url: ADD_SUBJECT_URL,
                 withCredentials: true,
                 method: "POST",
-                data: formData,
+                data: formData,           
             }).catch((err) => {
                 let msg = err.response.data["message"];
                 msg = msg.split(":")[1];

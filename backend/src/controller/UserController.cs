@@ -1,6 +1,7 @@
 using TeacherPractise.Model;
 using TeacherPractise.Service;
 using TeacherPractise.Config;
+using TeacherPractise.Dto.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,6 +49,35 @@ namespace TeacherPractise.Controller
     {
       List<User> ret = appUserService.getUsers();
       return Ok(ret);
+    }
+
+    [HttpGet("info")]
+    public IDictionary<string, string> getBasicInfo()
+    {
+      var identity = HttpContext.User.Identity;
+      User user = appUserService.getUserByUsername(identity.Name);
+
+      string firstName = user.FirstName;
+      string secondName = user.SecondName;
+      string role = user.Role.ToString();
+      return new Dictionary<string, string>
+      {
+          { "firstName", firstName },
+          { "secondName", secondName },
+          { "role", role }
+      };
+    }
+
+    [HttpGet("subjects")]
+    public IList<SubjectDto> getSubjects()
+    {
+        return appUserService.getSubjects();
+    }
+
+    [HttpGet("coordinators")]
+    public IList<UserDto> getCoordinators()
+    {
+        return appUserService.getCoordinators();
     }
   }
 }

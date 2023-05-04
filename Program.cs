@@ -10,12 +10,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Text;
 using System;
 
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
+using Microsoft.AspNetCore.Cors;
 
             //var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";  
             var builder = WebApplication.CreateBuilder(args);
@@ -39,20 +42,29 @@ using Microsoft.AspNetCore.Http;
             });
             
             //builder.Services.AddCors();
+            var  AllowSpecificOrigin = "_myAllowSpecificOrigins";
             builder.Services.AddCors(options =>
             {
-                options.AddDefaultPolicy(builder => 
+                options.AddPolicy(name: AllowSpecificOrigin, policy =>
                 {
-                    builder.WithOrigins("http://localhost")
+                    policy.WithOrigins("http://localhost:80", "http://localhost:5000", "http://localhost:5000/login", "http://localhost") 
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();
                 });
             });
 
-            builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
+            
 
             builder.Services.AddAuthorization();
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/login";
+                    options.AccessDeniedPath = "/Forbidden";
+                });
+
             builder.Services.AddAuthentication(opt =>
                 {
                     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -72,6 +84,8 @@ using Microsoft.AspNetCore.Http;
                         ClockSkew = TimeSpan.Zero
                     };
                 });
+            
+            builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
             
             using (var ctx = new Context())
             {
@@ -116,6 +130,7 @@ using Microsoft.AspNetCore.Http;
                 System.Console.WriteLine("-------------------------------------");*/
 
                 List<Subject> sbj = ctx.Subjects.ToList();
+
                 foreach(Subject sbobj in sbj)
                 {
                     System.Console.WriteLine("{0} {1}", sbobj.Id, sbobj.Name);
@@ -124,21 +139,18 @@ using Microsoft.AspNetCore.Http;
             
             var app = builder.Build();
 
-            /*app.UseCors(
-                options => options.WithOrigins("http://localhost:5000").AllowAnyMethod().AllowAnyHeader().AllowCredentials()
-            );*/
-            app.UseCors();
-            app.UseRouting(); //.AllowCredentials()
+            //app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseRouting();
+            app.UseCors(AllowSpecificOrigin);
 
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseDeveloperExceptionPage();
 
-            //app.UseCors(MyAllowSpecificOrigins); 
-            app.UseMvc();
-
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseMvc();
             app.MapControllers();
             app.Run();
         

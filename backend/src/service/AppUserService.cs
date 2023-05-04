@@ -2,6 +2,8 @@ using TeacherPractise.Model;
 using TeacherPractise.Config;
 using TeacherPractise.Service.FileManagement;
 using TeacherPractise.Dto.Request;
+using TeacherPractise.Dto.Response;
+using TeacherPractise.Mapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -16,6 +18,7 @@ namespace TeacherPractise.Service
     public class AppUserService
     {
         private readonly SecurityService securityService;
+        private readonly CustomMapper mapper;
     
         public AppUserService([FromServices] SecurityService securityService)
         {
@@ -199,6 +202,73 @@ namespace TeacherPractise.Service
 
             	return appUser;
             }
+        }
+
+        public List<SubjectDto> getSubjects()
+        {
+            using (var ctx = new Context())
+	        {
+                var subjects = ctx.Subjects.ToList();
+                return mapper.subjectsToSubjectDtos(subjects);
+            }
+        }
+
+        public List<UserDto> getCoordinators()
+        {
+            using (var ctx = new Context())
+	        {
+                var coordinators = ctx.Users.Where(q => q.Role == Roles.ROLE_COORDINATOR).ToList();
+                
+                return mapper.usersToUserDtos(coordinators);
+            }
+        }
+
+        /*public List<SubjectDto> getSchools()
+        {
+            using (var ctx = new Context())
+	        {
+                var subjects = ctx.Subjects.ToList();
+                return mapper.subjectsToSubjectDtos(subjects);
+            }
+        }
+
+        public List<SubjectDto> getTeachers()
+        {
+            using (var ctx = new Context())
+	        {
+                var subjects = ctx.Subjects.ToList();
+                return mapper.subjectsToSubjectDtos(subjects);
+            }
+        }
+
+        public List<SubjectDto> getStudents()
+        {
+            using (var ctx = new Context())
+	        {
+                var subjects = ctx.Subjects.ToList();
+                return mapper.subjectsToSubjectDtos(subjects);
+            }
+        }*/
+
+        public Dictionary<long, string> getAllReviews()
+        {
+            List<ReviewDto> reviews = new List<ReviewDto>();
+            Dictionary<long, string> practicesAndNames = new Dictionary<long, string>();
+
+            using (var ctx = new Context())
+	        {
+                List<Review> allReviews = ctx.Reviews.ToList();
+
+                foreach (Review r in allReviews)
+                {
+                    ReviewDto revDto = mapper.reviewToReviewDto(r);
+                    reviews.Add(revDto);
+
+                    User temp = getUserById((long)r.UserId);
+                    practicesAndNames.Add(r.PracticeId, $"{temp.FirstName} {temp.SecondName}");
+                }
+                return practicesAndNames;
+            }        
         }
     }
 }

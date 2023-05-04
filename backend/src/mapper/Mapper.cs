@@ -8,6 +8,7 @@ namespace TeacherPractise.Mapper
 {
     public class CustomMapper
     {
+        private readonly AppUserService appUserService;
         private readonly SchoolService schoolService;
 
         public SchoolDto schoolToSchoolDto(School school)
@@ -48,23 +49,24 @@ namespace TeacherPractise.Mapper
 
         public ReviewDto reviewToReviewDto(Review review)
         {
+            User temp = appUserService.getUserById((long)review.UserId);
             ReviewDto reviewDto = new ReviewDto();
             reviewDto.practiceId = (long)review.PracticeId;
-            //reviewDto.name = review.;
+            reviewDto.name = $"{temp.FirstName} {temp.SecondName}";
             reviewDto.reviewText = review.Text;
 
             return reviewDto;
         }
 
-        public Review reviewDtoToReview(ReviewDto reviewDto)
+        /*public Review reviewDtoToReview(ReviewDto reviewDto)
         {
             Review review = new Review();
             review.PracticeId = (int)reviewDto.practiceId;
-            //review.name = review.;
+            //review.UserId = review.;
             review.Text = reviewDto.reviewText;
 
             return review;
-        }
+        }*/
 
         public UserDto userToUserDto(User user)
         {
@@ -158,6 +160,32 @@ namespace TeacherPractise.Mapper
             }
 
             return studentPracticeDtos;
+        }
+
+        public List<SubjectDto> subjectsToSubjectDtos(List<Subject> subjects)
+        {
+            List<SubjectDto> subjectDtos = new List<SubjectDto>();
+
+            foreach (Subject subject in subjects)
+            {
+                SubjectDto subjectDto = subjectToSubjectDto(subject);
+                subjectDtos.Add(subjectDto);
+            }
+
+            return subjectDtos;
+        }
+
+        public List<UserDto> usersToUserDtos(List<User> users)
+        {
+            List<UserDto> userDtos = new List<UserDto>();
+
+            foreach (User user in users)
+            {
+                UserDto userDto = userToUserDto(user);
+                userDtos.Add(userDto);
+            }
+
+            return userDtos;
         }
     }
 }
