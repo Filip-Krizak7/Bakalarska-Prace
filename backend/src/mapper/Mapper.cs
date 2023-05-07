@@ -75,7 +75,7 @@ namespace TeacherPractise.Mapper
             userDto.username = user.Username;
             userDto.firstName = user.FirstName;
             userDto.secondName = user.SecondName;
-            userDto.school = schoolToSchoolDto(schoolService.getSchoolById((long)user.SchoolId));
+            userDto.school = schoolToSchoolDto(schoolService.getSchoolById((long)user.SchoolId)); //tady je chyba null reference exception
             
             return userDto;
         }
