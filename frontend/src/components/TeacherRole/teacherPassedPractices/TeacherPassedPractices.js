@@ -111,7 +111,7 @@ export const TeacherPassedPractices = () => {
                 method: 'POST',
                 url: UPLOAD_URL,
                 withCredentials: true,
-                headers: {'content-type': 'application/json'},
+                headers: {'content-type': 'application/json', 'Authorization': localStorage.getItem("token")},
                 data: formData,
             }).then(function (response) {
                 console.log(JSON.stringify(response.data));
@@ -159,6 +159,7 @@ export const TeacherPassedPractices = () => {
         const getSubjects = async () => {
             const response = await axios({
                 url: GET_SUBJECTS_URL,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 withCredentials: true,
                 method: "GET",
             }).then((response) => {
@@ -171,6 +172,7 @@ export const TeacherPassedPractices = () => {
 
         const getPraxe = async () => {
             const response = await axios({
+                headers: { 'Authorization': localStorage.getItem("token") },
                 url: GET_PRACTICE_LIST_URL_LISTED,
                 withCredentials: true,
                 method: "GET",
@@ -188,6 +190,7 @@ export const TeacherPassedPractices = () => {
             const response = await axios({
                 url: `${URL}/teacher/getReview/${email}/${practiceId}`,
                 withCredentials: true,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 method: "GET",
             }).catch((err) => {
                 setModalShowReview(true);
@@ -205,6 +208,7 @@ export const TeacherPassedPractices = () => {
         const getStudentReviews = async () => {
             const response = await axios({
                 url: GET_REVIEWS_URL,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 withCredentials: true,
                 method: "GET",
             }).then((response) => {

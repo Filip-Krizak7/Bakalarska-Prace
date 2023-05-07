@@ -20,9 +20,10 @@ namespace TeacherPractise.Service
         private readonly SecurityService securityService;
         private readonly CustomMapper mapper;
     
-        public AppUserService([FromServices] SecurityService securityService)
+        public AppUserService([FromServices] SecurityService securityService, [FromServices] CustomMapper mapper)
         {
             this.securityService = securityService;
+            this.mapper = mapper;
         }
 
         public User create(User user)
@@ -209,6 +210,7 @@ namespace TeacherPractise.Service
             using (var ctx = new Context())
 	        {
                 var subjects = ctx.Subjects.ToList();
+                
                 return mapper.subjectsToSubjectDtos(subjects);
             }
         }

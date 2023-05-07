@@ -78,6 +78,7 @@ export const TeacherListedPractices = () => {
     const getSubjects = async () => {
         const response = await axios({
             url: GET_SUBJECTS_URL,
+            headers: { 'Authorization': localStorage.getItem("token") },
             withCredentials: true,
             method: "GET",
         }).then((response) => {
@@ -90,6 +91,7 @@ export const TeacherListedPractices = () => {
 
     const getPraxe = async () => {
         const response = await axios({
+            headers: { 'Authorization': localStorage.getItem("token") },
             url: GET_PRACTICE_LIST_URL_LISTED,
             withCredentials: true,
             method: "GET",

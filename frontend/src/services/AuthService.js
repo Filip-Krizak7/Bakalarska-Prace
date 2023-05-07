@@ -20,6 +20,7 @@ class AuthService {
         }).then((response) => {
             if (response) {
                 localStorage.setItem("user", JSON.stringify(response.data));
+                localStorage.setItem("token", response.data.token);
                 if (response.data.role === "ROLE_COORDINATOR") {
                     localStorage.setItem("role", "ROLE_COORDINATOR");
                 } else if (response.data.role === "ROLE_STUDENT") {

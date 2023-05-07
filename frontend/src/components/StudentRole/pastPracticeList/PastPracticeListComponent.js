@@ -92,6 +92,7 @@ export const PastPracticeListComponent = () => {
         const getPraxe = async () => {
             const response = await axios({
                 url: GET_PRACTICE_LIST_URL,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 withCredentials: true,
                 method: "GET",
             }).catch((err) => {
@@ -106,7 +107,7 @@ export const PastPracticeListComponent = () => {
         const postReview = async (practiceId, review) => {
             console.log("review text", review);
             const response = await axios({
-                headers: {'content-type': 'text/plain'},
+                headers: {'content-type': 'text/plain', 'Authorization': localStorage.getItem("token")},
                 url: `${URL}/student/practices/${practiceId}/submitReview`,
                 withCredentials: true,
                 method: "POST",
@@ -258,6 +259,7 @@ export const PastPracticeListComponent = () => {
 
         const getSchools = async () => {
             const response = await axios({
+                headers: { 'Authorization': localStorage.getItem("token") },
                 url: GET_SCHOOLS_URL,
                 withCredentials: true,
                 method: "GET",
@@ -270,6 +272,7 @@ export const PastPracticeListComponent = () => {
 
         const getSubjects = async () => {
             const response = await axios({
+                headers: { 'Authorization': localStorage.getItem("token") },
                 url: GET_SUBJECTS_URL,
                 withCredentials: true,
                 method: "GET",
@@ -283,6 +286,7 @@ export const PastPracticeListComponent = () => {
 
         const getTeachers = async () => {
             const response = await axios({
+                headers: { 'Authorization': localStorage.getItem("token") },
                 url: GET_TEACHERS_URL,
                 withCredentials: true,
                 method: "GET",

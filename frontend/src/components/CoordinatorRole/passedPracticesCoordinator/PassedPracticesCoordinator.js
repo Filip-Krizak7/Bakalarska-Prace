@@ -97,6 +97,7 @@ export const PassedPracticesCoordinator = () => {
         const getPraxe = async () => {
             const response = await axios({
                 url: GET_PRACTICE_LIST_URL,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 withCredentials: true,
                 method: "GET",
             }).catch((err) => {
@@ -119,6 +120,7 @@ export const PassedPracticesCoordinator = () => {
 
         const getStudentReviews = async () => {
             const response = await axios({
+                headers: { 'Authorization': localStorage.getItem("token") },
                 url: GET_REVIEWS_URL,
                 withCredentials: true,
                 method: "GET",
@@ -191,6 +193,7 @@ export const PassedPracticesCoordinator = () => {
 
         const getSchools = async () => {
             const response = await axios({
+                headers: { 'Authorization': localStorage.getItem("token") },
                 url: GET_SCHOOLS_URL,
                 withCredentials: true,
                 method: "GET",
@@ -203,6 +206,7 @@ export const PassedPracticesCoordinator = () => {
 
         const getSubjects = async () => {
             const response = await axios({
+                headers: { 'Authorization': localStorage.getItem("token") },
                 url: GET_SUBJECTS_URL,
                 withCredentials: true,
                 method: "GET",
@@ -216,6 +220,7 @@ export const PassedPracticesCoordinator = () => {
 
         const getTeachers = async () => {
             const response = await axios({
+                headers: { 'Authorization': localStorage.getItem("token") },
                 url: GET_TEACHERS_URL,
                 withCredentials: true,
                 method: "GET",
@@ -267,6 +272,7 @@ export const PassedPracticesCoordinator = () => {
             const response = await axios({
                 url: `${URL}/coordinator/getReview/${email}/${practiceId}`,
                 withCredentials: true,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 method: "GET",
             }).catch((err) => {
                 setModalShowReview(true);

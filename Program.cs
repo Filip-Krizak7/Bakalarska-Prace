@@ -19,6 +19,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.OpenApi.Models;
 
             //var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";  
             var builder = WebApplication.CreateBuilder(args);
@@ -32,13 +33,35 @@ using Microsoft.AspNetCore.Cors;
             builder.Services.AddSingleton<RegistrationService>();
             builder.Services.AddSingleton<SchoolService>();
             builder.Services.AddSingleton<CoordinatorService>();
-            builder.Services.AddControllers();
-
+            builder.Services.AddSingleton<CustomMapper>();
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(c => {
-                c.SwaggerDoc("v1",
-                new() { Title="Teacher practice API", Version="v1"});
+            builder.Services.AddSwaggerGen(option =>
+            {
+                option.SwaggerDoc("v1", new OpenApiInfo { Title = "Teacher practice API", Version = "v1" });
+                option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter a valid token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
+                });
+                option.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type=ReferenceType.SecurityScheme,
+                                Id="Bearer"
+                            }
+                        },
+                        new string[]{}
+                    }
+                });
             });
             
             //builder.Services.AddCors();
@@ -62,7 +85,8 @@ using Microsoft.AspNetCore.Cors;
                 .AddCookie(options =>
                 {
                     options.LoginPath = "/login";
-                    options.AccessDeniedPath = "/Forbidden";
+                    options.Cookie.Name = "access_token";
+
                 });
 
             builder.Services.AddAuthentication(opt =>
@@ -74,6 +98,7 @@ using Microsoft.AspNetCore.Cors;
                 .AddJwtBearer(opt =>
                 {
                     var key = new SymmetricSecurityKey(securityService.Key);
+                    opt.SaveToken = true;
                     opt.TokenValidationParameters = new TokenValidationParameters()
                     {
                         IssuerSigningKey = key,
@@ -85,7 +110,17 @@ using Microsoft.AspNetCore.Cors;
                     };
                 });
             
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("JwtPolicy", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                });
+            });
+            
             builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
+            builder.Services.AddControllers();
             
             using (var ctx = new Context())
             {
@@ -130,16 +165,22 @@ using Microsoft.AspNetCore.Cors;
                 System.Console.WriteLine("-------------------------------------");*/
 
                 List<Subject> sbj = ctx.Subjects.ToList();
+                var coordinators = ctx.Users.Where(q => q.Role == Roles.ROLE_COORDINATOR).ToList();
 
-                foreach(Subject sbobj in sbj)
+                foreach(User sbobj in coordinators)
                 {
-                    System.Console.WriteLine("{0} {1}", sbobj.Id, sbobj.Name);
+                    System.Console.WriteLine("{0} {1}", sbobj.Role, sbobj.Username);
                 }
             }
             
             var app = builder.Build();
 
             //app.UseHttpsRedirection();
+            
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseCookiePolicy();
+
             app.UseStaticFiles();
             app.UseRouting();
             app.UseCors(AllowSpecificOrigin);
@@ -148,8 +189,6 @@ using Microsoft.AspNetCore.Cors;
             app.UseSwaggerUI();
             app.UseDeveloperExceptionPage();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
             app.UseMvc();
             app.MapControllers();
             app.Run();

@@ -93,6 +93,7 @@ export const PracticeListComponent = () => {
         const getPraxe = async () => {
             const response = await axios({
                 url: GET_PRACTICE_LIST_URL,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 withCredentials: true,
                 method: "GET",
             }).catch((err) => {
@@ -156,6 +157,7 @@ export const PracticeListComponent = () => {
         const registerRequest = async (id) => {
             const response = await axios({
                 url: `student/practices/${id}/make-reservation`,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 withCredentials: true,
                 method: "PUT",
             }).catch((err) => {
@@ -171,6 +173,7 @@ export const PracticeListComponent = () => {
         const unRegisterRequest = async (id) => {
             const response = await axios({
                 url: `student/practices/${id}/cancel-reservation`,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 withCredentials: true,
                 method: "PUT",
             }).catch((err) => {
@@ -185,6 +188,7 @@ export const PracticeListComponent = () => {
 
         const getSchools = async () => {
             const response = await axios({
+                headers: { 'Authorization': localStorage.getItem("token") },
                 url: GET_SCHOOLS_URL,
                 withCredentials: true,
                 method: "GET",
@@ -197,6 +201,7 @@ export const PracticeListComponent = () => {
 
         const getSubjects = async () => {
             const response = await axios({
+                headers: { 'Authorization': localStorage.getItem("token") },
                 url: GET_SUBJECTS_URL,
                 withCredentials: true,
                 method: "GET",
@@ -210,6 +215,7 @@ export const PracticeListComponent = () => {
 
         const getTeachers = async () => {
             const response = await axios({
+                headers: { 'Authorization': localStorage.getItem("token") },
                 url: GET_TEACHERS_URL,
                 withCredentials: true,
                 method: "GET",

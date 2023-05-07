@@ -15,10 +15,11 @@ namespace TeacherPractise.Service
         private readonly TeacherService teacherService;
         private readonly CustomMapper mapper;
 
-        public CoordinatorService([FromServices] AppUserService appUserService, [FromServices] TeacherService teacherService)
+        public CoordinatorService([FromServices] AppUserService appUserService, [FromServices] TeacherService teacherService, [FromServices] CustomMapper mapper)
         {
             this.appUserService = appUserService;
             this.teacherService = teacherService;
+            this.mapper = mapper;
         }
 
         public string addSubject(SubjectDto subjectDto)

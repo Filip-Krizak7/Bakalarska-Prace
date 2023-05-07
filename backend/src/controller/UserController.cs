@@ -2,6 +2,7 @@ using TeacherPractise.Model;
 using TeacherPractise.Service;
 using TeacherPractise.Config;
 using TeacherPractise.Dto.Response;
+using TeacherPractise.Dto.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,8 +44,8 @@ namespace TeacherPractise.Controller
     }
 
     [HttpGet("all")]
-    //[Authorize(Role = AppConfig.ADMIN_ROLE_NAME)] 
-    [AllowAnonymous]
+    [Authorize] 
+    //[Authorize(Policy = "JwtPolicy")]
     public IActionResult getAll()
     {
       List<User> ret = appUserService.getUsers();
@@ -55,6 +56,7 @@ namespace TeacherPractise.Controller
     public IDictionary<string, string> getBasicInfo()
     {
       var identity = HttpContext.User.Identity;
+      System.Console.WriteLine("identity username ------> " + identity);
       User user = appUserService.getUserByUsername(identity.Name);
 
       string firstName = user.FirstName;
@@ -79,5 +81,15 @@ namespace TeacherPractise.Controller
     {
         return appUserService.getCoordinators();
     }
+
+    [HttpPost("loginTest")]
+    [AllowAnonymous]
+    public IActionResult loginTwo(UserLoginDto request) 
+    {
+      User appUser = appUserService.login(request);
+      string token = securityService.BuildJwtToken(appUser);
+      return Ok(token);
+    }
+
   }
 }

@@ -21,6 +21,7 @@ function ShowCoordinators() {
     //create UseEffect
     const getStudents = async () => {
         const response = await axios({
+            headers: { 'Authorization': localStorage.getItem("token") },
             url: GET_COORDINATORS_URL,
             withCredentials: true,
             method: "GET",
@@ -56,7 +57,7 @@ function ShowCoordinators() {
 
     const removeCoordinator = async () => {
         const response = await axios({
-            headers: {'content-type': 'application/json'},
+            headers: {'content-type': 'application/json', 'Authorization': localStorage.getItem("token") },
             url: REMOVE_COORDINATOR_URL,
             withCredentials: true,
             method: "POST",

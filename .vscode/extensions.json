@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "jmrog.vscode-nuget-package-manager"
+        "jmrog.vscode-nuget-package-manager",
+        "rangav.vscode-thunder-client"
     ]
 }

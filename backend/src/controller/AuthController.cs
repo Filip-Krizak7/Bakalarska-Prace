@@ -30,7 +30,6 @@ namespace TeacherPractise.Controller
             this.regService = regService;
         }
 
-        [EnableCors("_myAllowSpecificOrigins")]
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> login(UserLoginDto request)
@@ -45,9 +44,10 @@ namespace TeacherPractise.Controller
                 Secure = SecurityConfig.COOKIE_SECURE,
             });
 
+            HttpContext.Response.StatusCode = 200;
             HttpContext.Response.ContentType = "application/json";
 
-            var responseJson = JsonConvert.SerializeObject(new Dictionary<string, string> { { "role", appUser.Role.ToString() } });
+            var responseJson = JsonConvert.SerializeObject(new Dictionary<string, string> { { "role", appUser.Role.ToString() }, { "token", "Bearer " + token } });
 
             await HttpContext.Response.WriteAsync(responseJson);
 

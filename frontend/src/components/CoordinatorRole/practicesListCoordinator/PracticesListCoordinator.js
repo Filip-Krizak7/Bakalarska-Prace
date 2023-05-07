@@ -88,6 +88,7 @@ export const PracticesListCoordinator = () => {
         const getPraxe = async () => {
             const response = await axios({
                 url: GET_PRACTICE_LIST_URL,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 withCredentials: true,
                 method: "GET",
             }).catch((err) => {
@@ -152,6 +153,7 @@ export const PracticesListCoordinator = () => {
             const response = await axios({
                 url: GET_SCHOOLS_URL,
                 withCredentials: true,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 method: "GET",
             }).then((response) => {
                 const sch = [];
@@ -162,6 +164,7 @@ export const PracticesListCoordinator = () => {
 
         const getSubjects = async () => {
             const response = await axios({
+                headers: { 'Authorization': localStorage.getItem("token") },
                 url: GET_SUBJECTS_URL,
                 withCredentials: true,
                 method: "GET",
@@ -175,6 +178,7 @@ export const PracticesListCoordinator = () => {
 
         const getTeachers = async () => {
             const response = await axios({
+                headers: { 'Authorization': localStorage.getItem("token") },
                 url: GET_TEACHERS_URL,
                 withCredentials: true,
                 method: "GET",

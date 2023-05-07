@@ -83,6 +83,7 @@ export const ReservedPracticeListComponent = () => {
 
         const getPraxe = async () => {
             const response = await axios({
+                headers: { 'Authorization': localStorage.getItem("token") },
                 url: GET_PRACTICE_LIST_URL,
                 withCredentials: true,
                 method: "GET",
@@ -147,6 +148,7 @@ export const ReservedPracticeListComponent = () => {
             const response = await axios({
                 url: `student/practices/${id}/make-reservation`,
                 withCredentials: true,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 method: "PUT",
             }).catch((err) => {
                 console.log(err.response.data.message);
@@ -161,6 +163,7 @@ export const ReservedPracticeListComponent = () => {
         const unRegisterRequest = async (id) => {
             const response = await axios({
                 url: `student/practices/${id}/cancel-reservation`,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 withCredentials: true,
                 method: "PUT",
             }).catch((err) => {
@@ -177,6 +180,7 @@ export const ReservedPracticeListComponent = () => {
             const response = await axios({
                 url: GET_SCHOOLS_URL,
                 withCredentials: true,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 method: "GET",
             }).then((response) => {
                 const sch = [];
@@ -189,6 +193,7 @@ export const ReservedPracticeListComponent = () => {
             const response = await axios({
                 url: GET_SUBJECTS_URL,
                 withCredentials: true,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 method: "GET",
             }).then((response) => {
                 const sch = [];
@@ -201,6 +206,7 @@ export const ReservedPracticeListComponent = () => {
         const getTeachers = async () => {
             const response = await axios({
                 url: GET_TEACHERS_URL,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 withCredentials: true,
                 method: "GET",
             }).then((response) => {

@@ -49,6 +49,7 @@ const TabsForm = () => {
         if (checkRole()) return;
         const response = await axios({
             url: GET_SUBJECTS_URL,
+            headers: { 'Authorization': localStorage.getItem("token") },
             withCredentials: true,
             method: "GET",
         }).catch((err) => {
@@ -88,6 +89,7 @@ const TabsForm = () => {
         checkFormData(formData);
         const response = await axios({
             url: GET_PRACTICES_URL,
+            headers: { 'Authorization': localStorage.getItem("token") },
             withCredentials: true,
             method: "POST",
             data: formData,

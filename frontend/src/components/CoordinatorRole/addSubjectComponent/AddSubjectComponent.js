@@ -49,7 +49,7 @@ export const AddSubjectComponent = () => {
 
     const removeSubject = async () => {
         const response = await axios({
-            headers: { 'content-type': 'application/json' },
+            headers: { 'content-type': 'application/json', 'Authorization': localStorage.getItem("token") },
             url: REMOVE_SUBJECT_URL,
             withCredentials: true,
             method: "POST",
@@ -67,7 +67,7 @@ export const AddSubjectComponent = () => {
     const editSubject = async () => {
         let form = { "originalSubject": currSubject, "newSubject": newSubjectName[0] };
         const response = await axios({
-            headers: { 'content-type': 'application/json' },
+            headers: { 'content-type': 'application/json', 'Authorization': localStorage.getItem("token") },
             url: EDIT_SUBJECT_URL,
             withCredentials: true,
             method: "POST",
@@ -84,6 +84,7 @@ export const AddSubjectComponent = () => {
     const getSubjects = async () => {
         const response = await axios({
             url: GET_SUBJECTS_URL,
+            headers: { 'Authorization': localStorage.getItem("token") },
             withCredentials: true,
             method: "GET",
         }).then((response) => {
@@ -186,6 +187,7 @@ export const AddSubjectComponent = () => {
         else {
             const response = await axios({
                 url: ADD_SUBJECT_URL,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 withCredentials: true,
                 method: "POST",
                 data: formData,           
