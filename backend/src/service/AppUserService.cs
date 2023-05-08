@@ -6,12 +6,15 @@ using TeacherPractise.Dto.Response;
 using TeacherPractise.Mapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Newtonsoft.Json;
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace TeacherPractise.Service
 {
@@ -19,11 +22,13 @@ namespace TeacherPractise.Service
     {
         private readonly SecurityService securityService;
         private readonly CustomMapper mapper;
+        private readonly IHttpContextAccessor httpContextAccessor;
     
-        public AppUserService([FromServices] SecurityService securityService, [FromServices] CustomMapper mapper)
+        public AppUserService([FromServices] SecurityService securityService, [FromServices] CustomMapper mapper, [FromServices] IHttpContextAccessor httpContextAccessor)
         {
             this.securityService = securityService;
             this.mapper = mapper;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public User create(User user)
@@ -271,6 +276,25 @@ namespace TeacherPractise.Service
                 }
                 return practicesAndNames;
             }        
+        }
+
+        public string getCurrentUserEmail()
+        {
+            string authHeader = httpContextAccessor.HttpContext.Request.Headers["Authorization"].ToString();
+
+            if (string.IsNullOrEmpty(authHeader))
+            {
+                return "No one is logged in!";
+            }
+            else{
+                string token = authHeader.Split(' ').Last().Replace("Bearer ", "");
+
+                string currentEmail = new JwtSecurityTokenHandler()
+                    .ReadJwtToken(token)
+                    .Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+
+                return currentEmail;
+            }
         }
     }
 }

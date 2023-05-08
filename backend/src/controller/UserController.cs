@@ -5,6 +5,10 @@ using TeacherPractise.Dto.Response;
 using TeacherPractise.Dto.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Linq;
 
 namespace TeacherPractise.Controller
 {
@@ -45,7 +49,6 @@ namespace TeacherPractise.Controller
 
     [HttpGet("all")]
     [Authorize] 
-    //[Authorize(Policy = "JwtPolicy")]
     public IActionResult getAll()
     {
       List<User> ret = appUserService.getUsers();
@@ -55,9 +58,8 @@ namespace TeacherPractise.Controller
     [HttpGet("info")]
     public IDictionary<string, string> getBasicInfo()
     {
-      var identity = HttpContext.User.Identity;
-      System.Console.WriteLine("identity username ------> " + identity);
-      User user = appUserService.getUserByUsername(identity.Name);
+      string currentEmail = appUserService.getCurrentUserEmail();
+      User user = appUserService.getUserByUsername(currentEmail);
 
       string firstName = user.FirstName;
       string secondName = user.SecondName;

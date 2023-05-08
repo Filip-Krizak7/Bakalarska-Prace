@@ -6,6 +6,10 @@ namespace TeacherPractise.Service
 {
     public class SchoolService
     {
+        public SchoolService()
+        {
+        }
+
         public School getSchoolById(long id)
         {
             using (var ctx = new Context())
@@ -61,6 +65,17 @@ namespace TeacherPractise.Service
             using (var ctx = new Context())
             {
                 return ctx.Schools.ToList();     
+            }
+        }
+
+        public User getStudentById(long id)
+        {
+            using (var ctx = new Context())
+	        {
+		        User appUser = ctx.Users.ToList().FirstOrDefault(q => q.Id == (int)id)
+                	?? throw AppUserService.CreateException($"Uživatel s ID {id} neexistuje.");
+
+            	return appUser;
             }
         }
     }

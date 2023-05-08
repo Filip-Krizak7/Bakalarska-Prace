@@ -3,13 +3,22 @@ using TeacherPractise.Dto.Response;
 using TeacherPractise.Domain;
 using TeacherPractise.Model;
 using TeacherPractise.Service;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace TeacherPractise.Mapper
 {
     public class CustomMapper
     {
-        private readonly AppUserService appUserService;
         private readonly SchoolService schoolService;
+
+        public CustomMapper([FromServices] SchoolService schoolService)
+        {
+            this.schoolService = schoolService;
+        }
 
         public SchoolDto schoolToSchoolDto(School school)
         {
@@ -49,7 +58,7 @@ namespace TeacherPractise.Mapper
 
         public ReviewDto reviewToReviewDto(Review review)
         {
-            User temp = appUserService.getUserById((long)review.UserId);
+            User temp = schoolService.getStudentById((long)review.UserId);
             ReviewDto reviewDto = new ReviewDto();
             reviewDto.practiceId = (long)review.PracticeId;
             reviewDto.name = $"{temp.FirstName} {temp.SecondName}";

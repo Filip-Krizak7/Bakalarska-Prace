@@ -41,8 +41,8 @@ namespace TeacherPractise.Controller
             [FromQuery(Name = "pageNumber")] int pageNumber,
             [FromQuery(Name = "pageSize")] int pageSize)
         {
-            var identity = HttpContext.User.Identity;
-            return Ok(teacherService.getPracticesList(identity.Name, date, subjectId, pageNumber, pageSize));
+            string currentEmail = appUserService.getCurrentUserEmail();
+            return Ok(teacherService.getPracticesList(currentEmail, date, subjectId, pageNumber, pageSize));
         }
 
         [HttpGet("practices-list-past")]
@@ -53,8 +53,8 @@ namespace TeacherPractise.Controller
             [FromQuery(Name = "pageNumber")] int pageNumber,
             [FromQuery(Name = "pageSize")] int pageSize)
         {
-            var identity = HttpContext.User.Identity;
-            return Ok(teacherService.getPracticesListPast(identity.Name, date, subjectId, pageNumber, pageSize));
+            string currentEmail = appUserService.getCurrentUserEmail();
+            return Ok(teacherService.getPracticesListPast(currentEmail, date, subjectId, pageNumber, pageSize));
         }
 
         [HttpGet("getAllReviews")]

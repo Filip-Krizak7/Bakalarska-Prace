@@ -18,10 +18,9 @@ namespace TeacherPractise.Service
         private readonly SchoolService schoolService;
         private readonly CustomMapper mapper;
 
-        public TeacherService([FromServices] AppUserService appUserService, [FromServices] SchoolService schoolService, [FromServices] CustomMapper mapper)
+        public TeacherService([FromServices] AppUserService appUserService, [FromServices] CustomMapper mapper)
         {
             this.appUserService = appUserService;
-            this.schoolService = schoolService;
             this.mapper = mapper;
         }
 

@@ -19,6 +19,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.OpenApi.Models;
 
             //var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";  
@@ -27,15 +28,48 @@ using Microsoft.OpenApi.Models;
             builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
             SecurityService securityService = new(builder.Configuration);
             builder.Services.AddSingleton<SecurityService>(securityService);
+
             builder.Services.AddSingleton<AppUserService>();
             builder.Services.AddSingleton<TeacherService>();
-            //builder.Services.AddSingleton<CustomMapper>();
             builder.Services.AddSingleton<RegistrationService>();
             builder.Services.AddSingleton<SchoolService>();
             builder.Services.AddSingleton<CoordinatorService>();
             builder.Services.AddSingleton<CustomMapper>();
+            //builder.Services.AddSingleton<IHttpContextAccessor>();
+
+            /*builder.Services.AddSingleton(sp => new AppUserService(
+                sp.GetRequiredService<SecurityService>(),
+                sp.GetRequiredService<CustomMapper>()
+            ));
+
+            builder.Services.AddSingleton(sp => new TeacherService(
+                sp.GetRequiredService<AppUserService>(),
+                sp.GetRequiredService<CustomMapper>()
+            ));
+
+
+            builder.Services.AddSingleton(sp => new RegistrationService(
+                sp.GetRequiredService<AppUserService>(),
+                sp.GetRequiredService<SchoolService>()
+            ));
+
+            builder.Services.AddSingleton(sp => new SchoolService(
+                sp.GetRequiredService<AppUserService>()
+            ));
+
+            builder.Services.AddSingleton(sp => new CoordinatorService(
+                sp.GetRequiredService<AppUserService>(),
+                sp.GetRequiredService<TeacherService>(),
+                sp.GetRequiredService<CustomMapper>()
+            ));
+
+            builder.Services.AddSingleton(sp => new CustomMapper(
+                sp.GetRequiredService<AppUserService>(),
+                sp.GetRequiredService<SchoolService>()
+            ));*/
 
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "Teacher practice API", Version = "v1" });
@@ -166,6 +200,7 @@ using Microsoft.OpenApi.Models;
 
                 List<Subject> sbj = ctx.Subjects.ToList();
                 var coordinators = ctx.Users.Where(q => q.Role == Roles.ROLE_COORDINATOR).ToList();
+
 
                 foreach(User sbobj in coordinators)
                 {
