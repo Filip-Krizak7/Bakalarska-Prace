@@ -21,6 +21,7 @@ const CoordinatorPersonalPageComponent = () => {
             axios({
                 url: GET_DATA_URL,
                 withCredentials: true,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 method: "GET",
             }),
         ]);
@@ -83,7 +84,7 @@ const CoordinatorPersonalPageComponent = () => {
             return;
         }
         const response = await axios({
-            headers: { 'content-type': 'application/json' },
+            headers: { 'content-type': 'application/json', 'Authorization': localStorage.getItem("token") },
             url: POST_PHONE_EDIT,
             withCredentials: true,
             method: "POST",

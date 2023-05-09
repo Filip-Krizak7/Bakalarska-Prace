@@ -16,7 +16,8 @@ class AuthService {
             withCredentials: true,
             method: "POST",
             data: formData,
-            headers: {'Content-Type': 'application/json', 'Accept': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost'},
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost',
+                'Authorization': localStorage.getItem("token") },
         }).then((response) => {
             if (response) {
                 localStorage.setItem("user", JSON.stringify(response.data));
@@ -58,7 +59,7 @@ class AuthService {
 
         return axios({
             url: REGISTER_COORDINATOR_URL,
-            headers: {'content-type': 'application/json'},
+            headers: {'content-type': 'application/json', 'Authorization': localStorage.getItem("token")},
             withCredentials: true,
             method: "POST",
             data: formData,
@@ -88,7 +89,7 @@ class AuthService {
 
         return axios({
             url: CHANGE_PASSWORD_URL,
-            headers: {'content-type': 'application/json'},
+            headers: {'content-type': 'application/json', 'Authorization': localStorage.getItem("token") },
             withCredentials: true,
             method: "POST",
             data: formData,
@@ -125,7 +126,7 @@ class AuthService {
 
         return axios({
             url: FORGOT_PASSWORD_URL,
-            headers: {'content-type': 'application/json'},
+            headers: {'content-type': 'application/json', 'Authorization': localStorage.getItem("token") },
             withCredentials: true,
             method: "POST",
             data: form,

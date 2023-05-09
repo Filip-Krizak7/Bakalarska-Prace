@@ -20,6 +20,7 @@ const AdminPersonalPageComponent = () => {
             axios({
                 url: GET_DATA_URL,
                 withCredentials: true,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 method: "GET",
             }),
         ]);

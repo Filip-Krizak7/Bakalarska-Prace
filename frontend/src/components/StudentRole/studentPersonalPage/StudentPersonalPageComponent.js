@@ -21,6 +21,7 @@ const StudentPersonalPageComponent = () => {
             axios({
                 url: GET_DATA_URL,
                 withCredentials: true,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 method: "GET",
             }),
         ]);
@@ -29,6 +30,7 @@ const StudentPersonalPageComponent = () => {
         const response2 = await axios({
             url: `${URL}/user/teacherFiles/${response[0].data.username}`,
             withCredentials: true,
+            headers: { 'Authorization': localStorage.getItem("token") },
             method: "GET",
         });
 

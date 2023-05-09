@@ -83,7 +83,7 @@ const FileManagementComponent = ({userDataRef}) => {
                 method: 'POST',
                 url: UPLOAD_URL,
                 withCredentials: true,
-                headers: {'content-type': 'application/json'},
+                headers: {'content-type': 'application/json', 'Authorization': localStorage.getItem("token") },
                 data: formData,
             }).then(function (response) {
                 setMessageColor("green");

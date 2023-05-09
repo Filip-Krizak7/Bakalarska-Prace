@@ -56,7 +56,7 @@ export const AddSchoolComponent = () => {
 
     const removeSchool = async () => {
         const response = await axios({
-            headers: { 'content-type': 'application/json' },
+            headers: { 'content-type': 'application/json', 'Authorization': localStorage.getItem("token") },
             url: REMOVE_SCHOOL_URL,
             withCredentials: true,
             method: "POST",
@@ -74,7 +74,7 @@ export const AddSchoolComponent = () => {
     const editSchool = async () => {
         let form = { "originalSchool": currSchool, "newSchool": newSchoolName[0] };
         const response = await axios({
-            headers: { 'content-type': 'application/json' },
+            headers: { 'content-type': 'application/json', 'Authorization': localStorage.getItem("token") },
             url: EDIT_SCHOOL_URL,
             withCredentials: true,
             method: "POST",
@@ -92,7 +92,7 @@ export const AddSchoolComponent = () => {
     const assignSchoolToTeacher = async () => {
         let form = { "username": currTeacher.username, "school": currAssignedSchool[0] };
         const response = await axios({
-            headers: { 'content-type': 'application/json' },
+            headers: { 'content-type': 'application/json', 'Authorization': localStorage.getItem("token") },
             url: ASSIGN_SCHOOL_URL,
             withCredentials: true,
             method: "POST",
@@ -112,6 +112,7 @@ export const AddSchoolComponent = () => {
         const response = await axios({
             url: GET_SCHOOLS_URL,
             withCredentials: true,
+            headers: { 'Authorization': localStorage.getItem("token") },
             method: "GET",
         }).then((response) => {
             const sch = [];
@@ -130,6 +131,7 @@ export const AddSchoolComponent = () => {
         const response = await axios({
             url: GET_TEACHERS_WITHOUT_SCHOOL_URL,
             withCredentials: true,
+            headers: { 'Authorization': localStorage.getItem("token") },
             method: "GET",
         }).then((response) => {
             setTeachersWithoutSchools(response.data);
@@ -264,6 +266,7 @@ export const AddSchoolComponent = () => {
             const response = await axios({
                 url: ADD_SCHOOL_URL,
                 withCredentials: true,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 method: "POST",
                 data: formData,
             }).catch((err) => {

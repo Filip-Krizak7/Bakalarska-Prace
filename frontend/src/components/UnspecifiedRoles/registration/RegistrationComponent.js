@@ -144,6 +144,7 @@ export class RegistrationComponent extends Component {
         axios({
             url: GET_SCHOOLS_URL,
             withCredentials: true,
+            headers: { 'Authorization': localStorage.getItem("token") },
             method: "GET",
         })
             .then(res => {

@@ -15,7 +15,7 @@ const FileByTeacherComponent = () => {
         method: 'GET',
         url: LIST_FILES_URL,
         withCredentials: true,
-        headers: {'content-type': 'application/json'},
+        headers: {'content-type': 'application/json', 'Authorization': localStorage.getItem("token") },
         data: data
     };
 

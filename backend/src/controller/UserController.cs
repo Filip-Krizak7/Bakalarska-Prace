@@ -78,6 +78,24 @@ namespace TeacherPractise.Controller
         return appUserService.getSubjects();
     }
 
+    [HttpGet("schools")]
+    public IList<SchoolDto> getSchools()
+    {
+        return appUserService.getSchools();
+    }
+
+    [HttpGet("teachers")]
+    public IList<UserDto> getTeachers()
+    {
+        return appUserService.getTeachers();
+    }
+
+    [HttpGet("students")]
+    public IList<UserDto> getStudents()
+    {
+        return appUserService.getStudents();
+    }
+
     [HttpGet("coordinators")]
     public IList<UserDto> getCoordinators()
     {

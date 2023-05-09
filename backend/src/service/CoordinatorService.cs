@@ -34,8 +34,7 @@ namespace TeacherPractise.Service
                 }
                 else
                 {
-                    Subject subject = new Subject((int)subjectDto.id, subjectDto.name);
-                    //Subject subject = mapper.Map<Subject>(subjectDto);
+                    Subject subject = mapper.subjectDtoToSubject(subjectDto);
                     ctx.Subjects.Add(subject);
                     ctx.SaveChanges();
                 }
@@ -56,8 +55,7 @@ namespace TeacherPractise.Service
                 }
                 else
                 {
-                    School school = new School((int)schoolDto.id, schoolDto.name);
-                    //School school = mapper.Map<School>(schoolDto);
+                    School school = mapper.schoolDtoToSchool(schoolDto);
                     ctx.Schools.Add(school);
                     ctx.SaveChanges();
                 }

@@ -21,7 +21,9 @@ export const WaitingListComponent = () => {
         if (checkRole()) return;
         const response = await axios({
             url: GET_WAITING_LIST_URL,
+            headers: { 'Authorization': localStorage.getItem("token") },
             withCredentials: true,
+            
             method: "GET",
         }).catch((err) => {
             console.log(err.response.data.message);
@@ -57,7 +59,7 @@ export const WaitingListComponent = () => {
 
     const acceptUser = async (email) => {
         const response = await axios({
-            headers: {'content-type': 'application/json'},
+            headers: {'content-type': 'application/json', 'Authorization': localStorage.getItem("token") },
             url: UNLOCK_USER_URL,
             withCredentials: true,
             method: "POST",
@@ -73,7 +75,7 @@ export const WaitingListComponent = () => {
 
     const removeUser = async () => {
         const response = await axios({
-            headers: {'content-type': 'application/json'},
+            headers: {'content-type': 'application/json', 'Authorization': localStorage.getItem("token") },
             url: REMOVE_USER_URL,
             withCredentials: true,
             method: "POST",

@@ -225,37 +225,36 @@ namespace TeacherPractise.Service
             using (var ctx = new Context())
 	        {
                 var coordinators = ctx.Users.Where(q => q.Role == Roles.ROLE_COORDINATOR).ToList();
-                
                 return mapper.usersToUserDtos(coordinators);
             }
         }
 
-        /*public List<SubjectDto> getSchools()
+        public List<SchoolDto> getSchools()
         {
             using (var ctx = new Context())
 	        {
-                var subjects = ctx.Subjects.ToList();
-                return mapper.subjectsToSubjectDtos(subjects);
+                var schools = ctx.Schools.ToList();
+                return mapper.schoolsToSchoolDtos(schools);
             }
         }
 
-        public List<SubjectDto> getTeachers()
+        public List<UserDto> getTeachers()
         {
             using (var ctx = new Context())
 	        {
-                var subjects = ctx.Subjects.ToList();
-                return mapper.subjectsToSubjectDtos(subjects);
+                var teachers = ctx.Users.Where(q => q.Role == Roles.ROLE_TEACHER).ToList();
+                return mapper.usersToUserDtos(teachers);
             }
         }
 
-        public List<SubjectDto> getStudents()
+        public List<UserDto> getStudents()
         {
             using (var ctx = new Context())
 	        {
-                var subjects = ctx.Subjects.ToList();
-                return mapper.subjectsToSubjectDtos(subjects);
+                var students = ctx.Users.Where(q => q.Role == Roles.ROLE_STUDENT).ToList();
+                return mapper.usersToUserDtos(students);
             }
-        }*/
+        }
 
         public Dictionary<long, string> getAllReviews()
         {

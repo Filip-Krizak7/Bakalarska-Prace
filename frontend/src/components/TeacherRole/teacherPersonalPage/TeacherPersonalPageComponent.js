@@ -56,6 +56,7 @@ const TeacherPersonalPageComponent = () => {
             headers: {'content-type': 'application/json'},
             url: `${URL}/teacher/file/delete/${email}/${fileName}`,
             withCredentials: true,
+            headers: { 'Authorization': localStorage.getItem("token") },
             method: "POST",
         }).catch((err) => {
             console.log(err.response.data.message);
@@ -86,6 +87,7 @@ const TeacherPersonalPageComponent = () => {
             axios({
                 url: GET_DATA_URL,
                 withCredentials: true,
+                headers: { 'Authorization': localStorage.getItem("token") },
                 method: "GET",
             }),
         ]);
@@ -94,6 +96,7 @@ const TeacherPersonalPageComponent = () => {
         const response2 = await axios({
             url: `${URL}/user/teacherFiles/${response[0].data.username}`,
             withCredentials: true,
+            headers: { 'Authorization': localStorage.getItem("token") },
             method: "GET",
         });
 

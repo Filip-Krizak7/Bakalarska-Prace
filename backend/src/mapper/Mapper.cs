@@ -184,6 +184,19 @@ namespace TeacherPractise.Mapper
             return subjectDtos;
         }
 
+        public List<SchoolDto> schoolsToSchoolDtos(List<School> schools)
+        {
+            List<SchoolDto> subjectDtos = new List<SchoolDto>();
+
+            foreach (School school in schools)
+            {
+                SchoolDto schoolDto = schoolToSchoolDto(school);
+                subjectDtos.Add(schoolDto);
+            }
+
+            return subjectDtos;
+        }
+
         public List<UserDto> usersToUserDtos(List<User> users)
         {
             List<UserDto> userDtos = new List<UserDto>();

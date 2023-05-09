@@ -15,6 +15,7 @@ function ShowTeachers() {
         const response = await axios({
             url: GET_TEACHERS_URL,
             withCredentials: true,
+            headers: { 'Authorization': localStorage.getItem("token") },
             method: "GET",
         }).then((response) => {
             response.data.forEach(element => teachers.push(element.name));
