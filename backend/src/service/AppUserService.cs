@@ -74,7 +74,7 @@ namespace TeacherPractise.Service
         {
             using (var ctx = new Context())
 	        {
-		        User appUser = ctx.Users.ToList().FirstOrDefault(q => q.Username == username.ToLower())
+		        User appUser = ctx.Users.Where(q => q.Username == username.ToLower()).FirstOrDefault()
                 	?? throw CreateException($"Username {username} does not exist.");
 
             	return appUser;
@@ -144,7 +144,7 @@ namespace TeacherPractise.Service
         {
             using (var ctx = new Context())
             {
-                var practice = ctx.practices.FirstOrDefault(p => p.Id == id);  //neexistuje practices? 
+                var practice = ctx.Practices.FirstOrDefault(p => p.Id == id);  //neexistuje practices? 
 
                 if (practice != null)
                 {
@@ -293,6 +293,37 @@ namespace TeacherPractise.Service
                     .Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
 
                 return currentEmail;
+            }
+        }
+
+        public string removeUser(string username)
+        {
+            using (var ctx = new Context())
+	        {
+                User user = ctx.Users.Where(q => q.Username == username.ToLower()).FirstOrDefault();
+                if (user != null)
+                {
+                    //Console.WriteLine("before token removal" + " " + username);
+                    //confirmationTokenRepository.DeleteConfirmationTokenById(user.Id);
+                    ctx.Users.Remove(user);
+                    int rowsAffected = ctx.SaveChanges();
+                    if (rowsAffected == 1) return "User deleted";
+                    else return "Something went wrong";
+                }
+                else return "User was not deleted";
+            }
+        }
+
+        public string unlockUser(string username) {
+            using (var ctx = new Context())
+	        {
+                User user = ctx.Users.Where(q => q.Username == username.ToLower()).FirstOrDefault();
+                if (user != null) {
+                    user.Locked = false;
+                    ctx.SaveChanges();
+                    return "User unlocked";
+                }
+                return "Email not found";
             }
         }
     }

@@ -19,6 +19,7 @@ namespace TeacherPractise.Controller
   {
     private readonly AppUserService appUserService;
     private readonly SecurityService securityService;
+    private readonly RegistrationService registrationService;
 
     public UserController(
       [FromServices] AppUserService appUserService,
@@ -42,13 +43,13 @@ namespace TeacherPractise.Controller
     [HttpGet("data")]
     public IActionResult getUserData() 
     {
-      string username = User.Identity.Name;
+      string username = appUserService.getCurrentUserEmail();
       User ret = appUserService.getUserByUsername(username);
       return Ok(ret);
     }
 
     [HttpGet("all")]
-    [Authorize] 
+    [AllowAnonymous] 
     public IActionResult getAll()
     {
       List<User> ret = appUserService.getUsers();

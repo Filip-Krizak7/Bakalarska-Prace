@@ -41,7 +41,7 @@ export const LoginInformationComponent = ({isLoggedIn}) => {
                     setRole("Student");
                 }
             } else {
-                //document.getElementById("sign-out-click").click(); //should log out the user if he has no token/role
+                document.getElementById("sign-out-click").click(); //should log out the user if he has no token/role
                 //still need to figure out what to do if access token is expired (all requests on page load are rejected but only after they all happen the user gets signed out)
             }
         }

@@ -5,6 +5,7 @@ using TeacherPractise.Dto.Request;
 using TeacherPractise.Dto.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace TeacherPractise.Controller
@@ -26,11 +27,11 @@ namespace TeacherPractise.Controller
         }
 
         [HttpPost("practice")]
-        [ProducesResponseType(typeof(long), (int)HttpStatusCode.Created)]
-        public IActionResult addPractice([FromBody] NewPracticeDto newPracticeDto) 
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public ActionResult<long> addPractice([FromBody] NewPracticeDto newPracticeDto) 
         {
-            var identity = HttpContext.User.Identity;
-            return Ok(teacherService.addPractice(identity.Name, newPracticeDto));
+            string currentEmail = appUserService.getCurrentUserEmail();
+            return Ok(teacherService.addPractice(currentEmail, newPracticeDto));
         }
 
         [HttpGet("practices-list")]

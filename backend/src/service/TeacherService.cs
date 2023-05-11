@@ -34,10 +34,10 @@ namespace TeacherPractise.Service
             	Subject subject = ctx.Subjects.ToList().FirstOrDefault(q => q.Id == newPracticeDto.subject.id)
                 	?? throw AppUserService.CreateException($"Předmět {newPracticeDto.subject.name} nenalezen.");
 
-                Practice practice = new Practice(newPracticeDto.date, newPracticeDto.start, newPracticeDto.end, 
-                    newPracticeDto.note, newPracticeDto.capacity, (int)newPracticeDto.subject.id, teacher.Id);
+                Practice practice = mapper.practiceDtoToPractice(newPracticeDto);
+                practice.TeacherId = teacher.Id;
                     
-                ctx.practices.Add(practice);
+                ctx.Practices.Add(practice);
                 ctx.SaveChanges();
 
                 return practice.Id;
@@ -66,7 +66,7 @@ namespace TeacherPractise.Service
                 User teacher = ctx.Users.ToList().FirstOrDefault(q => q.Username == teacherUsername.ToLower())
                 	?? throw AppUserService.CreateException($"Učitel {teacherUsername} nenalezen.");
 
-                var practices = ctx.practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == teacher.Id); //date, subjectId, teacher.Id, pageNumber, pageSize
+                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == teacher.Id); //date, subjectId, teacher.Id, pageNumber, pageSize
                 practices.OrderBy(p => p.Date);
 
                 var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
@@ -100,7 +100,7 @@ namespace TeacherPractise.Service
                 User teacher = ctx.Users.ToList().FirstOrDefault(q => q.Username == teacherUsername.ToLower())
                 	?? throw AppUserService.CreateException($"Učitel {teacherUsername} nenalezen.");
 
-                var practices = ctx.practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == teacher.Id); //date, subjectId, teacher.Id, pageNumber, pageSize
+                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == teacher.Id); //date, subjectId, teacher.Id, pageNumber, pageSize
                 practices.OrderBy(p => p.Date);
 
                 var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());

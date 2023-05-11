@@ -17,11 +17,11 @@ namespace TeacherPractise.Model
         public int Capacity { get; set; }
 
         //subjectID is fake key to subject.Id
-        public int SubjectId { get; set; }
+        public int? SubjectId { get; set; }
         [ForeignKey("SubjectId")]
         public Subject Subject { get; set; }
 
-        public int TeacherId { get; set; }
+        public int? TeacherId { get; set; }
         [ForeignKey("TeacherId")]
         public User User { get; set; }
 

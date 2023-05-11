@@ -16,7 +16,7 @@ namespace TeacherPractise.Model
         public DbSet<User> Users { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-        public DbSet<Practice> practices { get; set; }
+        public DbSet<Practice> Practices { get; set; }
         public DbSet<UserPractice> UserPractices { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

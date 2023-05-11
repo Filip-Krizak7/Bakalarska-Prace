@@ -35,38 +35,6 @@ using Microsoft.OpenApi.Models;
             builder.Services.AddSingleton<SchoolService>();
             builder.Services.AddSingleton<CoordinatorService>();
             builder.Services.AddSingleton<CustomMapper>();
-            //builder.Services.AddSingleton<IHttpContextAccessor>();
-
-            /*builder.Services.AddSingleton(sp => new AppUserService(
-                sp.GetRequiredService<SecurityService>(),
-                sp.GetRequiredService<CustomMapper>()
-            ));
-
-            builder.Services.AddSingleton(sp => new TeacherService(
-                sp.GetRequiredService<AppUserService>(),
-                sp.GetRequiredService<CustomMapper>()
-            ));
-
-
-            builder.Services.AddSingleton(sp => new RegistrationService(
-                sp.GetRequiredService<AppUserService>(),
-                sp.GetRequiredService<SchoolService>()
-            ));
-
-            builder.Services.AddSingleton(sp => new SchoolService(
-                sp.GetRequiredService<AppUserService>()
-            ));
-
-            builder.Services.AddSingleton(sp => new CoordinatorService(
-                sp.GetRequiredService<AppUserService>(),
-                sp.GetRequiredService<TeacherService>(),
-                sp.GetRequiredService<CustomMapper>()
-            ));
-
-            builder.Services.AddSingleton(sp => new CustomMapper(
-                sp.GetRequiredService<AppUserService>(),
-                sp.GetRequiredService<SchoolService>()
-            ));*/
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddHttpContextAccessor();
@@ -163,9 +131,12 @@ using Microsoft.OpenApi.Models;
                 SchoolService schService;
                 AppUserService appService;*/
 
-                /*var school1 = new School() { Id = 2, Name = "ZŠ Dobrá" };
-                ctx.Schools.Add(school1);
-                ctx.SaveChanges();*/
+                //User appUser = new User("coordinator@student.osu.cz", "secret_passwd123", "Testing", "Tester", 1, "123456789", Roles.ROLE_COORDINATOR, false, true);
+                //User user = ctx.Users.Where(q => q.Username == "coordinator@student.osu.cz").FirstOrDefault();
+                //var school1 = new School() { Id = 1, Name = "ZŠ Dobrá" };
+                //ctx.Schools.Add(school1);
+                //ctx.Users.Remove(user);
+                //ctx.SaveChanges();
 
                 //RegistrationDto request = new RegistrationDto("coordinator@student.osu.cz", "Testing", "Tester", 2, "123456789", "secret_passwd123", "coordinator");
                 //UserLoginDto req = new UserLoginDto("r93452@student.osu.cz", "secret_passwd123");
@@ -198,14 +169,14 @@ using Microsoft.OpenApi.Models;
 
                 System.Console.WriteLine("-------------------------------------");*/
 
-                List<Subject> sbj = ctx.Subjects.ToList();
+                /*List<Subject> sbj = ctx.Subjects.ToList();
                 var coordinators = ctx.Users.Where(q => q.Role == Roles.ROLE_COORDINATOR).ToList();
 
 
                 foreach(User sbobj in coordinators)
                 {
                     System.Console.WriteLine("{0} {1}", sbobj.Role, sbobj.Username);
-                }
+                }*/
             }
             
             var app = builder.Build();

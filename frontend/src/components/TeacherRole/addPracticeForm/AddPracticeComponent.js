@@ -88,8 +88,8 @@ const TabsForm = () => {
         event.preventDefault();
         checkFormData(formData);
         const response = await axios({
-            url: GET_PRACTICES_URL,
             headers: { 'Authorization': localStorage.getItem("token") },
+            url: GET_PRACTICES_URL,  
             withCredentials: true,
             method: "POST",
             data: formData,
