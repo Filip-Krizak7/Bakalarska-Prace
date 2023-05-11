@@ -128,7 +128,7 @@ namespace TeacherPractise.Controller
         }
 
         [HttpPost("changePhoneNumber")]
-        public IActionResult changePhoneNumber([FromBody] string phoneNumber)
+        public IActionResult changePhoneNumber([FromBody] string phoneNumber)   //pres swagger projde ale na frontendu vyhodi 400 bad request
         {
             string result = phoneNumber.Replace("\"", "");
             if (!Regex.IsMatch(result, @"^(\\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$"))
