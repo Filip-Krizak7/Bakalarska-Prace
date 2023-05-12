@@ -223,8 +223,9 @@ namespace TeacherPractise.Service
                         ctx.SaveChanges();
                         return "School assigned.";
                     }
+                    else return "Something went wrong";
                 }
-                return "School was not assigned.";
+                else return "School was not assigned.";
             }
         }
 
@@ -248,8 +249,8 @@ namespace TeacherPractise.Service
                     ctx.SaveChanges();
                     return "Phone number changed.";
                 }
-            }
-            return "Phone number was not changed.";
+                else return "Phone number was not changed.";
+            }        
         }
     }
 }    

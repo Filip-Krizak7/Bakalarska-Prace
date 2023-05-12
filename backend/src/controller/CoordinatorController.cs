@@ -1,4 +1,5 @@
 using System.Net;
+using Microsoft.AspNetCore.Http;
 using TeacherPractise.Model;
 using TeacherPractise.Service;
 using TeacherPractise.Dto.Response;
@@ -124,11 +125,12 @@ namespace TeacherPractise.Controller
         [HttpGet("getTeachersWithoutSchool")]
         public IActionResult getTeachersWithoutSchool()
         {
-            return Ok(coordinatorService.getTeachersWithoutSchool());
+            return Ok(coordinatorService.getTeachersWithoutSchool());   
         }
 
         [HttpPost("changePhoneNumber")]
-        public IActionResult changePhoneNumber([FromBody] string phoneNumber)   //pres swagger projde ale na frontendu vyhodi 400 bad request
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult changePhoneNumber([Required][FromBody] string phoneNumber)
         {
             string result = phoneNumber.Replace("\"", "");
             if (!Regex.IsMatch(result, @"^(\\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$"))

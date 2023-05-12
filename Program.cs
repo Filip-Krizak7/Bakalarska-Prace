@@ -186,16 +186,17 @@ using Microsoft.OpenApi.Models;
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseCookiePolicy();
+            app.UseCors(AllowSpecificOrigin);
 
+            //app.UseHsts(); //------
+            app.UseMvc();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors(AllowSpecificOrigin);
 
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseDeveloperExceptionPage();
 
-            app.UseMvc();
             app.MapControllers();
             app.Run();
         
