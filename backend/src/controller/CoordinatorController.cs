@@ -129,10 +129,9 @@ namespace TeacherPractise.Controller
         }
 
         [HttpPost("changePhoneNumber")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult changePhoneNumber([Required][FromBody] string phoneNumber)
+        public IActionResult changePhoneNumber([Required][FromBody] NewNumberDto phoneNumber)
         {
-            string result = phoneNumber.Replace("\"", "");
+            string result = phoneNumber.phoneNew.Replace("\"", "");
             if (!Regex.IsMatch(result, @"^(\\+420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$"))
             {
                 return BadRequest("The phone number must be in Czech format.");

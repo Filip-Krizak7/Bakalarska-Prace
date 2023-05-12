@@ -79,7 +79,7 @@ const CoordinatorPersonalPageComponent = () => {
 
 
     const editPhone = async () => {
-        //let form = { "phoneNumber": phoneNew };
+        let form = { "phoneNew": phoneNew };
         if (!validatePhoneNum(phoneNew)) {
             setErrorMessage("Špatný formát telefonního čísla!")
             return;
@@ -89,12 +89,10 @@ const CoordinatorPersonalPageComponent = () => {
             url: POST_PHONE_EDIT,
             withCredentials: true,
             method: "POST",
-            data: phoneNew,
+            data: form,
         }).catch((err) => {
-            console.log(err.response.data.message); //tady se to zachyti --> err.response.data.message = undefined
+            console.log(err.response.data.message);
         });
-        console.log(phoneNew); //spravne
-        console.log(typeof phoneNew); // vypise se string
         if (response && response.data) {
             setErrorMessage("");
             getUserData();
