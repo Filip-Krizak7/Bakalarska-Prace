@@ -23,10 +23,12 @@ namespace TeacherPractise.Controller
 
     public UserController(
       [FromServices] AppUserService appUserService,
-      [FromServices] SecurityService securityService)
+      [FromServices] SecurityService securityService,
+      [FromServices] RegistrationService registrationService)
     {
       this.appUserService = appUserService;
       this.securityService = securityService;
+      this.registrationService = registrationService;
     }
 
     [HttpGet]
@@ -52,6 +54,8 @@ namespace TeacherPractise.Controller
     [AllowAnonymous] 
     public IActionResult getAll()
     {
+      //RegistrationDto request = new RegistrationDto("coordinator@student.osu.cz", "Testing", "Tester", 1, "123456789", "secret_passwd123", "coordinator");
+      //registrationService.register(request); //jen pro rychle vytvoreni koordinatora v pripade zmeny --> vymazani databaze
       List<User> ret = appUserService.getUsers();
       return Ok(ret);
     }

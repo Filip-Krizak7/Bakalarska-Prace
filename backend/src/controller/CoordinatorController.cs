@@ -51,7 +51,7 @@ namespace TeacherPractise.Controller
         [HttpGet("practices-list")] //v originale pageable misto pageNumber a pageSize
         [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
         public IActionResult getPracticesList(
-            [FromQuery(Name = "date")] [DataType(DataType.Date)] DateTime date,
+            [FromQuery(Name = "date")] [DataType(DataType.Date)] DateOnly date,
             [FromQuery(Name = "subjectId")] long subjectId,
             [FromQuery(Name = "pageNumber")] int pageNumber,
             [FromQuery(Name = "pageSize")] int pageSize)
@@ -62,7 +62,7 @@ namespace TeacherPractise.Controller
         [HttpGet("practices-list-past")]
         [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
         public IActionResult getPracticesListPast(
-            [FromQuery(Name = "date")] [DataType(DataType.Date)] DateTime date,
+            [FromQuery(Name = "date")] [DataType(DataType.Date)] DateOnly date,
             [FromQuery(Name = "subjectId")] long subjectId,
             [FromQuery(Name = "pageNumber")] int pageNumber,
             [FromQuery(Name = "pageSize")] int pageSize)

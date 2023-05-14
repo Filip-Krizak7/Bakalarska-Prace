@@ -1,17 +1,19 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System;
 
 namespace TeacherPractise.Model
 {
     public class Practice
     {
+        [Key] //---
         public int Id { get; set; }
         [ForeignKey("Id")]
         public UserPractice UserPractice { get; set; }
 
-        public DateTime Date { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
+        public DateOnly Date { get; set; }
+        public TimeSpan Start { get; set; }
+        public TimeSpan End { get; set; }
         [Required]
         public string Note { get; set; }
         public int Capacity { get; set; }
@@ -27,8 +29,9 @@ namespace TeacherPractise.Model
 
 
         public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<User> Users { get; set; } //---
 
-        public Practice(DateTime date, DateTime start, DateTime end, string note, int capacity, int subjectId, int teacherId)
+        public Practice(DateOnly date, TimeSpan start, TimeSpan end, string note, int capacity, int subjectId, int teacherId)
         {
             this.Date = date;
             this.Start = start;

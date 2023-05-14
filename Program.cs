@@ -33,6 +33,7 @@ using Microsoft.OpenApi.Models;
             builder.Services.AddSingleton<TeacherService>();
             builder.Services.AddSingleton<RegistrationService>();
             builder.Services.AddSingleton<SchoolService>();
+            builder.Services.AddSingleton<StudentService>();
             builder.Services.AddSingleton<CoordinatorService>();
             builder.Services.AddSingleton<CustomMapper>();
 
@@ -133,10 +134,9 @@ using Microsoft.OpenApi.Models;
 
                 //User appUser = new User("coordinator@student.osu.cz", "secret_passwd123", "Testing", "Tester", 1, "123456789", Roles.ROLE_COORDINATOR, false, true);
                 //User user = ctx.Users.Where(q => q.Username == "coordinator@student.osu.cz").FirstOrDefault();
-                //var school1 = new School() { Id = 1, Name = "ZŠ Dobrá" };
-                //ctx.Schools.Add(school1);
-                //ctx.Users.Remove(user);
-                //ctx.SaveChanges();
+                /*var school1 = new School() { Id = 1, Name = "ZŠ Dobrá" };
+                ctx.Schools.Add(school1);
+                ctx.SaveChanges();*/
 
                 //RegistrationDto request = new RegistrationDto("coordinator@student.osu.cz", "Testing", "Tester", 2, "123456789", "secret_passwd123", "coordinator");
                 //UserLoginDto req = new UserLoginDto("r93452@student.osu.cz", "secret_passwd123");
@@ -177,6 +177,10 @@ using Microsoft.OpenApi.Models;
                 {
                     System.Console.WriteLine("{0} {1}", sbobj.Role, sbobj.Username);
                 }*/
+                DateOnly dateOnly2 = new DateOnly(2022, 5, 13);
+                TimeSpan time1 = new TimeSpan(10, 30, 0);
+                Console.WriteLine(dateOnly2);
+                Console.WriteLine(time1);
             }
             
             var app = builder.Build();

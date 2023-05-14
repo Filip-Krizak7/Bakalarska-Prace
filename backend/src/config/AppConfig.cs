@@ -2,6 +2,17 @@ namespace TeacherPractise.Config
 {
     public class AppConfig
     {
+        public const int MAKE_RESERVATION_DAYS_LEFT = 7;
+        public const int CANCEL_RESERVATION_DAYS_LEFT = 7;
+        public const int CREATE_PRACTICE_DAYS_LEFT = 7;
+        public const int PRACTICE_MIN_CAPACITY = 1;
+        public const int PRACTICE_MAX_CAPACITY = 10;
+        public const int PRACTICE_NOTE_MAX_LENGTH = 250;
+        public const int REGISTRATION_CONFIRMATION_TOKEN_EXPIRY_TIME = 60; // minutes
+        public const int FORGOT_PASSWORD_TOKEN_EXPIRY_TIME = 60; // minutes
+        public const string CONFIRMATION_EMAIL_ADDRESS = "ucitelske.praxe.osu@seznam.cz";
+        public const int MAXIMUM_FILE_NUMBER_PER_USER = 3;
+        public const int MAXIMUM_NUMBER_OF_REPORTS = 1;
         public const int TOKEN_EXPIRATION_IN_SECONDS = 600;
         public const string ADMIN_ROLE_NAME = "ROLE_ADMIN";
         public const string BASE_URL_DEVELOPMENT = "https://localhost:80";

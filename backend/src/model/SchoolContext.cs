@@ -8,7 +8,7 @@ namespace TeacherPractise.Model
         //sql server - localhost/mssqlserver_bp
         public Context(): base("SchoolDB")
         {
-            Database.SetInitializer<Context>(new DropCreateDatabaseIfModelChanges<Context>());
+            Database.SetInitializer<Context>(new DropCreateDatabaseIfModelChanges<Context>()); //DropCreateDatabaseIfModelChanges
             Configuration.LazyLoadingEnabled = false;
         }
 

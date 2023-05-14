@@ -75,7 +75,7 @@ const TabsForm = () => {
             });
         }
         if (!formData["date"]) {
-            formData["date"] = new Date(new Date().setDate(new Date().getDate() + 7))
+            formData["dateString"] = new Date(new Date().setDate(new Date().getDate() + 7))
                 .toISOString()
                 .substr(0, 10);
         }
@@ -87,6 +87,8 @@ const TabsForm = () => {
     const addPraxe = async (event) => {
         event.preventDefault();
         checkFormData(formData);
+        console.log(formData);
+        console.log(typeof formData["start"]);
         const response = await axios({
             headers: { 'Authorization': localStorage.getItem("token") },
             url: GET_PRACTICES_URL,  
@@ -181,7 +183,7 @@ const TabsForm = () => {
                         <Col sm={8}>
                             <InputGroup>
                                 <Form.Control
-                                    name="start"
+                                    name="startTimeString"
                                     type="time"
                                     required="required"
                                     onChange={handleChange}
@@ -200,7 +202,7 @@ const TabsForm = () => {
                         <Col sm={8}>
                             <InputGroup>
                                 <Form.Control
-                                    name="end"
+                                    name="endTimeString"
                                     type="time"
                                     required="required"
                                     onChange={handleChange}

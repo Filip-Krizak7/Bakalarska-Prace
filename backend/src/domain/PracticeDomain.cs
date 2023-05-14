@@ -6,7 +6,7 @@ namespace TeacherPractise.Domain
     public class PracticeDomain
     {
         public long id { get; set; }
-        public DateTime date { get; set; }
+        public DateOnly date { get; set; }
         public TimeSpan start { get; set; }
         public TimeSpan end { get; set; }
         public string note { get; set; }
@@ -38,7 +38,7 @@ namespace TeacherPractise.Domain
         public bool RemovePassedPractices()
         {
             //put date and end time into one variable
-            DateTime dateAndEnd = date.Date + end;
+            DateTime dateAndEnd = new DateTime(date.Year, date.Month, date.Day, end.Hours, end.Minutes, end.Seconds);
 
             //if date and end time is in the past, remove practice
             if (DateTime.Now > dateAndEnd)
@@ -51,7 +51,7 @@ namespace TeacherPractise.Domain
         public bool RemoveNotPassedPractices()
         {
             //put date and end time into one variable
-            DateTime dateAndEnd = date.Date + end;
+            DateTime dateAndEnd = new DateTime(date.Year, date.Month, date.Day, end.Hours, end.Minutes, end.Seconds);
 
             //if date and end time is in the past, remove practice
             if (DateTime.Now > dateAndEnd)
@@ -86,7 +86,7 @@ namespace TeacherPractise.Domain
             this.reviews = list;
         }
 
-        public PracticeDomain(long id, DateTime date, TimeSpan start, TimeSpan end, string note, int capacity,
+        public PracticeDomain(long id, DateOnly date, TimeSpan start, TimeSpan end, string note, int capacity,
                        SubjectDto subject, UserDto teacher, List<UserDto> students, string report,
                        List<ReviewDto> reviews, List<string> fileNames, List<string> studentNames,
                        List<string> studentEmails)

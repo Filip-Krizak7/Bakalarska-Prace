@@ -36,7 +36,10 @@ namespace TeacherPractise.Service
 
                 Practice practice = mapper.practiceDtoToPractice(newPracticeDto);
                 practice.TeacherId = teacher.Id;
-                    
+
+                UserPractice userPractice = new UserPractice(practice.Id, teacher.Id);
+
+                ctx.UserPractices.Add(userPractice);
                 ctx.Practices.Add(practice);
                 ctx.SaveChanges();
 
@@ -59,7 +62,7 @@ namespace TeacherPractise.Service
             }
         }
 
-        public List<StudentPracticeDto> getPracticesList(string teacherUsername, DateTime date, long subjectId, int pageNumber, int pageSize)
+        public List<StudentPracticeDto> getPracticesList(string teacherUsername, DateOnly date, long subjectId, int pageNumber, int pageSize)
         {
             using (var ctx = new Context())
 	        {
@@ -93,7 +96,7 @@ namespace TeacherPractise.Service
             }           
         }
 
-        public List<StudentPracticeDto> getPracticesListPast(string teacherUsername, DateTime date, long subjectId, int pageNumber, int pageSize)
+        public List<StudentPracticeDto> getPracticesListPast(string teacherUsername, DateOnly date, long subjectId, int pageNumber, int pageSize)
         {
             using (var ctx = new Context())
 	        {

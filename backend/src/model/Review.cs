@@ -18,6 +18,13 @@ namespace TeacherPractise.Model
         [Required]
         public string Text { get; set; }
 
+        public Review(int userId, int practiceId, string text)
+        {
+            this.UserId = userId;
+            this.PracticeId = practiceId;
+            this.Text = text;
+        }
+
         public Review()
         {}
     }

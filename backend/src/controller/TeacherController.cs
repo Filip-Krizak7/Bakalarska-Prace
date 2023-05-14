@@ -27,9 +27,15 @@ namespace TeacherPractise.Controller
         }
 
         [HttpPost("practice")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        public ActionResult<long> addPractice([FromBody] NewPracticeDto newPracticeDto) 
+        //[ProducesResponseType(StatusCodes.Status201Created)]
+        public IActionResult addPractice([FromBody] NewPracticeDto newPracticeDto) 
         {
+            Console.WriteLine("vypis -----------------------------------------");
+            Console.WriteLine(newPracticeDto._dateString);
+            Console.WriteLine(newPracticeDto.date);
+            Console.WriteLine(newPracticeDto.start);
+            Console.WriteLine(newPracticeDto.end);
+            Console.WriteLine(newPracticeDto.subject.name);
             string currentEmail = appUserService.getCurrentUserEmail();
             return Ok(teacherService.addPractice(currentEmail, newPracticeDto));
         }
@@ -37,7 +43,7 @@ namespace TeacherPractise.Controller
         [HttpGet("practices-list")]
         [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
         public IActionResult getPracticesList(
-            [FromQuery(Name = "date")] [DataType(DataType.Date)] DateTime date,
+            [FromQuery(Name = "date")] [DataType(DataType.Date)] DateOnly date,
             [FromQuery(Name = "subjectId")] long subjectId,
             [FromQuery(Name = "pageNumber")] int pageNumber,
             [FromQuery(Name = "pageSize")] int pageSize)
@@ -49,7 +55,7 @@ namespace TeacherPractise.Controller
         [HttpGet("practices-list-past")]
         [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
         public IActionResult getPracticesListPast(
-            [FromQuery(Name = "date")] [DataType(DataType.Date)] DateTime date,
+            [FromQuery(Name = "date")] [DataType(DataType.Date)] DateOnly date,
             [FromQuery(Name = "subjectId")] long subjectId,
             [FromQuery(Name = "pageNumber")] int pageNumber,
             [FromQuery(Name = "pageSize")] int pageSize)

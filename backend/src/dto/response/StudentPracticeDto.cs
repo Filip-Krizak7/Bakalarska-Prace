@@ -2,7 +2,7 @@ namespace TeacherPractise.Dto.Response
 {
     public class StudentPracticeDto {
         public long id { get; set; }
-        public DateTime date { get; set; }
+        public DateOnly date { get; set; }
         public TimeSpan start { get; set; }
         public TimeSpan end { get; set; }
         public string note { get; set; }

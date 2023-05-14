@@ -11,5 +11,11 @@ namespace TeacherPractise.Model
 
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<Practice> Practices { get; set; }
+
+        public UserPractice(int practiceId, int userId)
+        {
+            this.PracticeId = practiceId;
+            this.UserId = userId;
+        }
     }
 }

@@ -119,8 +119,8 @@ namespace TeacherPractise.Mapper
             PracticeDomain practiceDomain = new PracticeDomain();
             practiceDomain.id = (long)practice.Id;
             practiceDomain.date = practice.Date;
-            practiceDomain.start = practice.Start.TimeOfDay;
-            practiceDomain.end = practice.End.TimeOfDay;
+            practiceDomain.start = practice.Start;
+            practiceDomain.end = practice.End;
             practiceDomain.note = practice.Note;
             practiceDomain.capacity = practice.Capacity;
             practiceDomain.subject = subjectToSubjectDto(schoolService.getSubjectById((long)practice.SubjectId));

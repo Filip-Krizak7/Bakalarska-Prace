@@ -72,7 +72,7 @@ namespace TeacherPractise.Service
             return "Škola byla přidána.";
         }
 
-        public List<StudentPracticeDto> getPracticesList(DateTime date, long subjectId, int pageNumber, int pageSize)
+        public List<StudentPracticeDto> getPracticesList(DateOnly date, long subjectId, int pageNumber, int pageSize)
         {
             using (var ctx = new Context())
 	        {
@@ -103,7 +103,7 @@ namespace TeacherPractise.Service
             }
         }
 
-        public List<StudentPracticeDto> getPracticesListPast(DateTime date, long subjectId, int pageNumber, int pageSize)
+        public List<StudentPracticeDto> getPracticesListPast(DateOnly date, long subjectId, int pageNumber, int pageSize)
         {
             using (var ctx = new Context())
 	        {

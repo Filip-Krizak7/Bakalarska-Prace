@@ -14,8 +14,7 @@ namespace TeacherPractise.Model
         public string FirstName { get; set; }
         [Required]
         public string SecondName { get; set; }
-        [Required]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         public Roles Role { get; set; }
         public bool Locked { get; set; }
         public bool Enabled { get; set; }
@@ -45,6 +44,18 @@ namespace TeacherPractise.Model
             this.PhoneNumber = phoneNumber;
             this.SchoolId = schoolId;
             this.Role = role;
+        }
+
+        public User(string username, string password, string firstName, string lastName, string phoneNumber, Roles role, bool locked, bool enabled)
+        {
+            this.Username = username;
+            this.Password = password;
+            this.FirstName = firstName;
+            this.SecondName = lastName;
+            this.PhoneNumber = phoneNumber;
+            this.Role = role;
+            this.Locked = locked;
+            this.Enabled = enabled;
         }
 
         public User(string username, string password, string firstName, string lastName, int schoolId, string phoneNumber, Roles role, bool locked, bool enabled)
