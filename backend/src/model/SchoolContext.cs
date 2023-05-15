@@ -17,10 +17,18 @@ namespace TeacherPractise.Model
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Practice> Practices { get; set; }
-        public DbSet<UserPractice> UserPractices { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .HasMany<Practice>(s => s.AttendedPractices)
+                .WithMany(c => c.UsersOnPractice)
+                .Map(cs =>
+                        {
+                            cs.MapLeftKey("UserRefId");
+                            cs.MapRightKey("PracticeRefId");
+                            cs.ToTable("UserPractice");
+                        });
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
     }

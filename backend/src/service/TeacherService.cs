@@ -37,13 +37,10 @@ namespace TeacherPractise.Service
                 Practice practice = mapper.practiceDtoToPractice(newPracticeDto);
                 practice.TeacherId = teacher.Id;
 
-                UserPractice userPractice = new UserPractice(practice.Id, teacher.Id);
-
-                ctx.UserPractices.Add(userPractice);
                 ctx.Practices.Add(practice);
                 ctx.SaveChanges();
 
-                return practice.Id;
+                return practice.PracticeId;
             }
         }
 
@@ -51,14 +48,17 @@ namespace TeacherPractise.Service
         {
             using (var ctx = new Context())
 	        {
-                var studentIds = ctx.UserPractices
-                    .Where(up => up.PracticeId == id)
-                    .OrderBy(up => up.UserPracticeId)
-                    .Take(pageSize)
-                    .Select(up => up.UserId)
+                var studentIds = ctx.Practices
+                    .Where(p => p.PracticeId == id)
+                    .SelectMany(p => p.UsersOnPractice.Select(s => s.Id))
                     .ToList();
 
-                return studentIds.ConvertAll<long>(x => (long)x);
+                var paginatedStudentIds = studentIds
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                return paginatedStudentIds.ConvertAll<long>(x => (long)x);
             }
         }
 
@@ -69,7 +69,7 @@ namespace TeacherPractise.Service
                 User teacher = ctx.Users.ToList().FirstOrDefault(q => q.Username == teacherUsername.ToLower())
                 	?? throw AppUserService.CreateException($"Učitel {teacherUsername} nenalezen.");
 
-                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == teacher.Id); //date, subjectId, teacher.Id, pageNumber, pageSize
+                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == teacher.Id);
                 practices.OrderBy(p => p.Date);
 
                 var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
@@ -86,7 +86,7 @@ namespace TeacherPractise.Service
 
                 foreach (PracticeDomain practiceDomain in toDelete)
                 {
-                    if (practiceDomain.RemovePassedPractices())
+                    if (practiceDomain.RemoveNotPassedPractices())
                     {
                         practicesDomain.Remove(practiceDomain);
                     }

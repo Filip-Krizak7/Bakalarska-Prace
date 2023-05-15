@@ -117,14 +117,19 @@ namespace TeacherPractise.Mapper
         public PracticeDomain practiceToPracticeDomain(Practice practice)
         {
             PracticeDomain practiceDomain = new PracticeDomain();
-            practiceDomain.id = (long)practice.Id;
+            practiceDomain.id = (long)practice.PracticeId;
             practiceDomain.date = practice.Date;
             practiceDomain.start = practice.Start;
             practiceDomain.end = practice.End;
             practiceDomain.note = practice.Note;
             practiceDomain.capacity = practice.Capacity;
-            practiceDomain.subject = subjectToSubjectDto(schoolService.getSubjectById((long)practice.SubjectId));
-            practiceDomain.teacher = userToUserDto(schoolService.getTeacherById((long)practice.TeacherId));
+            using (var ctx = new Context())
+	        {
+                Subject sbj = ctx.Subjects.Where(q => q.Id == practice.SubjectId).FirstOrDefault();
+                User usr = ctx.Users.Where(q => q.Id == practice.TeacherId).FirstOrDefault();
+                practiceDomain.subject = subjectToSubjectDto(sbj);
+                practiceDomain.teacher = userToUserDto(usr);
+            }
             
             return practiceDomain;
         }
@@ -140,7 +145,15 @@ namespace TeacherPractise.Mapper
             studentPracticeDto.capacity = practiceDomain.capacity;
             studentPracticeDto.subject = practiceDomain.subject;
             studentPracticeDto.teacher = practiceDomain.teacher;
-            //reviews
+
+            studentPracticeDto.report = practiceDomain.report;
+            studentPracticeDto.reviews = practiceDomain.reviews;
+            studentPracticeDto.fileNames = practiceDomain.fileNames;
+            studentPracticeDto.studentNames = practiceDomain.studentNames;
+            studentPracticeDto.studentEmails = practiceDomain.studentEmails;
+
+            studentPracticeDto.numberOfReservedStudents = practiceDomain.numberOfReservedStudents;
+            studentPracticeDto.isCurrentStudentReserved = practiceDomain.isCurrentStudentReserved;
 
             return studentPracticeDto;
         }

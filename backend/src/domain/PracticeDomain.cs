@@ -13,6 +13,7 @@ namespace TeacherPractise.Domain
         public int capacity { get; set; }
         public SubjectDto subject { get; set; }
         public UserDto teacher { get; set; }
+
         public List<UserDto> students { get; set; }
         public string report { get; set; }
         public List<ReviewDto> reviews { get; set; }
@@ -25,7 +26,8 @@ namespace TeacherPractise.Domain
 
         public void SetNumberOfReservedStudents()
         {
-            this.numberOfReservedStudents = students.Count();
+            if(students != null) this.numberOfReservedStudents = students.Count();
+            else this.numberOfReservedStudents = 0;
         }
 
         public void SetIsCurrentStudentReserved(string currentStudentUsername)

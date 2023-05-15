@@ -9,6 +9,7 @@ namespace TeacherPractise.Dto.Response
         public int capacity { get; set; }
         public SubjectDto subject { get; set; }
         public UserDto teacher { get; set; }
+        
         public string report { get; set; }
         public List<string> fileNames { get; set; }
         public List<string> studentNames { get; set; }

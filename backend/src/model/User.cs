@@ -5,6 +5,7 @@ namespace TeacherPractise.Model
 {
     public class User
     {
+
         public int Id { get; set; }
         [Required]
         public string Username { get; set; } //osu email
@@ -27,13 +28,9 @@ namespace TeacherPractise.Model
         [ForeignKey("Teacher_PracticeId")]
         public Practice Practice { get; set; }
 
-
-        public int? Student_PracticeId { get; set; }
-        [ForeignKey("Student_PracticeId")]
-        public UserPractice UserPractice { get; set; }
-
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Practice> Practices { get; set; }
+        public virtual ICollection<Practice> AttendedPractices { get; set; }
 
         public User(string username, string firstName, string lastName, int schoolId, string phoneNumber, string password, Roles role)
         {
@@ -71,24 +68,7 @@ namespace TeacherPractise.Model
             this.Enabled = enabled;
         }
 
-        public User(string username, string password, string firstName, string lastName, int schoolId, string phoneNumber, Roles role, bool locked, 
-            bool enabled, int teacher_practiceId, int student_practiceId)
-        {
-            this.Username = username;
-            this.Password = password;
-            this.FirstName = firstName;
-            this.SecondName = lastName;
-            this.SchoolId = schoolId;
-            this.PhoneNumber = phoneNumber;
-            this.Role = role;
-            this.Locked = locked;
-            this.Enabled = enabled;
-            this.Teacher_PracticeId = teacher_practiceId;
-            this.Student_PracticeId = student_practiceId;
-        }
-
         public User()
-        {
-        }
+        {}
     }
 }

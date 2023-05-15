@@ -144,39 +144,36 @@ using Microsoft.OpenApi.Models;
                 //regService.register(request);
                 /*User appUser = new User("r31252@student.osu.cz", "secret_passwd123", "Testing", "Tester", 2, "123456789", Roles.ROLE_TEACHER, false, true);
 
-                List<string> roleList = new List<string>();
-                roleList.Add(appUser.Role.ToString());
+                List<string> results = ctx.Database.SqlQuery<string>("SELECT name FROM sys.tables ORDER BY name").ToList();
 
-                Dictionary<string, object> roleClaims = roleList.ToDictionary(
-                    q => ClaimTypes.Role,
-                    q => (object)q.ToUpper());
-
-                foreach (var item in roleList)
+                // Vypsání názvů tabulek
+                /*foreach (var tableName in results)
                 {
-                    Console.WriteLine(item);
+                    Console.WriteLine(tableName);
+                }*/
+
+                Console.WriteLine("----------------------------");
+
+                /*var studentIds = ctx.Practices
+                    .Where(p => p.PracticeId == id)
+                    .SelectMany(p => p.UsersOnPractice.Select(s => s.Id))
+                    .ToList();*/
+
+                var userPractices = ctx.Set<User>()
+                               .SelectMany(u => u.AttendedPractices)
+                               .ToList();
+
+                foreach (var up in userPractices)
+                {
+                    Console.WriteLine($"Student ID: {up.User.Id}, Practice ID: {up.PracticeId}");
                 }
 
-                foreach (var item in roleClaims)
+                var practices = ctx.Practices.ToList();
+                foreach (var practice in practices)
                 {
-                    Console.WriteLine("Key: {0}, Value: {1}", item.Key, item.Value);
-                }*/
+                    Console.WriteLine($"Datum: {practice.Date}, Poznamka: {practice.Note}, SubjectID: {practice.SubjectId}, TeacherID: {practice.TeacherId}");
+                }
 
-                /*List<User> us = ctx.Users.ToList();
-                foreach(User usobj in us)
-                {
-                    System.Console.WriteLine("{0} | {1} | {2}", usobj.Id, usobj.Username, usobj.SchoolId);
-                }      
-
-                System.Console.WriteLine("-------------------------------------");*/
-
-                /*List<Subject> sbj = ctx.Subjects.ToList();
-                var coordinators = ctx.Users.Where(q => q.Role == Roles.ROLE_COORDINATOR).ToList();
-
-
-                foreach(User sbobj in coordinators)
-                {
-                    System.Console.WriteLine("{0} {1}", sbobj.Role, sbobj.Username);
-                }*/
                 DateOnly dateOnly2 = new DateOnly(2022, 5, 13);
                 TimeSpan time1 = new TimeSpan(10, 30, 0);
                 Console.WriteLine(dateOnly2);

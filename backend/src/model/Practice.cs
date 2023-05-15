@@ -6,15 +6,10 @@ namespace TeacherPractise.Model
 {
     public class Practice
     {
-        [Key] //---
-        public int Id { get; set; }
-        [ForeignKey("Id")]
-        public UserPractice UserPractice { get; set; }
-
+        public int PracticeId { get; set; }
         public DateOnly Date { get; set; }
         public TimeSpan Start { get; set; }
         public TimeSpan End { get; set; }
-        [Required]
         public string Note { get; set; }
         public int Capacity { get; set; }
 
@@ -29,9 +24,10 @@ namespace TeacherPractise.Model
 
 
         public virtual ICollection<Review> Reviews { get; set; }
-        public virtual ICollection<User> Users { get; set; } //---
+        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<User> UsersOnPractice { get; set; } 
 
-        public Practice(DateOnly date, TimeSpan start, TimeSpan end, string note, int capacity, int subjectId, int teacherId)
+        /*public Practice(DateOnly date, TimeSpan start, TimeSpan end, string note, int capacity, int subjectId, int teacherId)
         {
             this.Date = date;
             this.Start = start;
@@ -42,7 +38,16 @@ namespace TeacherPractise.Model
             this.TeacherId = teacherId;
         }
 
+        public Practice(DateOnly date, TimeSpan start, TimeSpan end, string note, int capacity)
+        {
+            this.Date = date;
+            this.Start = start;
+            this.End = end;
+            this.Note = note;
+            this.Capacity = capacity;
+        }
+
         public Practice()
-        {}
+        {}*/
     }
 }

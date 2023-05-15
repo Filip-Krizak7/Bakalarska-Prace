@@ -65,7 +65,7 @@ namespace TeacherPractise.Service
 
         //getPracticesSlice
 
-        public void makeReservation(string studentUsername, long practiceId)
+        /*public void makeReservation(string studentUsername, long practiceId)
         {
             using (var ctx = new Context())
 	        {
@@ -75,7 +75,7 @@ namespace TeacherPractise.Service
                 Practice practice = ctx.Practices.ToList().FirstOrDefault(q => q.Id == practiceId)
                 	?? throw AppUserService.CreateException($"Požadovaná praxe nebyla nalezena.");
 
-                List<User> registeredStudents = ctx.Users.Where(q => q.Student_PracticeId == practiceId).ToList();
+                List<User> registeredStudents = ctx.Users.Where(q => q.Student_PracticeId == practiceId).ToList(); //--------------------------------- zmenit
 
                 if (registeredStudents.Contains(student))
                 {
@@ -123,13 +123,13 @@ namespace TeacherPractise.Service
 
                 ctx.SaveChanges();
             }
-        }
+        }*/
 
         public string SubmitReview(string name, long practiceId, string text) 
         {
             using (var ctx = new Context())
 	        {
-                Practice practice = ctx.Practices.ToList().FirstOrDefault(q => q.Id == practiceId)
+                Practice practice = ctx.Practices.ToList().FirstOrDefault(q => q.PracticeId == practiceId)
                 	?? throw AppUserService.CreateException($"Požadovaná praxe nebyla nalezena.");
 
                 User student = ctx.Users.ToList().FirstOrDefault(q => q.Username == name.ToLower())

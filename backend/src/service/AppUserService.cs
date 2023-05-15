@@ -144,19 +144,30 @@ namespace TeacherPractise.Service
         {
             using (var ctx = new Context())
             {
-                var practice = ctx.Practices.FirstOrDefault(p => p.Id == id);  //neexistuje practices? 
+                var practice = ctx.Practices.FirstOrDefault(p => p.PracticeId == id);
 
                 if (practice != null)
                 {
                     var folderPath = $"{FileUtil.reportsFolderPath}{id}";
+
+                    if (!Directory.Exists(folderPath))
+                    {
+                        try
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Nepodařilo se vytvořit adresář: {ex.Message}");
+                            return null;
+                        }
+                    }
                     var files = Directory.GetFiles(folderPath);
 
-                    if (files.Length > 0)
-                    {
-                        return Path.GetFileName(files[0]);
-                    }
+                    if (files == null || files.Length == 0)
+                        return null;
 
-                    return null;
+                    return Path.GetFileName(files[0]);
                 }
                 else
                 {
