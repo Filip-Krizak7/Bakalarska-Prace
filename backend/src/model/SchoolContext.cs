@@ -1,5 +1,6 @@
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using TeacherPractise.Service.Token.RegistrationToken;
 
 namespace TeacherPractise.Model
 {
@@ -8,7 +9,7 @@ namespace TeacherPractise.Model
         //sql server - localhost/mssqlserver_bp
         public Context(): base("SchoolDB")
         {
-            Database.SetInitializer<Context>(new DropCreateDatabaseIfModelChanges<Context>()); //DropCreateDatabaseIfModelChanges
+            Database.SetInitializer<Context>(new DropCreateDatabaseIfModelChanges<Context>());
             Configuration.LazyLoadingEnabled = false;
         }
 
@@ -17,9 +18,10 @@ namespace TeacherPractise.Model
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Practice> Practices { get; set; }
+        public DbSet<ConfirmationToken> ConfirmationTokens { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
+        {         
             modelBuilder.Entity<User>()
                 .HasMany<Practice>(s => s.AttendedPractices)
                 .WithMany(c => c.UsersOnPractice)
@@ -29,6 +31,11 @@ namespace TeacherPractise.Model
                             cs.MapRightKey("PracticeRefId");
                             cs.ToTable("UserPractice");
                         });
+
+            modelBuilder.Entity<User>()
+                .HasOptional(u => u.ConfirmationToken)
+                .WithRequired(ct => ct.AppUser);
+                
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
     }

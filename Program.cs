@@ -1,5 +1,7 @@
 using TeacherPractise.Service;
+using TeacherPractise.Service.Token.RegistrationToken;
 using TeacherPractise.Model;
+using TeacherPractise.Service.Email;
 using TeacherPractise.Mapper;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Dto.Response;
@@ -34,7 +36,9 @@ using Microsoft.OpenApi.Models;
             builder.Services.AddSingleton<RegistrationService>();
             builder.Services.AddSingleton<SchoolService>();
             builder.Services.AddSingleton<StudentService>();
+            builder.Services.AddSingleton<ConfirmationTokenService>();
             builder.Services.AddSingleton<CoordinatorService>();
+            builder.Services.AddSingleton<EmailService>();
             builder.Services.AddSingleton<CustomMapper>();
 
             builder.Services.AddEndpointsApiExplorer();
@@ -152,32 +156,34 @@ using Microsoft.OpenApi.Models;
                     Console.WriteLine(tableName);
                 }*/
 
-                Console.WriteLine("----------------------------");
-
-                /*var studentIds = ctx.Practices
-                    .Where(p => p.PracticeId == id)
-                    .SelectMany(p => p.UsersOnPractice.Select(s => s.Id))
-                    .ToList();*/
-
-                var userPractices = ctx.Set<User>()
+                /*var userPractices = ctx.Set<User>()
                                .SelectMany(u => u.AttendedPractices)
                                .ToList();
 
                 foreach (var up in userPractices)
                 {
                     Console.WriteLine($"Student ID: {up.User.Id}, Practice ID: {up.PracticeId}");
-                }
+                }*/
+
+                /*var remPractices = ctx.Practices;
+                ctx.Practices.RemoveRange(remPractices); 
+                ctx.SaveChanges();*/
 
                 var practices = ctx.Practices.ToList();
                 foreach (var practice in practices)
                 {
-                    Console.WriteLine($"Datum: {practice.Date}, Poznamka: {practice.Note}, SubjectID: {practice.SubjectId}, TeacherID: {practice.TeacherId}");
+                    //Type typeDate = practice.Date.GetType();
+                    //Console.WriteLine(typeDate.ToString());
+                    Console.WriteLine($"Datum: {practice.Date.ToShortDateString()}, Čas začátku: {practice.Start}, Poznamka: {practice.Note}, SubjectID: {practice.SubjectId}, TeacherID: {practice.TeacherId}");
                 }
 
-                DateOnly dateOnly2 = new DateOnly(2022, 5, 13);
-                TimeSpan time1 = new TimeSpan(10, 30, 0);
-                Console.WriteLine(dateOnly2);
-                Console.WriteLine(time1);
+                /*string sqlQuery = "SELECT * FROM Practice";
+                var results = ctx.Database.SqlQuery<Practice>(sqlQuery);
+
+                foreach (var result in results)
+                {
+                    Console.WriteLine($"Datum: {practice.Date}, Čas začátku: {practice.Start}, Poznamka: {practice.Note}");
+                }*/
             }
             
             var app = builder.Build();

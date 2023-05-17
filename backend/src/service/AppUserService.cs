@@ -1,6 +1,7 @@
 using TeacherPractise.Model;
 using TeacherPractise.Config;
 using TeacherPractise.Service.FileManagement;
+using TeacherPractise.Service.Token.RegistrationToken;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Dto.Response;
 using TeacherPractise.Mapper;
@@ -23,12 +24,18 @@ namespace TeacherPractise.Service
         private readonly SecurityService securityService;
         private readonly CustomMapper mapper;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly ConfirmationTokenService confirmationTokenService;
     
-        public AppUserService([FromServices] SecurityService securityService, [FromServices] CustomMapper mapper, [FromServices] IHttpContextAccessor httpContextAccessor)
+        public AppUserService(
+            [FromServices] SecurityService securityService, 
+            [FromServices] CustomMapper mapper, 
+            [FromServices] IHttpContextAccessor httpContextAccessor,
+            [FromServices] ConfirmationTokenService confirmationTokenService)
         {
             this.securityService = securityService;
             this.mapper = mapper;
             this.httpContextAccessor = httpContextAccessor;
+            this.confirmationTokenService = confirmationTokenService;
         }
 
         public User create(User user)
@@ -57,7 +64,15 @@ namespace TeacherPractise.Service
         {
             create(user);
 
-            String token = this.securityService.BuildJwtToken(user);
+            string token = this.securityService.BuildJwtToken(user);
+
+            ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                DateTime.Now,
+                DateTime.Now.AddMinutes(AppConfig.REGISTRATION_CONFIRMATION_TOKEN_EXPIRY_TIME),
+                user
+            );
+            confirmationTokenService.saveConfirmationToken(confirmationToken);
 
             return token;
         }
@@ -315,7 +330,7 @@ namespace TeacherPractise.Service
                 if (user != null)
                 {
                     //Console.WriteLine("before token removal" + " " + username);
-                    //confirmationTokenRepository.DeleteConfirmationTokenById(user.Id);
+                    confirmationTokenService.deleteConfirmationTokenById(user.Id);
                     ctx.Users.Remove(user);
                     int rowsAffected = ctx.SaveChanges();
                     if (rowsAffected == 1) return "User deleted";
@@ -325,7 +340,8 @@ namespace TeacherPractise.Service
             }
         }
 
-        public string unlockUser(string username) {
+        public string unlockUser(string username) 
+        {
             using (var ctx = new Context())
 	        {
                 User user = ctx.Users.Where(q => q.Username == username.ToLower()).FirstOrDefault();
@@ -335,6 +351,22 @@ namespace TeacherPractise.Service
                     return "User unlocked";
                 }
                 return "Email not found";
+            }
+        }
+
+        public string signUpCoordinator(User user)
+        {
+            create(user);
+            return "Koordinátor byl vytvořen";
+        }
+
+        public int enableAppUser(string email)
+        {
+            using (var ctx = new Context())
+	        {
+                User user = ctx.Users.Where(q => q.Username == email.ToLower()).FirstOrDefault();
+                user.Enabled = true;
+                return ctx.SaveChanges();
             }
         }
     }

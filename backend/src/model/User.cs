@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TeacherPractise.Service.Token.RegistrationToken;
 
 namespace TeacherPractise.Model
 {
@@ -31,6 +32,7 @@ namespace TeacherPractise.Model
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Practice> Practices { get; set; }
         public virtual ICollection<Practice> AttendedPractices { get; set; }
+        public virtual ConfirmationToken ConfirmationToken { get; set; }
 
         public User(string username, string firstName, string lastName, int schoolId, string phoneNumber, string password, Roles role)
         {
@@ -42,7 +44,7 @@ namespace TeacherPractise.Model
             this.SchoolId = schoolId;
             this.Role = role;
         }
-
+        
         public User(string username, string password, string firstName, string lastName, string phoneNumber, Roles role, bool locked, bool enabled)
         {
             this.Username = username;

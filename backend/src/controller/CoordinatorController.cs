@@ -51,7 +51,7 @@ namespace TeacherPractise.Controller
         [HttpGet("practices-list")] //v originale pageable misto pageNumber a pageSize
         [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
         public IActionResult getPracticesList(
-            [FromQuery(Name = "date")] [DataType(DataType.Date)] DateOnly date,
+            [FromQuery(Name = "date")] DateOnly date,
             [FromQuery(Name = "subjectId")] long subjectId,
             [FromQuery(Name = "pageNumber")] int pageNumber,
             [FromQuery(Name = "pageSize")] int pageSize)
@@ -62,7 +62,7 @@ namespace TeacherPractise.Controller
         [HttpGet("practices-list-past")]
         [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
         public IActionResult getPracticesListPast(
-            [FromQuery(Name = "date")] [DataType(DataType.Date)] DateOnly date,
+            [FromQuery(Name = "date")] DateOnly date,
             [FromQuery(Name = "subjectId")] long subjectId,
             [FromQuery(Name = "pageNumber")] int pageNumber,
             [FromQuery(Name = "pageSize")] int pageSize)
@@ -138,6 +138,19 @@ namespace TeacherPractise.Controller
             }
             var username = appUserService.getCurrentUserEmail();
             return Ok(coordinatorService.changePhoneNumber(username, result));
+        }
+
+        [HttpPost("registerCoordinator")]
+        public IActionResult register([FromBody] RegistrationDto request)
+        {
+            return Ok(coordinatorService.register(request));
+        }
+        
+
+        [HttpPost("deleteCoordinator")]
+        public IActionResult deleteCoordinator([FromBody] long id)
+        {        
+            return Ok(coordinatorService.deleteCoordinator(id));
         }
     }
 }

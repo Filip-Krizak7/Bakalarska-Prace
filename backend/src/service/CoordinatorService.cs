@@ -13,12 +13,18 @@ namespace TeacherPractise.Service
     {
         private readonly AppUserService appUserService;
         private readonly TeacherService teacherService;
+        private readonly RegistrationService registrationService;
         private readonly CustomMapper mapper;
 
-        public CoordinatorService([FromServices] AppUserService appUserService, [FromServices] TeacherService teacherService, [FromServices] CustomMapper mapper)
+        public CoordinatorService(
+            [FromServices] AppUserService appUserService, 
+            [FromServices] TeacherService teacherService,
+            [FromServices] RegistrationService registrationService, 
+            [FromServices] CustomMapper mapper)
         {
             this.appUserService = appUserService;
             this.teacherService = teacherService;
+            this.registrationService = registrationService;
             this.mapper = mapper;
         }
 
@@ -251,6 +257,51 @@ namespace TeacherPractise.Service
                 }
                 else return "Phone number was not changed.";
             }        
+        }
+
+       public string register(RegistrationDto request)
+        {
+            if(!(appUserService.checkEmail(request.email, Roles.ROLE_COORDINATOR)))
+            {
+                throw AppUserService.CreateException($"Email is in the wrong format.", null);
+            }
+
+            string email, password, firstName, lastName, phoneNumber;
+            Roles role;
+            bool locked, enabled;
+
+            email = request.email;
+            password = Guid.NewGuid().ToString();
+            firstName = request.firstName;
+            lastName = request.lastName;
+            phoneNumber = request.phoneNumber;
+            role = Roles.ROLE_COORDINATOR;
+            locked = false;
+            enabled = true;
+
+            appUserService.signUpCoordinator(new User(email, password, firstName, lastName, phoneNumber, role, locked, enabled));
+
+            return "Účet byl úspěšně vytvořen.";
+        }
+
+        public string deleteCoordinator(long id)
+        {
+            using (var ctx = new Context())
+	        {
+                string loggedUserEmail = appUserService.getCurrentUserEmail();
+                User coordinator = ctx.Users.Where(q => q.Id == (int)id).FirstOrDefault();
+
+                if (loggedUserEmail.Equals(coordinator.Username)) throw AppUserService.CreateException($"Nelze smazat vlastní účet!", null);
+
+                if (coordinator != null)
+                {
+                    ctx.Users.Remove(coordinator);
+                    int rowsAffected = ctx.SaveChanges();
+                    if (rowsAffected == 1) return "Koordinátor byl úspěšně smazán.";
+                    else return "Došlo k chybě. Koordinátora nelze smazat.";
+                }
+                else return "Došlo k chybě. Koordinátor nebyl nalezen.";
+            }
         }
     }
 }    

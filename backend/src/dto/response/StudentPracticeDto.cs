@@ -1,6 +1,6 @@
 namespace TeacherPractise.Dto.Response
 {
-    public class StudentPracticeDto {
+    public class StudentPracticeDto { 
         public long id { get; set; }
         public DateOnly date { get; set; }
         public TimeSpan start { get; set; }

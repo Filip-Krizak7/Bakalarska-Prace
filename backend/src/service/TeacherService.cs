@@ -40,6 +40,17 @@ namespace TeacherPractise.Service
                 ctx.Practices.Add(practice);
                 ctx.SaveChanges();
 
+                Console.WriteLine("--------------------");
+                Console.WriteLine(practice.Date);
+                Type typeDate = practice.Date.GetType();
+                Console.WriteLine(typeDate.ToString());
+
+                var practices = ctx.Practices.ToList();
+                foreach (var pr in practices)
+                {
+                    Console.WriteLine($"Datum: {pr.Date}, Čas začátku: {pr.Start}, Poznamka: {pr.Note}, SubjectID: {pr.SubjectId}, TeacherID: {pr.TeacherId}");
+                }
+
                 return practice.PracticeId;
             }
         }

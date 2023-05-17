@@ -53,6 +53,10 @@
               "target": "Package",
               "version": "[6.4.4, )"
             },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
             "Microsoft.AspNet.WebApi.Cors": {
               "target": "Package",
               "version": "[5.2.9, )"
@@ -89,9 +93,17 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Microsoft.OpenApi": {
               "target": "Package",
               "version": "[1.6.4, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.0.0, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",

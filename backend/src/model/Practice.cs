@@ -26,28 +26,5 @@ namespace TeacherPractise.Model
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<User> UsersOnPractice { get; set; } 
-
-        /*public Practice(DateOnly date, TimeSpan start, TimeSpan end, string note, int capacity, int subjectId, int teacherId)
-        {
-            this.Date = date;
-            this.Start = start;
-            this.End = end;
-            this.Note = note;
-            this.Capacity = capacity;
-            this.SubjectId = subjectId;
-            this.TeacherId = teacherId;
-        }
-
-        public Practice(DateOnly date, TimeSpan start, TimeSpan end, string note, int capacity)
-        {
-            this.Date = date;
-            this.Start = start;
-            this.End = end;
-            this.Note = note;
-            this.Capacity = capacity;
-        }
-
-        public Practice()
-        {}*/
     }
 }

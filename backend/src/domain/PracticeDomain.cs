@@ -39,10 +39,9 @@ namespace TeacherPractise.Domain
 
         public bool RemovePassedPractices()
         {
-            //put date and end time into one variable
             DateTime dateAndEnd = new DateTime(date.Year, date.Month, date.Day, end.Hours, end.Minutes, end.Seconds);
+            //DateTime dateAndEnd = date;
 
-            //if date and end time is in the past, remove practice
             if (DateTime.Now > dateAndEnd)
             {
                 return false;
@@ -52,10 +51,9 @@ namespace TeacherPractise.Domain
 
         public bool RemoveNotPassedPractices()
         {
-            //put date and end time into one variable
             DateTime dateAndEnd = new DateTime(date.Year, date.Month, date.Day, end.Hours, end.Minutes, end.Seconds);
+            //DateTime dateAndEnd = date;
 
-            //if date and end time is in the past, remove practice
             if (DateTime.Now > dateAndEnd)
             {
                 return true;

@@ -10,12 +10,15 @@ namespace TeacherPractise.Config
         public const int PRACTICE_NOTE_MAX_LENGTH = 250;
         public const int REGISTRATION_CONFIRMATION_TOKEN_EXPIRY_TIME = 60; // minutes
         public const int FORGOT_PASSWORD_TOKEN_EXPIRY_TIME = 60; // minutes
-        public const string CONFIRMATION_EMAIL_ADDRESS = "ucitelske.praxe.osu@seznam.cz";
+        //public const string CONFIRMATION_EMAIL_ADDRESS = "ucitelske.praxe.osu@seznam.cz";
+        public const string CONFIRMATION_EMAIL_ADDRESS = "ucitelske.praxe.osu@gmail.com";
+        public const string CONFIRMATION_EMAIL_PASSWORD = "grvrwsfdmihpycke";
         public const int MAXIMUM_FILE_NUMBER_PER_USER = 3;
         public const int MAXIMUM_NUMBER_OF_REPORTS = 1;
         public const int TOKEN_EXPIRATION_IN_SECONDS = 600;
         public const string ADMIN_ROLE_NAME = "ROLE_ADMIN";
         public const string BASE_URL_DEVELOPMENT = "https://localhost:80";
         public const string BASE_URL_PRODUCTION = "https://172.16.101.104:80";
+        public const string BASE_DNS_PRODUCTION = "https://rezervace.prf.osu.cz/";
     }
 }
