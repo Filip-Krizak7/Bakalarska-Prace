@@ -32,9 +32,10 @@ namespace TeacherPractise.Model
                             cs.ToTable("UserPractice");
                         });
 
-            modelBuilder.Entity<User>()
-                .HasOptional(u => u.ConfirmationToken)
-                .WithRequired(ct => ct.AppUser);
+            /*modelBuilder.Entity<User>()
+                .HasOne(u => u.ConfirmationToken)
+                .WithOne(ct => ct.User)
+                .HasForeignKey<ConfirmationToken>(ct => ct.UserId);*/
                 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }

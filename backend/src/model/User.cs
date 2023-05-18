@@ -29,10 +29,11 @@ namespace TeacherPractise.Model
         [ForeignKey("Teacher_PracticeId")]
         public Practice Practice { get; set; }
 
+        public virtual ConfirmationToken ConfirmationToken { get; set; }
+
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Practice> Practices { get; set; }
         public virtual ICollection<Practice> AttendedPractices { get; set; }
-        public virtual ConfirmationToken ConfirmationToken { get; set; }
 
         public User(string username, string firstName, string lastName, int schoolId, string phoneNumber, string password, Roles role)
         {

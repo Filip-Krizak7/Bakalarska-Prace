@@ -103,9 +103,9 @@ namespace TeacherPractise.Service
             }
                 
             string link = AppConfig.BASE_DNS_PRODUCTION + "/login?token=" + token;
-            emailService.send(
+            /*emailService.send(
                 request.email,
-                buildEmail(request.firstName, link));
+                buildEmail(request.firstName, link));*/
             
             return "Success";
         }
@@ -130,7 +130,14 @@ namespace TeacherPractise.Service
             }
 
             confirmationTokenService.setConfirmedAt(token);
-            appUserService.enableAppUser(confirmationToken.AppUser.Username); //nastavit pote aby se user automaticky nastavil na enabled = false
+
+            using (var ctx = new Context())
+            {
+                var user = ctx.Users.Where(q => q.Id == confirmationToken.ConfirmationTokenId).FirstOrDefault()
+                    ?? throw AppUserService.CreateException($"User with ID {confirmationToken.ConfirmationTokenId} does not exist.");
+
+                appUserService.enableAppUser(user.Username); //nastavit pote aby se user automaticky nastavil na enabled = false
+            }
 
             return "E-mail byl úspěšně ověřen.";
         }

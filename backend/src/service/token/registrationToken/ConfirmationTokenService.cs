@@ -60,7 +60,7 @@ namespace TeacherPractise.Service.Token.RegistrationToken
         {
             using (var ctx = new Context())
 	        {
-                ConfirmationToken confToken = ctx.ConfirmationTokens.Where(q => q.AppUser.Id == (int)userId).FirstOrDefault();
+                ConfirmationToken confToken = ctx.ConfirmationTokens.Where(q => q.ConfirmationTokenId == (int)userId).FirstOrDefault();
                 ctx.ConfirmationTokens.Remove(confToken);
                 return ctx.SaveChanges();
             }

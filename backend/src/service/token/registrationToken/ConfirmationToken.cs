@@ -9,8 +9,8 @@ namespace TeacherPractise.Service.Token.RegistrationToken
 {
     public class ConfirmationToken
     {
-        [Key]
-        public long Id { get; set; }
+        [ForeignKey("User")]
+        public int ConfirmationTokenId { get; set; }
         [Required]
         public string Token { get; set; }
         [Required]
@@ -19,14 +19,14 @@ namespace TeacherPractise.Service.Token.RegistrationToken
         public DateTime ExpiresAt { get; set; }
         public DateTime? ConfirmedAt { get; set; }
 
-        public virtual User AppUser { get; set; }
+        public virtual User User { get; set; }
 
-        public ConfirmationToken(string token, DateTime createdAt, DateTime expiresAt, User appUser)
+        public ConfirmationToken(int confirmationTokenId, string token, DateTime createdAt, DateTime expiresAt)
         {
+            ConfirmationTokenId = confirmationTokenId;
             Token = token;
             CreatedAt = createdAt;
             ExpiresAt = expiresAt;
-            AppUser = appUser;
         }
     }
 }

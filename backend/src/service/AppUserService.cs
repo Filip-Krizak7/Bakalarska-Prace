@@ -67,10 +67,10 @@ namespace TeacherPractise.Service
             string token = this.securityService.BuildJwtToken(user);
 
             ConfirmationToken confirmationToken = new ConfirmationToken(
+                user.Id,
                 token,
                 DateTime.Now,
-                DateTime.Now.AddMinutes(AppConfig.REGISTRATION_CONFIRMATION_TOKEN_EXPIRY_TIME),
-                user
+                DateTime.Now.AddMinutes(AppConfig.REGISTRATION_CONFIRMATION_TOKEN_EXPIRY_TIME)
             );
             confirmationTokenService.saveConfirmationToken(confirmationToken);
 
