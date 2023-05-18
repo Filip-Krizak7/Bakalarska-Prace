@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Data.Entity;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -30,10 +31,10 @@ namespace TeacherPractise.Service
         {
             using (var ctx = new Context())
 	        {
-                User teacher = ctx.Users.ToList().FirstOrDefault(q => q.Username == studentUsername.ToLower())
+                User student = ctx.Users.ToList().FirstOrDefault(q => q.Username == studentUsername.ToLower())
                 	?? throw AppUserService.CreateException($"Student {studentUsername} nenalezen.");
 
-                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == teacher.Id); //date, subjectId, teacher.Id, pageNumber, pageSize
+                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == student.Id); //date, subjectId, teacher.Id, pageNumber, pageSize
                 practices.OrderBy(p => p.Date);
 
                 var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
@@ -42,7 +43,7 @@ namespace TeacherPractise.Service
                 foreach (PracticeDomain p in practicesDomain)
                 {
                     p.SetNumberOfReservedStudents();
-                    p.SetIsCurrentStudentReserved(studentUsername);
+                    p.SetIsCurrentStudentReserved(studentUsername); //null value
                     p.SetFileNames(appUserService.getTeacherFiles(p.teacher.username));
                     toDelete.Add(p);
                 }
@@ -59,9 +60,79 @@ namespace TeacherPractise.Service
             }           
         }
 
-        //getStudentReservedPractices
+        public List<StudentPracticeDto> getStudentReservedPractices(string studentUsername, int pageNumber, int pageSize)
+        {
+            using (var ctx = new Context())
+	        {
+                User student = ctx.Users.Include(u => u.AttendedPractices).SingleOrDefault(u => u.Username == studentUsername)
+                	?? throw AppUserService.CreateException($"Student {studentUsername} nenalezen.");
 
-        //getStudentPassedPractices
+                var practices = student.AttendedPractices.ToList();
+                practices.OrderBy(p => p.Date);
+
+                var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
+                var toDelete = new List<PracticeDomain>();
+
+                foreach (PracticeDomain p in practicesDomain)
+                {
+                    p.SetNumberOfReservedStudents();
+                    p.SetIsCurrentStudentReserved(studentUsername);
+                    p.SetFileNames(appUserService.getTeacherFiles(p.teacher.username));
+                    toDelete.Add(p);
+                }
+
+                foreach (PracticeDomain practiceDomain in toDelete)
+                {
+                    if (practiceDomain.RemoveNotPassedPractices())
+                    {
+                        practicesDomain.Remove(practiceDomain);
+                    }
+                }
+
+                return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
+            }
+        }
+
+        public List<StudentPracticeDto> getStudentPassedPractices(string studentUsername, int pageNumber, int pageSize)
+        {
+            using (var ctx = new Context())
+	        {
+                User student = ctx.Users.Include(u => u.AttendedPractices).SingleOrDefault(u => u.Username == studentUsername)
+                	?? throw AppUserService.CreateException($"Student {studentUsername} nenalezen.");
+
+                var practices = student.AttendedPractices.ToList();
+                practices.OrderBy(p => p.Date);
+
+                var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
+                var toDelete = new List<PracticeDomain>();
+
+                foreach (PracticeDomain p in practicesDomain)
+                {
+                    p.SetNumberOfReservedStudents();
+                    p.SetIsCurrentStudentReserved(studentUsername);
+                    p.SetFileNames(appUserService.getTeacherFiles(p.teacher.username));
+
+                    string report = appUserService.getPracticeReport(p.id);
+                    p.SetReport(report);
+                    List<ReviewDto> reviewList = new List<ReviewDto>();
+                    ReviewDto studentRev = appUserService.getStudentReview(studentUsername, p.id);
+                    reviewList.Add(studentRev);
+                    p.SetReviews(studentRev == null ? null : reviewList);
+
+                    toDelete.Add(p);
+                }
+
+                foreach (PracticeDomain practiceDomain in toDelete)
+                {
+                    if (practiceDomain.RemoveNotPassedPractices())
+                    {
+                        practicesDomain.Remove(practiceDomain);
+                    }
+                }
+
+                return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
+            }
+        }
 
         //getPracticesSlice
 

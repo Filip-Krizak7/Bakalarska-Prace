@@ -26,6 +26,36 @@ namespace TeacherPractise.Controller
             this.appUserService = appUserService;
         }
 
+        [HttpGet("practices-list")]
+        [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
+        public IActionResult getPracticesList(
+            [FromQuery(Name = "date")] DateOnly date,
+            [FromQuery(Name = "subjectId")] long subjectId,
+            [FromQuery(Name = "pageNumber")] int pageNumber,
+            [FromQuery(Name = "pageSize")] int pageSize)
+        {
+            string currentEmail = appUserService.getCurrentUserEmail();
+            return Ok(studentService.getPracticesList(currentEmail, date, subjectId, pageNumber, pageSize));
+        }
 
+        [HttpGet("reserved-practices-list")]
+        [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
+        public IActionResult getPracticesListPast(
+            [FromQuery(Name = "pageNumber")] int pageNumber,
+            [FromQuery(Name = "pageSize")] int pageSize)
+        {
+            string currentEmail = appUserService.getCurrentUserEmail();
+            return Ok(studentService.getStudentReservedPractices(currentEmail, pageNumber, pageSize));
+        }
+
+        [HttpGet("passed-practices-list")]
+        [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
+        public IActionResult getPassedPractices(
+            [FromQuery(Name = "pageNumber")] int pageNumber,
+            [FromQuery(Name = "pageSize")] int pageSize)
+        {
+            string currentEmail = appUserService.getCurrentUserEmail();
+            return Ok(studentService.getStudentPassedPractices(currentEmail, pageNumber, pageSize));
+        }
     }
 }

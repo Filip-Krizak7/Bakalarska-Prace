@@ -103,7 +103,7 @@ namespace TeacherPractise.Service
             }
                 
             string link = AppConfig.BASE_DNS_PRODUCTION + "/login?token=" + token;
-            /*emailService.send(
+            /*emailService.send( //System.NullReferenceException: Object reference not set to an instance of an object.
                 request.email,
                 buildEmail(request.firstName, link));*/
             

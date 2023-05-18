@@ -30,7 +30,6 @@ namespace TeacherPractise.Model
         public Practice Practice { get; set; }
 
         public virtual ConfirmationToken ConfirmationToken { get; set; }
-
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Practice> Practices { get; set; }
         public virtual ICollection<Practice> AttendedPractices { get; set; }

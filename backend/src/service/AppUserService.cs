@@ -369,5 +369,25 @@ namespace TeacherPractise.Service
                 return ctx.SaveChanges();
             }
         }
+
+        public ReviewDto getStudentReview(string username, long practiceId){
+            using (var ctx = new Context())
+	        {
+                User student = ctx.Users.Where(q => q.Username == username.ToLower()).FirstOrDefault();
+                if(student != null)
+                {
+                    Review rev = ctx.Reviews.Where(q => q.UserId == student.Id && q.PracticeId == (int)practiceId).FirstOrDefault();
+                    if(rev != null) 
+                    {
+                        ReviewDto revDto = new ReviewDto();
+                        revDto.practiceId = practiceId;
+                        revDto.name = student.FirstName + " " + student.SecondName;
+                        revDto.reviewText = rev.Text;
+                        return revDto;
+                    }
+                }
+                return null;
+            }
+        }
     }
 }
