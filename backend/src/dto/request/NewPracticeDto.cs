@@ -1,4 +1,5 @@
 using TeacherPractise.Dto.Response;
+using TeacherPractise.Model;
 using System.Globalization;
 using System;
 
@@ -15,10 +16,8 @@ namespace TeacherPractise.Dto.Request
             set
             {
                 _dateString = value;
-                if (DateTime.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateValue))
-                {
-                    date = new DateOnly(dateValue.Year, dateValue.Month, dateValue.Day);
-                }
+                date = DateTime.ParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                //date = CustomDateOnly.FromString(dateString);
             }
         }
 
@@ -44,7 +43,7 @@ namespace TeacherPractise.Dto.Request
             }
         }
 
-        public DateOnly date { get; set; }
+        public DateTime date { get; set; }
         public TimeSpan start { get; set; }
         public TimeSpan end { get; set; }
         public string note { get; set; }

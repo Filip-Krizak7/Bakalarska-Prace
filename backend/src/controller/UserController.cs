@@ -107,14 +107,12 @@ namespace TeacherPractise.Controller
           return appUserService.getCoordinators();
       }
 
-      [HttpPost("loginTest")]
-      [AllowAnonymous]
-      public IActionResult loginTwo(UserLoginDto request) 
+      [HttpGet("teacherFiles/{teacherMail}")]
+      [ProducesResponseType(typeof(List<string>), 200)]
+      public IActionResult getTeacherFiles([FromRoute] string teacherMail)
       {
-        User appUser = appUserService.login(request);
-        string token = securityService.BuildJwtToken(appUser);
-        return Ok(token);
+          var teacherFiles = appUserService.getTeacherFiles(teacherMail);
+          return Ok(teacherFiles);
       }
-
     }
 }

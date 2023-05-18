@@ -78,15 +78,20 @@ namespace TeacherPractise.Service
             return "Škola byla přidána.";
         }
 
-        public List<StudentPracticeDto> getPracticesList(DateOnly date, long subjectId, int pageNumber, int pageSize)
+        public List<StudentPracticeDto> getPracticesList(DateTime date, long subjectId, int pageNumber, int pageSize)
         {
             using (var ctx = new Context())
 	        {
                 var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId);
+                if(!practices.Any()) 
+                {
+                    practices = ctx.Practices.ToList();
+                }
+
                 practices.OrderBy(p => p.Date);
 
-                List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
-                List<PracticeDomain> toDelete = new List<PracticeDomain>();
+                var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
+                var toDelete = new List<PracticeDomain>();
 
                 foreach (PracticeDomain p in practicesDomain)
                 {
@@ -99,7 +104,7 @@ namespace TeacherPractise.Service
 
                 foreach (PracticeDomain practiceDomain in toDelete)
                 {
-                    if (practiceDomain.RemovePassedPractices())
+                    if (practiceDomain.RemoveNotPassedPractices())
                     {
                         practicesDomain.Remove(practiceDomain);
                     }
@@ -109,11 +114,16 @@ namespace TeacherPractise.Service
             }
         }
 
-        public List<StudentPracticeDto> getPracticesListPast(DateOnly date, long subjectId, int pageNumber, int pageSize)
+        public List<StudentPracticeDto> getPracticesListPast(DateTime date, long subjectId, int pageNumber, int pageSize)
         {
             using (var ctx = new Context())
 	        {
                 var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId);
+                if(!practices.Any()) 
+                {
+                    practices = ctx.Practices.ToList();
+                }
+
                 practices.OrderBy(p => p.Date);
 
                 List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());

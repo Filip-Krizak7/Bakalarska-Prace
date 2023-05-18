@@ -29,7 +29,7 @@ namespace TeacherPractise.Controller
         [HttpGet("practices-list")]
         [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
         public IActionResult getPracticesList(
-            [FromQuery(Name = "date")] DateOnly date,
+            [FromQuery(Name = "date")] DateTime date,
             [FromQuery(Name = "subjectId")] long subjectId,
             [FromQuery(Name = "pageNumber")] int pageNumber,
             [FromQuery(Name = "pageSize")] int pageSize)
@@ -56,6 +56,29 @@ namespace TeacherPractise.Controller
         {
             string currentEmail = appUserService.getCurrentUserEmail();
             return Ok(studentService.getStudentPassedPractices(currentEmail, pageNumber, pageSize));
+        }
+
+        [HttpPut("practices/{id}/make-reservation")]
+        public IActionResult makeReservation([FromRoute] long id)
+        {
+            string currentEmail = appUserService.getCurrentUserEmail();
+            studentService.makeReservation(currentEmail, id);
+            return NoContent();
+        }
+
+        [HttpPut("practices/{id}/cancel-reservation")]
+        public IActionResult cancelReservation([FromRoute] long id)
+        {
+            string currentEmail = appUserService.getCurrentUserEmail();
+            studentService.cancelReservation(currentEmail, id);
+            return NoContent();
+        }
+
+        [HttpPost("practices/{id}/submitReview")]
+        public IActionResult submitReview([FromRoute] long id, [FromBody] string text)
+        {
+            string currentEmail = appUserService.getCurrentUserEmail();
+            return Ok(studentService.submitReview(currentEmail, id, text));
         }
     }
 }

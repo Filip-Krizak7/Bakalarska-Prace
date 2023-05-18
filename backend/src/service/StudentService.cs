@@ -27,14 +27,15 @@ namespace TeacherPractise.Service
             this.mapper = mapper;
         }
 
-        public List<StudentPracticeDto> getPracticesList(string studentUsername, DateOnly date, long subjectId, int pageNumber, int pageSize)
+        public List<StudentPracticeDto> getPracticesList(string studentUsername, DateTime date, long subjectId, int pageNumber, int pageSize)
         {
             using (var ctx = new Context())
 	        {
-                User student = ctx.Users.ToList().FirstOrDefault(q => q.Username == studentUsername.ToLower())
-                	?? throw AppUserService.CreateException($"Student {studentUsername} nenalezen.");
-
-                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == student.Id); //date, subjectId, teacher.Id, pageNumber, pageSize
+                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId);
+                if(!practices.Any()) 
+                {
+                    practices = ctx.Practices.ToList();
+                }
                 practices.OrderBy(p => p.Date);
 
                 var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
@@ -43,14 +44,14 @@ namespace TeacherPractise.Service
                 foreach (PracticeDomain p in practicesDomain)
                 {
                     p.SetNumberOfReservedStudents();
-                    p.SetIsCurrentStudentReserved(studentUsername); //null value
+                    p.SetIsCurrentStudentReserved(studentUsername);
                     p.SetFileNames(appUserService.getTeacherFiles(p.teacher.username));
                     toDelete.Add(p);
                 }
 
                 foreach (PracticeDomain practiceDomain in toDelete)
                 {
-                    if (practiceDomain.RemovePassedPractices())
+                    if (practiceDomain.RemoveNotPassedPractices())
                     {
                         practicesDomain.Remove(practiceDomain);
                     }
@@ -124,7 +125,7 @@ namespace TeacherPractise.Service
 
                 foreach (PracticeDomain practiceDomain in toDelete)
                 {
-                    if (practiceDomain.RemoveNotPassedPractices())
+                    if (practiceDomain.RemovePassedPractices())
                     {
                         practicesDomain.Remove(practiceDomain);
                     }
@@ -136,17 +137,20 @@ namespace TeacherPractise.Service
 
         //getPracticesSlice
 
-        /*public void makeReservation(string studentUsername, long practiceId)
+        public void makeReservation(string studentUsername, long practiceId)
         {
             using (var ctx = new Context())
 	        {
                 User student = ctx.Users.ToList().FirstOrDefault(q => q.Username == studentUsername.ToLower())
                 	?? throw AppUserService.CreateException($"Student {studentUsername} nenalezen.");
 
-                Practice practice = ctx.Practices.ToList().FirstOrDefault(q => q.Id == practiceId)
+                Practice practice = ctx.Practices.ToList().FirstOrDefault(q => q.PracticeId == practiceId)
                 	?? throw AppUserService.CreateException($"Požadovaná praxe nebyla nalezena.");
 
-                List<User> registeredStudents = ctx.Users.Where(q => q.Student_PracticeId == practiceId).ToList(); //--------------------------------- zmenit
+                List<User> registeredStudents = ctx.Users
+                    .Include(u => u.AttendedPractices)
+                    .Where(u => u.AttendedPractices.Any(p => p.PracticeId == practiceId))
+                    .ToList();
 
                 if (registeredStudents.Contains(student))
                 {
@@ -156,7 +160,7 @@ namespace TeacherPractise.Service
                 {
                     throw new UserErrorException("Na tuto praxi se již více studentů přihlásit nemůže. V případě potřeby kontaktujte, prosím, vyučujícího.");
                 }
-                if (practice.Date.AddDays(-AppConfig.MAKE_RESERVATION_DAYS_LEFT) <= DateOnly.FromDateTime(DateTime.Now))
+                if (practice.Date.AddDays(-AppConfig.MAKE_RESERVATION_DAYS_LEFT) <= DateTime.Now)
                 {
                     throw new UserErrorException($"Na praxi je možné se přihlásit nejpozději {AppConfig.MAKE_RESERVATION_DAYS_LEFT} dní předem.");
                 }
@@ -175,16 +179,19 @@ namespace TeacherPractise.Service
                 User student = ctx.Users.ToList().FirstOrDefault(q => q.Username == studentUsername.ToLower())
                 	?? throw AppUserService.CreateException($"Student {studentUsername} nenalezen.");
 
-                Practice practice = ctx.Practices.ToList().FirstOrDefault(q => q.Id == practiceId)
+                Practice practice = ctx.Practices.ToList().FirstOrDefault(q => q.PracticeId == practiceId)
                 	?? throw AppUserService.CreateException($"Požadovaná praxe nebyla nalezena.");
 
-                List<User> registeredStudents = ctx.Users.Where(q => q.Student_PracticeId == practiceId).ToList();
+                List<User> registeredStudents = ctx.Users
+                    .Include(u => u.AttendedPractices)
+                    .Where(u => u.AttendedPractices.Any(p => p.PracticeId == practiceId))
+                    .ToList();
 
                 if (!registeredStudents.Contains(student))
                 {
                     throw new UserErrorException("Na tuto praxi nejste přihlášen/á.");
                 }
-                if (practice.Date.AddDays(-AppConfig.CANCEL_RESERVATION_DAYS_LEFT) <= DateOnly.FromDateTime(DateTime.Now)) 
+                if (practice.Date.AddDays(-AppConfig.CANCEL_RESERVATION_DAYS_LEFT) <= DateTime.Now) 
                 {
                     throw new UserErrorException($"Z praxe je možné se odhlásit nejpozději {AppConfig.CANCEL_RESERVATION_DAYS_LEFT} dní předem.");
                 }
@@ -194,9 +201,9 @@ namespace TeacherPractise.Service
 
                 ctx.SaveChanges();
             }
-        }*/
+        }
 
-        public string SubmitReview(string name, long practiceId, string text) 
+        public string submitReview(string name, long practiceId, string text) 
         {
             using (var ctx = new Context())
 	        {

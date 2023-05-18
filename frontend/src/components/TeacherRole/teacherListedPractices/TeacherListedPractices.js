@@ -1,4 +1,5 @@
 import "./TeacherListedPractices.css";
+import { parseISO, format } from 'date-fns';
 import Accordion from "react-bootstrap/Accordion";
 import React, { useEffect, useState } from "react";
 import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
@@ -98,6 +99,7 @@ export const TeacherListedPractices = () => {
         }).catch((err) => {
             console.log(err.response.data.message);
         });
+        console.log(response.data);
         if (response && response.data) {
             setPraxe(response.data);
             setDateRangeLimit(response.data);
@@ -112,8 +114,8 @@ export const TeacherListedPractices = () => {
     }, [todos]);
 
     function setDateRangeLimit(practices) {
-        let lowestDate = new Date(practices[0].date.split('-'));
-        let highestDate = new Date(practices[0].date.split('-'));
+        let lowestDate = parseISO(practices[0].date);
+        let highestDate = parseISO(practices[0].date);
 
         practices.forEach(element => {
             if (new Date(element.date.split('-')) < lowestDate) {
@@ -128,7 +130,6 @@ export const TeacherListedPractices = () => {
 
     function search(items) {
         return items.filter((item) => {
-
             if (filterParam.includes(allFilterParam)) {
                 return true;
             }
@@ -302,11 +303,7 @@ export const TeacherListedPractices = () => {
                                         {item.teacher.firstName + " " + item.teacher.secondName}
                                     </Col>
                                     <Col className="text-center">
-                                        {item.date.split("-")[2] +
-                                            ". " +
-                                            item.date.split("-")[1] +
-                                            ". " +
-                                            item.date.split("-")[0]}
+                                    {format(parseISO(item.date), 'dd. MM. yyyy')}
                                     </Col>
                                     <Col className="text-center">
                                         {item.start.split(":")[0] +

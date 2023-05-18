@@ -48,10 +48,10 @@ namespace TeacherPractise.Controller
             return Ok(coordinatorService.addSubject(newSubjectDto));
         }
 
-        [HttpGet("practices-list")] //v originale pageable misto pageNumber a pageSize
+        [HttpGet("practices-list")]
         [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
         public IActionResult getPracticesList(
-            [FromQuery(Name = "date")] DateOnly date,
+            [FromQuery(Name = "date")] DateTime date,
             [FromQuery(Name = "subjectId")] long subjectId,
             [FromQuery(Name = "pageNumber")] int pageNumber,
             [FromQuery(Name = "pageSize")] int pageSize)
@@ -62,7 +62,7 @@ namespace TeacherPractise.Controller
         [HttpGet("practices-list-past")]
         [ProducesResponseType(typeof(List<StudentPracticeDto>), 200)]
         public IActionResult getPracticesListPast(
-            [FromQuery(Name = "date")] DateOnly date,
+            [FromQuery(Name = "date")] DateTime date,
             [FromQuery(Name = "subjectId")] long subjectId,
             [FromQuery(Name = "pageNumber")] int pageNumber,
             [FromQuery(Name = "pageSize")] int pageSize)

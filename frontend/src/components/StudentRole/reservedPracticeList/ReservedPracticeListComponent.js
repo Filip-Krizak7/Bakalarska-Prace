@@ -13,7 +13,7 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import * as rdrLocales from 'react-date-range/dist/locale';
 import {DateRange} from 'react-date-range';
-import {addDays, format} from 'date-fns';
+import {addDays, format, parseISO} from 'date-fns';
 import {useSelector} from 'react-redux';
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
@@ -104,8 +104,8 @@ export const ReservedPracticeListComponent = () => {
         }, [todos]);
 
         function setDateRangeLimit(practices) {
-            let lowestDate = new Date(practices[0].date.split('-'));
-            let highestDate = new Date(practices[0].date.split('-'));
+            let lowestDate = parseISO(practices[0].date);
+            let highestDate = parseISO(practices[0].date);
 
             practices.forEach(element => {
                 if (new Date(element.date.split('-')) < lowestDate) {
@@ -407,11 +407,7 @@ export const ReservedPracticeListComponent = () => {
                                         <Col
                                             className="text-center d-none d-xl-block">{item.teacher.school != null ? item.teacher.school.name : schoolNotFound}</Col>
                                         <Col className="text-center">
-                                            {item.date.split("-")[2] +
-                                            ". " +
-                                            item.date.split("-")[1] +
-                                            ". " +
-                                            item.date.split("-")[0]}
+                                        {format(parseISO(item.date), 'dd. MM. yyyy')}
                                         </Col>
                                         <Col className="text-center d-none">
                                             {item.start.split(":")[0] +

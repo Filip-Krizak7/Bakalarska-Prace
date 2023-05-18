@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 using System;
 
 namespace TeacherPractise.Model
@@ -7,13 +8,21 @@ namespace TeacherPractise.Model
     public class Practice
     {
         public int PracticeId { get; set; }
-        public DateOnly Date { get; set; }
+
+        /*[Column("date")]
+        public DateTime DateValue
+        {
+            get { return Date; }
+            set { Date = new CustomDateOnly(value); }
+        }
+
+        [NotMapped]*/
+        public DateTime Date { get; set; }
         public TimeSpan Start { get; set; }
         public TimeSpan End { get; set; }
         public string Note { get; set; }
         public int Capacity { get; set; }
 
-        //subjectID is fake key to subject.Id
         public int? SubjectId { get; set; }
         [ForeignKey("SubjectId")]
         public Subject Subject { get; set; }

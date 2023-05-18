@@ -40,17 +40,6 @@ namespace TeacherPractise.Service
                 ctx.Practices.Add(practice);
                 ctx.SaveChanges();
 
-                Console.WriteLine("--------------------");
-                Console.WriteLine(practice.Date);
-                Type typeDate = practice.Date.GetType();
-                Console.WriteLine(typeDate.ToString());
-
-                var practices = ctx.Practices.ToList();
-                foreach (var pr in practices)
-                {
-                    Console.WriteLine($"Datum: {pr.Date}, Čas začátku: {pr.Start}, Poznamka: {pr.Note}, SubjectID: {pr.SubjectId}, TeacherID: {pr.TeacherId}");
-                }
-
                 return practice.PracticeId;
             }
         }
@@ -73,7 +62,7 @@ namespace TeacherPractise.Service
             }
         }
 
-        public List<StudentPracticeDto> getPracticesList(string teacherUsername, DateOnly date, long subjectId, int pageNumber, int pageSize)
+        public List<StudentPracticeDto> getPracticesList(string teacherUsername, DateTime date, long subjectId, int pageNumber, int pageSize)
         {
             using (var ctx = new Context())
 	        {
@@ -107,7 +96,7 @@ namespace TeacherPractise.Service
             }           
         }
 
-        public List<StudentPracticeDto> getPracticesListPast(string teacherUsername, DateOnly date, long subjectId, int pageNumber, int pageSize)
+        public List<StudentPracticeDto> getPracticesListPast(string teacherUsername, DateTime date, long subjectId, int pageNumber, int pageSize)
         {
             using (var ctx = new Context())
 	        {

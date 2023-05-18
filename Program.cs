@@ -174,7 +174,7 @@ using Microsoft.OpenApi.Models;
                 {
                     //Type typeDate = practice.Date.GetType();
                     //Console.WriteLine(typeDate.ToString());
-                    Console.WriteLine($"Datum: {practice.Date.ToShortDateString()}, Čas začátku: {practice.Start}, Poznamka: {practice.Note}, SubjectID: {practice.SubjectId}, TeacherID: {practice.TeacherId}");
+                    Console.WriteLine($"Datum: {practice.Date}, Čas začátku: {practice.Start}, Poznamka: {practice.Note}, SubjectID: {practice.SubjectId}, TeacherID: {practice.TeacherId}");
                 }
 
                 /*string sqlQuery = "SELECT * FROM Practice";

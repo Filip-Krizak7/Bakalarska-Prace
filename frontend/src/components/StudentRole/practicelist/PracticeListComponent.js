@@ -114,8 +114,8 @@ export const PracticeListComponent = () => {
         }, []);
 
         function setDateRangeLimit(practices) {
-            let lowestDate = new Date(practices[0].date.split('-'));
-            let highestDate = new Date(practices[0].date.split('-'));
+            let lowestDate = parseISO(practices[0].date);
+            let highestDate = parseISO(practices[0].date);
 
             practices.forEach(element => {
                 if (new Date(element.date.split('-')) < lowestDate) {
@@ -417,11 +417,7 @@ export const PracticeListComponent = () => {
                                         <Col
                                             className="text-center d-none d-xl-block">{item.teacher.school != null ? item.teacher.school.name : schoolNotFound}</Col>
                                         <Col className="text-center">
-                                            {item.date.split("-")[2] +
-                                            ". " +
-                                            item.date.split("-")[1] +
-                                            ". " +
-                                            item.date.split("-")[0]}
+                                        {format(parseISO(item.date), 'dd. MM. yyyy')}
                                         </Col>
                                         <Col className="text-center d-none">
                                             {item.start.split(":")[0] +

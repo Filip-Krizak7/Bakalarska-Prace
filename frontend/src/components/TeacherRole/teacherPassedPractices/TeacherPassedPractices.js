@@ -1,4 +1,5 @@
 import "./TeacherPassedPractices.css";
+import { parseISO, format } from 'date-fns';
 import DLImage from "../../../resources/DLImg.svg";
 import Accordion from "react-bootstrap/Accordion";
 import React, {useEffect, useRef, useState} from "react";
@@ -224,8 +225,8 @@ export const TeacherPassedPractices = () => {
         }, []);
 
         function setDateRangeLimit(practices) {
-            let lowestDate = new Date(practices[0].date.split('-'));
-            let highestDate = new Date(practices[0].date.split('-'));
+            let lowestDate = parseISO(practices[0].date);
+            let highestDate = parseISO(practices[0].date);
 
             practices.forEach(element => {
                 if (new Date(element.date.split('-')) < lowestDate) {
@@ -489,11 +490,7 @@ export const TeacherPassedPractices = () => {
                                             {item.teacher.firstName + " " + item.teacher.secondName}
                                         </Col>
                                         <Col className="text-center">
-                                            {item.date.split("-")[2] +
-                                            ". " +
-                                            item.date.split("-")[1] +
-                                            ". " +
-                                            item.date.split("-")[0]}
+                                        {format(parseISO(item.date), 'dd. MM. yyyy')}
                                         </Col>
                                         <Col className="text-center">
                                             {item.start.split(":")[0] +

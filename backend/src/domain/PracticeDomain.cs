@@ -1,12 +1,12 @@
 using TeacherPractise.Dto.Response;
-//using 
+using TeacherPractise.Model;
 
 namespace TeacherPractise.Domain
 {
     public class PracticeDomain
     {
         public long id { get; set; }
-        public DateOnly date { get; set; }
+        public DateTime date { get; set; }
         public TimeSpan start { get; set; }
         public TimeSpan end { get; set; }
         public string note { get; set; }
@@ -44,8 +44,8 @@ namespace TeacherPractise.Domain
 
         public bool RemovePassedPractices()
         {
-            DateTime dateAndEnd = new DateTime(date.Year, date.Month, date.Day, end.Hours, end.Minutes, end.Seconds);
-            //DateTime dateAndEnd = date;
+            //DateTime dateAndEnd = new DateTime(date.Year, date.Month, date.Day, end.Hours, end.Minutes, end.Seconds);
+            DateTime dateAndEnd = date;
 
             if (DateTime.Now > dateAndEnd)
             {
@@ -56,8 +56,8 @@ namespace TeacherPractise.Domain
 
         public bool RemoveNotPassedPractices()
         {
-            DateTime dateAndEnd = new DateTime(date.Year, date.Month, date.Day, end.Hours, end.Minutes, end.Seconds);
-            //DateTime dateAndEnd = date;
+            //DateTime dateAndEnd = new DateTime(date.Year, date.Month, date.Day, end.Hours, end.Minutes, end.Seconds);
+            DateTime dateAndEnd = date;
 
             if (DateTime.Now > dateAndEnd)
             {
@@ -91,7 +91,7 @@ namespace TeacherPractise.Domain
             this.reviews = list;
         }
 
-        public PracticeDomain(long id, DateOnly date, TimeSpan start, TimeSpan end, string note, int capacity,
+        public PracticeDomain(long id, DateTime date, TimeSpan start, TimeSpan end, string note, int capacity,
                        SubjectDto subject, UserDto teacher, List<UserDto> students, string report,
                        List<ReviewDto> reviews, List<string> fileNames, List<string> studentNames,
                        List<string> studentEmails)
