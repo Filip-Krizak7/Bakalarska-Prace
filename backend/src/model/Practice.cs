@@ -8,15 +8,6 @@ namespace TeacherPractise.Model
     public class Practice
     {
         public int PracticeId { get; set; }
-
-        /*[Column("date")]
-        public DateTime DateValue
-        {
-            get { return Date; }
-            set { Date = new CustomDateOnly(value); }
-        }
-
-        [NotMapped]*/
         public DateTime Date { get; set; }
         public TimeSpan Start { get; set; }
         public TimeSpan End { get; set; }

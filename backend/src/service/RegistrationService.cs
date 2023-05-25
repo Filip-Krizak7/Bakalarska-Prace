@@ -27,6 +27,7 @@ namespace TeacherPractise.Service
             this.appUserService = appUserService;
             this.schoolService = schoolService;
             this.confirmationTokenService = confirmationTokenService;
+            this.emailService = emailService;
         }
         
         public string register(RegistrationDto request)
@@ -103,9 +104,9 @@ namespace TeacherPractise.Service
             }
                 
             string link = AppConfig.BASE_DNS_PRODUCTION + "/login?token=" + token;
-            /*emailService.send( //System.NullReferenceException: Object reference not set to an instance of an object.
+            emailService.send( 
                 request.email,
-                buildEmail(request.firstName, link));*/
+                buildEmail(request.firstName, link));
             
             return "Success";
         }
