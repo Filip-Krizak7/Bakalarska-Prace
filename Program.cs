@@ -40,6 +40,7 @@ using Microsoft.OpenApi.Models;
             builder.Services.AddSingleton<CoordinatorService>();
             builder.Services.AddSingleton<EmailService>();
             builder.Services.AddSingleton<CustomMapper>();
+            builder.Services.AddSingleton<ForgotPasswordService>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddHttpContextAccessor();
