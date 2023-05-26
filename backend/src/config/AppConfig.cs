@@ -8,8 +8,8 @@ namespace TeacherPractise.Config
         public const int PRACTICE_MIN_CAPACITY = 1;
         public const int PRACTICE_MAX_CAPACITY = 10;
         public const int PRACTICE_NOTE_MAX_LENGTH = 250;
-        public const int REGISTRATION_CONFIRMATION_TOKEN_EXPIRY_TIME = 60; // minutes
-        public const int FORGOT_PASSWORD_TOKEN_EXPIRY_TIME = 60; // minutes
+        public const int REGISTRATION_CONFIRMATION_TOKEN_EXPIRY_TIME = 60;
+        public const int FORGOT_PASSWORD_TOKEN_EXPIRY_TIME = 60;
         //public const string CONFIRMATION_EMAIL_ADDRESS = "ucitelske.praxe.osu@seznam.cz";
         public const string CONFIRMATION_EMAIL_ADDRESS = "ucitelske.praxe.osu@gmail.com";
         public const string CONFIRMATION_EMAIL_PASSWORD = "grvrwsfdmihpycke";

@@ -1,6 +1,7 @@
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using TeacherPractise.Service.Token.RegistrationToken;
+using TeacherPractise.Service.Token.PasswordResetToken;
 
 namespace TeacherPractise.Model
 {
@@ -19,6 +20,7 @@ namespace TeacherPractise.Model
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Practice> Practices { get; set; }
         public DbSet<ConfirmationToken> ConfirmationTokens { get; set; }
+        public DbSet<PasswordResetToken> PasswordResetTokens { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {         

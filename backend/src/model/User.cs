@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TeacherPractise.Service.Token.RegistrationToken;
+using TeacherPractise.Service.Token.PasswordResetToken;
 
 namespace TeacherPractise.Model
 {
@@ -33,6 +34,7 @@ namespace TeacherPractise.Model
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Practice> Practices { get; set; }
         public virtual ICollection<Practice> AttendedPractices { get; set; }
+        public virtual ICollection<PasswordResetToken> PasswordResetTokens { get; set; }
 
         public User(string username, string firstName, string lastName, int schoolId, string phoneNumber, string password, Roles role)
         {

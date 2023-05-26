@@ -114,5 +114,20 @@ namespace TeacherPractise.Controller
           var teacherFiles = appUserService.getTeacherFiles(teacherMail);
           return Ok(teacherFiles);
       }
+
+      [HttpPost("changePassword")]
+      public IActionResult changePassword([FromBody] PasswordDto passwordDto)
+      {
+          string currentEmail = appUserService.getCurrentUserEmail();
+
+          if (appUserService.changePassword(currentEmail, passwordDto))
+          {
+              return Ok("Heslo bylo změněno");
+          }
+          else
+          {
+              return BadRequest("Heslo se nepodařilo změnit");
+          }
+      }
     }
 }

@@ -389,5 +389,26 @@ namespace TeacherPractise.Service
                 return null;
             }
         }
+
+        public bool changePassword(string username, PasswordDto passwordDto)
+        {
+            using (var ctx = new Context())
+	        {
+                User user = ctx.Users.Where(q => q.Username == username.ToLower()).FirstOrDefault();
+            
+                if (user != null)
+                {
+                    if (securityService.VerifyPassword(passwordDto.oldPassword, user.Password))
+                    {
+                        var hashedPassword = securityService.HashPassword(passwordDto.newPassword);
+                        user.Password = hashedPassword;
+                        ctx.SaveChanges();
+                        return true;
+                    }
+                    else return false;
+                }
+                else return false;
+            }
+        }
     }
 }
