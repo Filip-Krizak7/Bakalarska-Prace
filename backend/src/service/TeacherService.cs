@@ -103,7 +103,7 @@ namespace TeacherPractise.Service
                 User teacher = ctx.Users.ToList().FirstOrDefault(q => q.Username == teacherUsername.ToLower())
                 	?? throw AppUserService.CreateException($"Učitel {teacherUsername} nenalezen.");
 
-                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == teacher.Id); //date, subjectId, teacher.Id, pageNumber, pageSize
+                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == teacher.Id);
                 practices.OrderBy(p => p.Date);
 
                 var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());

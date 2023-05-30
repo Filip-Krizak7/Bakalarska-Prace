@@ -4,7 +4,7 @@ namespace TeacherPractise.Service
 {
     public class ForgotPasswordService 
     {
-        public string buildEmail(String name, String link) {
+        public string buildEmail(string name, string link) {
             return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                     "\n" +
                     "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +

@@ -2,8 +2,8 @@ namespace TeacherPractise.Config
 {
     public class AppConfig
     {
-        public const int MAKE_RESERVATION_DAYS_LEFT = 7;
-        public const int CANCEL_RESERVATION_DAYS_LEFT = 7;
+        public const int MAKE_RESERVATION_DAYS_LEFT = 6;
+        public const int CANCEL_RESERVATION_DAYS_LEFT = 6;
         public const int CREATE_PRACTICE_DAYS_LEFT = 7;
         public const int PRACTICE_MIN_CAPACITY = 1;
         public const int PRACTICE_MAX_CAPACITY = 10;

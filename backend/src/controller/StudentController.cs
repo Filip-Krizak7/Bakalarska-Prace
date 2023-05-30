@@ -80,5 +80,18 @@ namespace TeacherPractise.Controller
             string currentEmail = appUserService.getCurrentUserEmail();
             return Ok(studentService.submitReview(currentEmail, id, text));
         }
+
+        [HttpGet("practices-slice")]
+        public IActionResult getPracticesSlice(
+            [FromQuery(Name = "date")] DateTime? date,
+            [FromQuery(Name = "subjectId")] long? subjectId,
+            [FromQuery(Name = "pageNumber")] int pageNumber,
+            [FromQuery(Name = "pageSize")] int pageSize)
+        {
+            string currentEmail = appUserService.getCurrentUserEmail();
+            DateTime localDate = date.GetValueOrDefault();
+
+            return Ok(studentService.getPracticesSlice(currentEmail, localDate, subjectId, pageNumber, pageSize));
+        }
     }
 }

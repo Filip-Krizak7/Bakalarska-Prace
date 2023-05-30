@@ -68,10 +68,11 @@ namespace TeacherPractise.Service
                 User student = ctx.Users.Include(u => u.AttendedPractices).SingleOrDefault(u => u.Username == studentUsername)
                 	?? throw AppUserService.CreateException($"Student {studentUsername} nenalezen.");
 
-                var practices = student.AttendedPractices.ToList();
+                var practices = student.AttendedPractices;
                 practices.OrderBy(p => p.Date);
 
                 var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
+
                 var toDelete = new List<PracticeDomain>();
 
                 foreach (PracticeDomain p in practicesDomain)
@@ -101,7 +102,7 @@ namespace TeacherPractise.Service
                 User student = ctx.Users.Include(u => u.AttendedPractices).SingleOrDefault(u => u.Username == studentUsername)
                 	?? throw AppUserService.CreateException($"Student {studentUsername} nenalezen.");
 
-                var practices = student.AttendedPractices.ToList();
+                var practices = student.AttendedPractices;
                 practices.OrderBy(p => p.Date);
 
                 var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
@@ -135,7 +136,27 @@ namespace TeacherPractise.Service
             }
         }
 
-        //getPracticesSlice
+        public List<StudentPracticeDto> getPracticesSlice(string studentUsername, DateTime date, long? subjectId, int pageNumber, int pageSize)
+        {
+            using (var ctx = new Context())
+	        {
+                List<Practice> practices = ctx.Practices.Where(q => q.Date == date || q.SubjectId == subjectId).ToList();
+                if(!practices.Any()) 
+                {
+                    practices = ctx.Practices.ToList();
+                }
+
+                List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices);
+
+                foreach (var p in practicesDomain)
+                {
+                    p.SetNumberOfReservedStudents();
+                    p.SetIsCurrentStudentReserved(studentUsername);
+                }
+
+                return practicesDomain.Select(mapper.practiceDomainToStudentPracticeDto).ToList();
+            }
+        }
 
         public void makeReservation(string studentUsername, long practiceId)
         {
@@ -166,7 +187,8 @@ namespace TeacherPractise.Service
                 }
 
                 registeredStudents.Add(student);
-                practice.Users = registeredStudents;
+                practice.UsersOnPractice = registeredStudents;
+                //student.AttendedPractices.Add(practice);
 
                 ctx.SaveChanges();
             }
@@ -197,7 +219,8 @@ namespace TeacherPractise.Service
                 }
 
                 registeredStudents.Remove(student);
-                practice.Users = registeredStudents;
+                practice.UsersOnPractice = registeredStudents;
+                //student.AttendedPractices.Remove(practice);
 
                 ctx.SaveChanges();
             }

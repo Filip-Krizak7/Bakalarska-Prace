@@ -32,6 +32,13 @@ namespace TeacherPractise.Service.Token.PasswordResetToken
             ExpiryDate = calculateExpiryDate(EXPIRATION);
         }
 
+        public PasswordResetToken(string token, int userId)
+        {
+            Token = token;
+            UserId = userId;
+            ExpiryDate = calculateExpiryDate(EXPIRATION);
+        }
+        
         public PasswordResetToken(string token, User user)
         {
             Token = token;

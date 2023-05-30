@@ -101,8 +101,9 @@ class AuthService {
     }
 
     forgotPasswordEmail(email) {
-        const data = new FormData();
-        data.append('email', email);
+        const data = {
+            email: email
+        };
 
         return axios({
             url: EMAIL_FOR_RESET_URL,

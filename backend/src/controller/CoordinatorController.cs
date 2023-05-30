@@ -152,5 +152,13 @@ namespace TeacherPractise.Controller
         {        
             return Ok(coordinatorService.deleteCoordinator(id));
         }
+
+        [HttpGet("getReview/{email}/{practiceId}")]
+        public IActionResult getReviews([FromRoute] string email, [FromRoute] long practiceId)
+        {
+            return Ok(appUserService.getStudentReview(email, practiceId));
+        }
+
+        //getExport
     }
 }

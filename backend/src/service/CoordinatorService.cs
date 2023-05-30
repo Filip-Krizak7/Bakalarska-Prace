@@ -313,5 +313,27 @@ namespace TeacherPractise.Service
                 else return "Došlo k chybě. Koordinátor nebyl nalezen.";
             }
         }
+
+        public List<Dictionary<long, List<ReviewDto>>> getAllReviews()
+        {
+            List<Dictionary<long, List<ReviewDto>>> mappedReviews = new List<Dictionary<long, List<ReviewDto>>>();
+
+            using (var ctx = new Context())
+	        {
+                List<Practice> practices = ctx.Practices.ToList();
+
+                foreach (Practice practice in practices)
+                {
+                    List<Review> reviews = ctx.Reviews.Where(r => r.PracticeId == practice.PracticeId).ToList();
+                    List<ReviewDto> revDtos = mapper.reviewsToReviewDtos(reviews);
+
+                    mappedReviews.Add(new Dictionary<long, List<ReviewDto>>
+                    {
+                        { practice.PracticeId, revDtos }
+                    });
+                } 
+                return mappedReviews;
+            }        
+        }
     }
 }    

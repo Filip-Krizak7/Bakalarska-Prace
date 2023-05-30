@@ -2,6 +2,7 @@ using TeacherPractise.Model;
 using TeacherPractise.Config;
 using TeacherPractise.Service.FileManagement;
 using TeacherPractise.Service.Token.RegistrationToken;
+using TeacherPractise.Service.Token.PasswordResetToken;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Dto.Response;
 using TeacherPractise.Mapper;
@@ -408,6 +409,50 @@ namespace TeacherPractise.Service
                     else return false;
                 }
                 else return false;
+            }
+        }
+        
+        public User? getUserByPasswordResetToken(string token) //mozna bude treba vracet pouze userId
+        {
+            using (var ctx = new Context())
+	        {
+                var passwordToken = ctx.PasswordResetTokens.Where(q => q.Token == token.ToLower()).FirstOrDefault();
+
+                if (passwordToken != null)
+                {
+                    return passwordToken.User;
+                }
+                else return null;
+            }
+        }
+
+        public void changeUserPassword(User user, string password) 
+        {
+            using (var ctx = new Context())
+	        {
+                var hashedPassword = securityService.HashPassword(password);
+                user.Password = hashedPassword;
+                ctx.SaveChanges();
+            }
+        }
+
+        public void createPasswordResetTokenForUser(int userId, string token)
+        {
+            using (var ctx = new Context())
+	        {
+                PasswordResetToken passwordToken = new PasswordResetToken(token, userId);
+                ctx.PasswordResetTokens.Add(passwordToken);
+                ctx.SaveChanges();
+            }
+        }
+
+        public void deleteByToken(string token)
+        {
+            using (var ctx = new Context())
+	        {
+                var passwordToken = ctx.PasswordResetTokens.Where(q => q.Token == token.ToLower()).FirstOrDefault();
+                ctx.PasswordResetTokens.Remove(passwordToken);
+                ctx.SaveChanges();
             }
         }
     }

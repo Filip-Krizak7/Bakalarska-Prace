@@ -61,7 +61,11 @@ namespace TeacherPractise.Mapper
             User temp = schoolService.getStudentById((long)review.UserId);
             ReviewDto reviewDto = new ReviewDto();
             reviewDto.practiceId = (long)review.PracticeId;
-            reviewDto.name = $"{temp.FirstName} {temp.SecondName}";
+            using (var ctx = new Context())
+	        {
+                User usr = ctx.Users.Where(q => q.Id == review.UserId).FirstOrDefault();
+                reviewDto.name = $"{usr.FirstName} {usr.SecondName}";
+            }
             reviewDto.reviewText = review.Text;
 
             return reviewDto;
@@ -185,6 +189,19 @@ namespace TeacherPractise.Mapper
             }
 
             return studentPracticeDtos;
+        }
+
+        public List<ReviewDto> reviewsToReviewDtos(List<Review> reviews)
+        {
+            List<ReviewDto> reviewDtos = new List<ReviewDto>();
+
+            foreach (Review review in reviews)
+            {
+                ReviewDto reviewDto = reviewToReviewDto(review);
+                reviewDtos.Add(reviewDto);
+            }
+
+            return reviewDtos;
         }
 
         public List<SubjectDto> subjectsToSubjectDtos(List<Subject> subjects)

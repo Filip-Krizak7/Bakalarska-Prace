@@ -1,5 +1,6 @@
 using TeacherPractise.Model;
 using TeacherPractise.Config;
+using TeacherPractise.Service.Token.PasswordResetToken;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
@@ -81,6 +82,26 @@ namespace TeacherPractise.Service
     {
       string ret = BCrypt.Net.BCrypt.EnhancedHashPassword(password);
       return ret;
+    }
+
+    private bool IsTokenFound(PasswordResetToken passToken)
+    {
+        return passToken != null;
+    }
+
+    private bool IsTokenExpired(PasswordResetToken passToken)
+    {
+        DateTime now = DateTime.Now;
+        return passToken != null && passToken.ExpiryDate < now;
+    }
+
+    public bool ValidatePasswordResetToken(string token)
+    {
+      using (var ctx = new Context())
+	    {
+        var passToken = ctx.PasswordResetTokens.Where(q => q.Token == token.ToLower()).FirstOrDefault();
+        return passToken != null && !IsTokenExpired(passToken);
+      }
     }
   }
 }

@@ -129,5 +129,9 @@ namespace TeacherPractise.Controller
               return BadRequest("Heslo se nepodařilo změnit");
           }
       }
+
+      //downloadFileFromLocal
+
+      //downloadReportFromLocal
     }
 }
