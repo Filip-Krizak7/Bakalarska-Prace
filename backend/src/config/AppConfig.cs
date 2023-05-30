@@ -19,6 +19,9 @@ namespace TeacherPractise.Config
         public const string ADMIN_ROLE_NAME = "ROLE_ADMIN";
         public const string BASE_URL_DEVELOPMENT = "https://localhost:80";
         public const string BASE_URL_PRODUCTION = "https://172.16.101.104:80";
-        public const string BASE_DNS_PRODUCTION = "https://rezervace.prf.osu.cz/";
+        public const string BASE_DNS_PRODUCTION = "http://localhost:80";
+        //public const string BASE_DNS_PRODUCTION = "https://rezervace.prf.osu.cz/";
+        public const string EMAIL_SMTP_SERVER = "smtp.gmail.com";
+        public const int SMTP_SERVER_PORT = 465;
     }
 }

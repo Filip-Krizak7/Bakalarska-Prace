@@ -32,7 +32,7 @@ namespace TeacherPractise.Service.Email
                 
                 using (var client = new SmtpClient())
                 {
-                    await client.ConnectAsync("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
+                    await client.ConnectAsync(AppConfig.EMAIL_SMTP_SERVER, AppConfig.SMTP_SERVER_PORT, SecureSocketOptions.SslOnConnect);
                     await client.AuthenticateAsync(AppConfig.CONFIRMATION_EMAIL_ADDRESS, AppConfig.CONFIRMATION_EMAIL_PASSWORD);
 
                     await client.SendAsync(mimeMessage);
@@ -61,7 +61,7 @@ namespace TeacherPractise.Service.Email
 
                 using (var client = new SmtpClient())
                 {
-                    await client.ConnectAsync("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
+                    await client.ConnectAsync(AppConfig.EMAIL_SMTP_SERVER, AppConfig.SMTP_SERVER_PORT, SecureSocketOptions.SslOnConnect);
                     await client.AuthenticateAsync(AppConfig.CONFIRMATION_EMAIL_ADDRESS, AppConfig.CONFIRMATION_EMAIL_PASSWORD);
 
                     await client.SendAsync(mimeMessage);
