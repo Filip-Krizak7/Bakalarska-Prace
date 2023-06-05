@@ -26,5 +26,10 @@ namespace TeacherPractise.Model
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<User> UsersOnPractice { get; set; } 
+
+        public Practice()
+        {
+            this.UsersOnPractice = new List<User>();
+        }
     }
 }

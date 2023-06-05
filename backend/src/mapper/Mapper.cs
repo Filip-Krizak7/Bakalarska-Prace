@@ -130,9 +130,21 @@ namespace TeacherPractise.Mapper
             practiceDomain.end = practice.End;
             practiceDomain.note = practice.Note;
             practiceDomain.capacity = practice.Capacity;
-            practiceDomain.students = usersToUserDtos(practice.UsersOnPractice.ToList());
+            
             using (var ctx = new Context())
 	        {
+                bool areUsersRegistered = ctx.Practices
+                    .Any(p => p.PracticeId == practice.PracticeId && p.UsersOnPractice.Any());
+                    
+                if (areUsersRegistered)
+                {
+                    List<User> usersOnPractice = ctx.Practices
+                        .Where(p => p.PracticeId == practice.PracticeId)
+                        .SelectMany(p => p.UsersOnPractice)
+                        .ToList();
+
+                    practiceDomain.students = usersToUserDtos(usersOnPractice);
+                }
                 Subject sbj = ctx.Subjects.Where(q => q.Id == practice.SubjectId).FirstOrDefault();
                 User usr = ctx.Users.Where(q => q.Id == practice.TeacherId).FirstOrDefault();
                 practiceDomain.subject = subjectToSubjectDto(sbj);

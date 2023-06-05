@@ -44,7 +44,6 @@ namespace TeacherPractise.Domain
 
         public bool RemovePassedPractices()
         {
-            //DateTime dateAndEnd = new DateTime(date.Year, date.Month, date.Day, end.Hours, end.Minutes, end.Seconds);
             DateTime dateAndEnd = date;
 
             if (DateTime.Now > dateAndEnd)
@@ -56,7 +55,6 @@ namespace TeacherPractise.Domain
 
         public bool RemoveNotPassedPractices()
         {
-            //DateTime dateAndEnd = new DateTime(date.Year, date.Month, date.Day, end.Hours, end.Minutes, end.Seconds);
             DateTime dateAndEnd = date;
 
             if (DateTime.Now > dateAndEnd)

@@ -22,9 +22,7 @@ namespace TeacherPractise.Service.Token.PasswordResetToken
         public DateTime ExpiryDate { get; set; }
 
         public PasswordResetToken()
-        {
-            // Empty constructor required for entity framework
-        }
+        {}
 
         public PasswordResetToken(string token)
         {

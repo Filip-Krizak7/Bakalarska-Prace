@@ -151,44 +151,21 @@ using Microsoft.OpenApi.Models;
                 //UserLoginDto req = new UserLoginDto("r93452@student.osu.cz", "secret_passwd123");
                 //appService.login(req, HttpContext);
                 //regService.register(request);
-                /*User appUser = new User("r31252@student.osu.cz", "secret_passwd123", "Testing", "Tester", 2, "123456789", Roles.ROLE_TEACHER, false, true);
-
-                List<string> results = ctx.Database.SqlQuery<string>("SELECT name FROM sys.tables ORDER BY name").ToList();
-
-                // Vypsání názvů tabulek
-                /*foreach (var tableName in results)
-                {
-                    Console.WriteLine(tableName);
-                }*/
-
-                /*var userPractices = ctx.Set<User>()
-                               .SelectMany(u => u.AttendedPractices)
-                               .ToList();
-
-                foreach (var up in userPractices)
-                {
-                    Console.WriteLine($"Student ID: {up.User.Id}, Practice ID: {up.PracticeId}");
-                }*/
-
-                /*var remPractices = ctx.Practices;
-                ctx.Practices.RemoveRange(remPractices); 
-                ctx.SaveChanges();*/
+                
+                /*List<User> usersOnPractice = ctx.Users
+                        .Include(u => u.AttendedPractices)
+                        .Where(u => u.AttendedPractices.Any(p => p.PracticeId == 1))
+                        .ToList();
+                foreach (var user in usersOnPractice)
+                    {
+                        Console.WriteLine(user.Username);
+                    }*/
 
                 var practices = ctx.Practices.ToList();
                 foreach (var practice in practices)
                 {
-                    //Type typeDate = practice.Date.GetType();
-                    //Console.WriteLine(typeDate.ToString());
                     Console.WriteLine($"Datum: {practice.Date}, Čas začátku: {practice.Start}, Poznamka: {practice.Note}, SubjectID: {practice.SubjectId}, TeacherID: {practice.TeacherId}");
                 }
-
-                /*string sqlQuery = "SELECT * FROM Practice";
-                var results = ctx.Database.SqlQuery<Practice>(sqlQuery);
-
-                foreach (var result in results)
-                {
-                    Console.WriteLine($"Datum: {practice.Date}, Čas začátku: {practice.Start}, Poznamka: {practice.Note}");
-                }*/
             }
             
             var app = builder.Build();

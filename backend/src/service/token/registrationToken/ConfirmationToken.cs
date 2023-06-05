@@ -28,5 +28,8 @@ namespace TeacherPractise.Service.Token.RegistrationToken
             CreatedAt = createdAt;
             ExpiresAt = expiresAt;
         }
+
+        public ConfirmationToken()
+        {}
     }
 }

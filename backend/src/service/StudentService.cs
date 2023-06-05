@@ -220,7 +220,7 @@ namespace TeacherPractise.Service
 
                 registeredStudents.Remove(student);
                 practice.UsersOnPractice = registeredStudents;
-                //student.AttendedPractices.Remove(practice);
+                student.AttendedPractices.Remove(practice);
 
                 ctx.SaveChanges();
             }
