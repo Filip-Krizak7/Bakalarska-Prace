@@ -135,7 +135,7 @@ namespace TeacherPractise.Mapper
 	        {
                 bool areUsersRegistered = ctx.Practices
                     .Any(p => p.PracticeId == practice.PracticeId && p.UsersOnPractice.Any());
-                    
+
                 if (areUsersRegistered)
                 {
                     List<User> usersOnPractice = ctx.Practices

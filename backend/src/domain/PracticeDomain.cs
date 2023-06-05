@@ -39,7 +39,7 @@ namespace TeacherPractise.Domain
                 currentStudent = students.FirstOrDefault(student => currentStudentUsername.Equals(student.username));
             }
             
-            this.isCurrentStudentReserved = currentStudent.username != null;
+            this.isCurrentStudentReserved = currentStudent?.username != null;
         }
 
         public bool RemovePassedPractices()
