@@ -1,8 +1,10 @@
 using System.Net;
+using System.IO;
 using TeacherPractise.Model;
 using TeacherPractise.Service;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Dto.Response;
+using TeacherPractise.Service.FileService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -17,13 +19,16 @@ namespace TeacherPractise.Controller
     {
         private readonly TeacherService teacherService;
         private readonly AppUserService appUserService;
+        private readonly FileService fileService;
 
         public TeacherController(
         [FromServices] TeacherService teacherService,
-        [FromServices] AppUserService appUserService)
+        [FromServices] AppUserService appUserService,
+        [FromServices] FileService fileService)
         {
             this.teacherService = teacherService;
             this.appUserService = appUserService;
+            this.fileService = fileService;
         }
 
         [HttpPost("practice")]
@@ -70,6 +75,19 @@ namespace TeacherPractise.Controller
             return Ok(appUserService.getStudentReview(email, practiceId));
         }
 
-        //deleteFileFromLocal
+        [HttpPost("file/delete/{teacherEmail}/{fileName}")]
+        public IActionResult deleteFileFromLocal([FromRoute] string teacherEmail, [FromRoute] string fileName)
+        {
+            string filePath = fileService.figureOutFileNameFor(teacherEmail, fileName);
+            try
+            {
+                System.IO.File.Delete(filePath);
+                return Ok("Soubor smazán.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Chyba při mazání souboru: " + ex.Message);
+            }
+        }
     }
 }

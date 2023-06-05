@@ -52,5 +52,12 @@ namespace TeacherPractise.Controller
             List<School> ret = schoolService.getSchools();
             return Ok(ret);
         }
+
+        [HttpGet("confirm")]
+        [AllowAnonymous]
+        public IActionResult confirmUser(string token)
+        {
+            return Ok(regService.confirmToken(token));
+        }
     }
 }

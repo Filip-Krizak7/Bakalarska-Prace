@@ -9,6 +9,7 @@
       "Bakalarska-Prace/1.0.0": {
         "dependencies": {
           "BCrypt.Net-Next": "4.0.3",
+          "CsvHelper": "30.0.1",
           "EntityFramework": "6.4.4",
           "MailKit": "4.0.0",
           "Microsoft.AspNet.WebApi.Cors": "5.2.9",
@@ -44,6 +45,14 @@
           "lib/net6.0/BouncyCastle.Cryptography.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "2.1.1.34079"
+          }
+        }
+      },
+      "CsvHelper/30.0.1": {
+        "runtime": {
+          "lib/net6.0/CsvHelper.dll": {
+            "assemblyVersion": "30.0.0.0",
+            "fileVersion": "30.0.1.0"
           }
         }
       },
@@ -1800,6 +1809,13 @@
       "sha512": "sha512-NNQaa4eyf5YjSdLKUWGPzq5HXZQc3yGybfIOkR6UY1C/rRFWdo0UhSzBqqnxwGnq3ie4vkN0JlzhhANjfTIJIQ==",
       "path": "bouncycastle.cryptography/2.1.1",
       "hashPath": "bouncycastle.cryptography.2.1.1.nupkg.sha512"
+    },
+    "CsvHelper/30.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rcZtgbWR+As4G3Vpgx0AMNmShGuQLFjkHAPIIflzrfkJCx8/AOd4m96ZRmiU1Wi39qS5UVjV0P8qdgqOo5Cwyg==",
+      "path": "csvhelper/30.0.1",
+      "hashPath": "csvhelper.30.0.1.nupkg.sha512"
     },
     "EntityFramework/6.4.4": {
       "type": "package",

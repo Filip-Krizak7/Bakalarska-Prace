@@ -1,7 +1,10 @@
 using System.Net;
+using System.IO;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
 using TeacherPractise.Model;
 using TeacherPractise.Service;
+using TeacherPractise.Service.CsvReport;
 using TeacherPractise.Dto.Response;
 using TeacherPractise.Dto.Request;
 using Microsoft.AspNetCore.Authorization;
@@ -19,13 +22,18 @@ namespace TeacherPractise.Controller
         private readonly CoordinatorService coordinatorService;
         private readonly TeacherService teacherService;
         private readonly AppUserService appUserService;
+        private readonly CsvReport csvReport;
 
         public CoordinatorController(
-        [FromServices] CoordinatorService coordinatorService, [FromServices] TeacherService teacherService, [FromServices] AppUserService appUserService)
+        [FromServices] CoordinatorService coordinatorService, 
+        [FromServices] TeacherService teacherService, 
+        [FromServices] AppUserService appUserService,
+        [FromServices] CsvReport csvReport)
         {
             this.coordinatorService = coordinatorService;
             this.teacherService = teacherService;
             this.appUserService = appUserService;
+            this.csvReport = csvReport;
         }
 
         [HttpGet("waitingList")]
@@ -159,6 +167,20 @@ namespace TeacherPractise.Controller
             return Ok(appUserService.getStudentReview(email, practiceId));
         }
 
-        //getExport
+        [HttpPost("export")]
+        public IActionResult getExport([FromBody] ExportDatesDto request)
+        {
+            DateTime start = new DateTime(request.startYear, request.startMonth, request.startDay);
+            DateTime end = new DateTime(request.endYear, request.endMonth, request.endDay);
+            string filePath = "/home/student/project/myproject/backend/export.csv";
+            csvReport.createReport(filePath, start, end);
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+            var fileContentResult = new FileContentResult(fileBytes, "application/octet-stream")
+            {
+                FileDownloadName = Path.GetFileName(filePath)
+            };
+            return Ok(fileContentResult);
+        }
     }
 }

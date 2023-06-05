@@ -63,3 +63,4 @@ A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\
 A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
 A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\MailKit.dll
 A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\MimeKit.dll
+A:\Projekty\Bakalarska_prace\Bakalarska-Prace\Bakalarska-Prace\bin\Debug\net7.0\CsvHelper.dll

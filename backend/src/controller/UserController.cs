@@ -3,12 +3,15 @@ using TeacherPractise.Service;
 using TeacherPractise.Config;
 using TeacherPractise.Dto.Response;
 using TeacherPractise.Dto.Request;
+using TeacherPractise.Service.FileService;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Linq;
+using System.IO;
 
 namespace TeacherPractise.Controller
 {
@@ -20,15 +23,18 @@ namespace TeacherPractise.Controller
       private readonly AppUserService appUserService;
       private readonly SecurityService securityService;
       private readonly RegistrationService registrationService;
+      private readonly FileService fileService;
 
       public UserController(
         [FromServices] AppUserService appUserService,
         [FromServices] SecurityService securityService,
-        [FromServices] RegistrationService registrationService)
+        [FromServices] RegistrationService registrationService,
+        [FromServices] FileService fileService)
       {
         this.appUserService = appUserService;
         this.securityService = securityService;
         this.registrationService = registrationService;
+        this.fileService = fileService;
       }
 
       [HttpGet]
@@ -130,8 +136,31 @@ namespace TeacherPractise.Controller
           }
       }
 
-      //downloadFileFromLocal
+      [HttpGet("download/{teacherEmail}/{fileName}")]
+      public IActionResult downloadFileFromLocal([FromRoute] string teacherEmail, [FromRoute] string fileName)
+      {
+          string filePath = fileService.figureOutFileNameFor(teacherEmail, fileName);
+          //var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+          byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+          var fileContentResult = new FileContentResult(fileBytes, "application/octet-stream")
+          {
+              FileDownloadName = Path.GetFileName(filePath)
+          };
 
-      //downloadReportFromLocal
+          return Ok(fileContentResult);
+      }
+
+      [HttpGet("report/download/{id}")]
+      public IActionResult downloadReportFromLocal([FromRoute] string id)
+      {
+          string name = fileService.figureOutReportNameFor(Convert.ToInt64(id));
+          //var fileStream = new FileStream(name, FileMode.Open, FileAccess.Read);
+          byte[] fileBytes = System.IO.File.ReadAllBytes(name);
+          var fileContentResult = new FileContentResult(fileBytes, "application/octet-stream")
+          {
+              FileDownloadName = Path.GetFileName(name)
+          };
+          return Ok(fileContentResult);
+      }
     }
 }
