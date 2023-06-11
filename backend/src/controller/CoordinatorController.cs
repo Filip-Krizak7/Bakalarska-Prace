@@ -20,18 +20,15 @@ namespace TeacherPractise.Controller
     public class CoordinatorController : ControllerBase
     {
         private readonly CoordinatorService coordinatorService;
-        private readonly TeacherService teacherService;
         private readonly AppUserService appUserService;
         private readonly CsvReport csvReport;
 
         public CoordinatorController(
-        [FromServices] CoordinatorService coordinatorService, 
-        [FromServices] TeacherService teacherService, 
+        [FromServices] CoordinatorService coordinatorService,  
         [FromServices] AppUserService appUserService,
         [FromServices] CsvReport csvReport)
         {
             this.coordinatorService = coordinatorService;
-            this.teacherService = teacherService;
             this.appUserService = appUserService;
             this.csvReport = csvReport;
         }

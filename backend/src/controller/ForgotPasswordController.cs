@@ -20,7 +20,6 @@ namespace TeacherPractise.Controller
     public class ForgotPasswordController : ControllerBase
     {
         private readonly SecurityService securityService;
-        private readonly RegistrationService regService;
         private readonly AppUserService appUserService;
         private readonly EmailService emailService;
         private readonly ForgotPasswordService forgotPasswordService;
@@ -28,13 +27,11 @@ namespace TeacherPractise.Controller
         public ForgotPasswordController(
         [FromServices] AppUserService appUserService,
         [FromServices] SecurityService securityService,
-        [FromServices] RegistrationService regService,
         [FromServices] EmailService emailService,
         [FromServices] ForgotPasswordService forgotPasswordService)
         {
             this.appUserService = appUserService;
             this.securityService = securityService;
-            this.regService = regService;
             this.emailService = emailService;
             this.forgotPasswordService = forgotPasswordService;
         }

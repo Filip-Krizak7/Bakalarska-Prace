@@ -21,18 +21,15 @@ namespace TeacherPractise.Controller
     public class UserController : ControllerBase
     {
       private readonly AppUserService appUserService;
-      private readonly SecurityService securityService;
       private readonly RegistrationService registrationService;
       private readonly FileService fileService;
 
       public UserController(
         [FromServices] AppUserService appUserService,
-        [FromServices] SecurityService securityService,
         [FromServices] RegistrationService registrationService,
         [FromServices] FileService fileService)
       {
         this.appUserService = appUserService;
-        this.securityService = securityService;
         this.registrationService = registrationService;
         this.fileService = fileService;
       }

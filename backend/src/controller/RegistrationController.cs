@@ -11,19 +11,13 @@ namespace TeacherPractise.Controller
     [ApiController]
     public class RegistrationController : ControllerBase
     {
-        private readonly SecurityService securityService;
         private readonly RegistrationService regService;
-        private readonly AppUserService appUserService;
         private readonly SchoolService schoolService;
 
         public RegistrationController(
-        [FromServices] AppUserService appUserService,
-        [FromServices] SecurityService securityService,
         [FromServices] RegistrationService regService,
         [FromServices] SchoolService schoolService)
         {
-            this.appUserService = appUserService;
-            this.securityService = securityService;
             this.regService = regService;
             this.schoolService = schoolService;
         }
