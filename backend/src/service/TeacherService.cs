@@ -44,7 +44,7 @@ namespace TeacherPractise.Service
             }
         }
 
-        public List<long> findAllStudentIdsByStudentPracticeIds(long id, int pageNumber, int pageSize)
+        public List<long> findAllStudentIdsByStudentPracticeIds(long id)
         {
             using (var ctx = new Context())
 	        {
@@ -53,12 +53,7 @@ namespace TeacherPractise.Service
                     .SelectMany(p => p.UsersOnPractice.Select(s => s.Id))
                     .ToList();
 
-                var paginatedStudentIds = studentIds
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize)
-                    .ToList();
-
-                return paginatedStudentIds.ConvertAll<long>(x => (long)x);
+                return studentIds.ConvertAll<long>(x => (long)x);
             }
         }
 
@@ -78,9 +73,9 @@ namespace TeacherPractise.Service
                 foreach (PracticeDomain p in practicesDomain)
                 {
                     p.SetNumberOfReservedStudents();
-                    p.SetStudentNames(getStudentNamesByPractice(p, pageNumber, pageSize));
+                    p.SetStudentNames(getStudentNamesByPractice(p));
                     p.SetFileNames(appUserService.getTeacherFiles(p.teacher.username));
-                    p.SetStudentEmails(getStudentEmailsByPractice(p, pageNumber, pageSize));
+                    p.SetStudentEmails(getStudentEmailsByPractice(p));
                     toDelete.Add(p);
                 }
 
@@ -112,9 +107,9 @@ namespace TeacherPractise.Service
                 foreach (PracticeDomain p in practicesDomain)
                 {
                     p.SetNumberOfReservedStudents();
-                    p.SetStudentNames(getStudentNamesByPractice(p, pageNumber, pageSize));
+                    p.SetStudentNames(getStudentNamesByPractice(p));
                     p.SetFileNames(appUserService.getTeacherFiles(p.teacher.username));
-                    p.SetStudentEmails(getStudentEmailsByPractice(p, pageNumber, pageSize));
+                    p.SetStudentEmails(getStudentEmailsByPractice(p));
                     string report = appUserService.getPracticeReport(p.id);
                     p.SetReport(report);
                     toDelete.Add(p);
@@ -132,9 +127,9 @@ namespace TeacherPractise.Service
             }           
         }
 
-        public List<string> getStudentEmailsByPractice(PracticeDomain p, int pageNumber, int pageSize)
+        public List<string> getStudentEmailsByPractice(PracticeDomain p)
         {
-            List<long> ids = findAllStudentIdsByStudentPracticeIds(p.id, pageNumber, pageSize);
+            List<long> ids = findAllStudentIdsByStudentPracticeIds(p.id);
             List<string> emails = new List<string>();
 
             foreach (long id in ids)
@@ -156,9 +151,9 @@ namespace TeacherPractise.Service
             return new List<string>(arr);
         }
 
-        public List<String> getStudentNamesByPractice(PracticeDomain p, int pageNumber, int pageSize)
+        public List<String> getStudentNamesByPractice(PracticeDomain p)
         {
-            List<long> ids = findAllStudentIdsByStudentPracticeIds(p.id, pageNumber, pageSize);
+            List<long> ids = findAllStudentIdsByStudentPracticeIds(p.id);
             List<string> names = new List<string>();
 
             foreach (long id in ids)

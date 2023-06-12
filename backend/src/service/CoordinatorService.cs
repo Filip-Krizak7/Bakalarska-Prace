@@ -96,9 +96,9 @@ namespace TeacherPractise.Service
                 foreach (PracticeDomain p in practicesDomain)
                 {
                     p.SetNumberOfReservedStudents();
-                    p.SetStudentNames(teacherService.getStudentNamesByPractice(p, pageNumber, pageSize));
+                    p.SetStudentNames(teacherService.getStudentNamesByPractice(p));
                     p.SetFileNames(appUserService.getTeacherFiles(p.teacher.username));
-                    p.SetStudentEmails(teacherService.getStudentEmailsByPractice(p, pageNumber, pageSize));
+                    p.SetStudentEmails(teacherService.getStudentEmailsByPractice(p));
                     toDelete.Add(p);
                 }
 
@@ -132,9 +132,9 @@ namespace TeacherPractise.Service
                 foreach (PracticeDomain p in practicesDomain)
                 {
                     p.SetNumberOfReservedStudents();
-                    p.SetStudentNames(teacherService.getStudentNamesByPractice(p, pageNumber, pageSize));
+                    p.SetStudentNames(teacherService.getStudentNamesByPractice(p));
                     p.SetFileNames(appUserService.getTeacherFiles(p.teacher.username));
-                    p.SetStudentEmails(teacherService.getStudentEmailsByPractice(p, pageNumber, pageSize));
+                    p.SetStudentEmails(teacherService.getStudentEmailsByPractice(p));
                     string report = appUserService.getPracticeReport(p.id);
                     p.SetReport(report);
                     toDelete.Add(p);

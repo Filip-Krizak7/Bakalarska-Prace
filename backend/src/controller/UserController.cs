@@ -139,30 +139,37 @@ namespace TeacherPractise.Controller
       }
 
       [HttpGet("download/{teacherEmail}/{fileName}")]
+      [AllowAnonymous]
       public IActionResult downloadFileFromLocal([FromRoute] string teacherEmail, [FromRoute] string fileName)
       {
           string filePath = fileService.figureOutFileNameFor(teacherEmail, fileName);
-          //var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-          byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
-          var fileContentResult = new FileContentResult(fileBytes, "application/octet-stream")
+          var file = new FileInfo(filePath);
+          if (!file.Exists)
           {
-              FileDownloadName = Path.GetFileName(filePath)
-          };
+              return NotFound();
+          }
 
-          return Ok(fileContentResult);
+          var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+          var contentType = "application/octet-stream";
+
+          return File(fileStream, contentType, file.Name);
       }
 
       [HttpGet("report/download/{id}")]
+      [AllowAnonymous]
       public IActionResult downloadReportFromLocal([FromRoute] string id)
       {
           string name = fileService.figureOutReportNameFor(Convert.ToInt64(id));
-          //var fileStream = new FileStream(name, FileMode.Open, FileAccess.Read);
-          byte[] fileBytes = System.IO.File.ReadAllBytes(name);
-          var fileContentResult = new FileContentResult(fileBytes, "application/octet-stream")
+          var file = new FileInfo(name);
+          if (!file.Exists)
           {
-              FileDownloadName = Path.GetFileName(name)
-          };
-          return Ok(fileContentResult);
+              return NotFound();
+          }
+
+          var fileStream = new FileStream(name, FileMode.Open, FileAccess.Read);
+          var contentType = "application/octet-stream";
+
+          return File(fileStream, contentType, file.Name);
       }
     }
 }

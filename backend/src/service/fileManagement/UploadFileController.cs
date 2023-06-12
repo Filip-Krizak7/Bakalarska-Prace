@@ -31,20 +31,20 @@ namespace TeacherPractise.Controller.FileManagement
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> uploadFiles([FromForm] List<IFormFile> files)
+        public async Task<IActionResult> UploadFiles([FromForm] List<IFormFile> files)
         {
             try
             {
                 using (var ctx = new Context())
-	            {
+                {
                     string currentEmail = appUserService.getCurrentUserEmail();
                     var id = ctx.Users.ToList().FirstOrDefault(q => q.Username == currentEmail).Id;
-                    var userFolderPath = new DirectoryInfo(FileUtil.folderPath + id);
-                    var userFilePath = new FileInfo(Path.Combine(FileUtil.folderPath, id.ToString()));
+                    var userFolderPath = new DirectoryInfo(Path.Combine(FileUtil.folderPath, id.ToString()));
                     createDirIfNotExist(userFolderPath);
+                    
                     var maxFiles = AppConfig.MAXIMUM_FILE_NUMBER_PER_USER;
                     var numberOfFilesUploaded = files.Count;
-
+                    
                     var filesNum = FileUtil.getNumberOfFilesInFolder(id);
                     if ((filesNum + numberOfFilesUploaded) > maxFiles)
                     {
@@ -56,21 +56,21 @@ namespace TeacherPractise.Controller.FileManagement
 
                     foreach (var file in files)
                     {
-                        byte[] bytes;
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            await file.CopyToAsync(memoryStream);
-                            bytes = memoryStream.ToArray();
-                        }
-
-                        var fileName = file.FileName;
-                        var path = new FileInfo(Path.Combine(FileUtil.folderPath, id.ToString(), fileName));
+                        var fileName = Path.GetFileName(file.FileName);
+                        var filePath = Path.Combine(userFolderPath.FullName, fileName);
+                        
                         if (fileExists(id, fileName))
                         {
-                            fileName = renameExistingFile(userFilePath, fileName);
+                            fileName = renameExistingFile(userFolderPath, fileName);
+                            filePath = Path.Combine(userFolderPath.FullName, fileName);
                         }
-                        await System.IO.File.WriteAllBytesAsync(path.FullName, bytes);
-                        fileNames.Add(file.FileName);
+                        
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+
+                        fileNames.Add(fileName);
                     }
 
                     return Ok(new FileUploadResponse("Soubory byly úspěšně nahrány: " + string.Join(", ", fileNames)));
@@ -95,7 +95,7 @@ namespace TeacherPractise.Controller.FileManagement
             try
             {
                 var userFolderPath = new DirectoryInfo(FileUtil.reportsFolderPath + id);
-                var userFilePath = new FileInfo(Path.Combine(FileUtil.folderPath, id.ToString()));
+                var userFilePath = new DirectoryInfo(Path.Combine(FileUtil.folderPath, id.ToString()));
                 createDirIfNotExist(userFolderPath);
                 var maxFiles = AppConfig.MAXIMUM_NUMBER_OF_REPORTS;
                 var numberOfFilesUploaded = files.Count;
@@ -148,10 +148,10 @@ namespace TeacherPractise.Controller.FileManagement
             }
         }
 
-        private string renameExistingFile(FileInfo path, string fileName)
+        private string renameExistingFile(DirectoryInfo path, string fileName)
         {
             int highestNumber = 1;
-            DirectoryInfo directory = path.Directory;
+            DirectoryInfo directory = path.Parent;
             FileInfo[] matchingFiles = directory.GetFiles().Where(file => file.Name.StartsWith(fileName.Split('.')[0])).ToArray();
             Regex myPattern = new Regex(@"(\d+)");
             foreach (var file in matchingFiles)
