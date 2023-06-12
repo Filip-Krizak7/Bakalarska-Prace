@@ -88,6 +88,7 @@ namespace TeacherPractise.Mapper
             userDto.username = user.Username;
             userDto.firstName = user.FirstName;
             userDto.secondName = user.SecondName;
+            userDto.phoneNumber = user.PhoneNumber;
             if (user.SchoolId != null)
             {
                 userDto.school = schoolToSchoolDto(schoolService.getSchoolById((long)user.SchoolId));

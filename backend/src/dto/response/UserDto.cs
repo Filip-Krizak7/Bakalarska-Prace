@@ -5,6 +5,7 @@ namespace TeacherPractise.Dto.Response
         public string? username { get; set; }
         public string firstName { get; set; }
         public string secondName { get; set; }
+        public string phoneNumber { get; set; }
         public SchoolDto? school { get; set; }
 
         public UserDto()

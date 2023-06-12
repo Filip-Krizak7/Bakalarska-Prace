@@ -1,6 +1,7 @@
 using TeacherPractise.Model;
 using TeacherPractise.Service;
 using TeacherPractise.Config;
+using TeacherPractise.Mapper;
 using TeacherPractise.Dto.Response;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Service.FileService;
@@ -20,18 +21,21 @@ namespace TeacherPractise.Controller
     [ApiController]
     public class UserController : ControllerBase
     {
-      private readonly AppUserService appUserService;
       private readonly RegistrationService registrationService;
+      private readonly AppUserService appUserService;
       private readonly FileService fileService;
+      private readonly CustomMapper mapper;
 
       public UserController(
         [FromServices] AppUserService appUserService,
         [FromServices] RegistrationService registrationService,
-        [FromServices] FileService fileService)
+        [FromServices] FileService fileService,
+        [FromServices] CustomMapper mapper)
       {
         this.appUserService = appUserService;
         this.registrationService = registrationService;
         this.fileService = fileService;
+        this.mapper = mapper;
       }
 
       [HttpGet]
@@ -44,15 +48,6 @@ namespace TeacherPractise.Controller
         return Ok(ret);
       }
 
-      [Authorize]
-      [HttpGet("data")]
-      public IActionResult getUserData() 
-      {
-        string username = appUserService.getCurrentUserEmail();
-        User ret = appUserService.getUserByUsername(username);
-        return Ok(ret);
-      }
-
       [HttpGet("all")]
       [AllowAnonymous] 
       public IActionResult getAll()
@@ -60,6 +55,16 @@ namespace TeacherPractise.Controller
         /*RegistrationDto request = new RegistrationDto("coordinator@student.osu.cz", "Testing", "Tester", 1, "123456789", "secret_passwd123", "coordinator");
         registrationService.register(request);*/ //jen pro rychle vytvoreni koordinatora v pripade zmeny --> vymazani databaze
         List<User> ret = appUserService.getUsers();
+        return Ok(ret);
+      }
+
+      [Authorize]
+      [HttpGet("data")]
+      public IActionResult getUserData() 
+      {
+        string currentEmail = appUserService.getCurrentUserEmail();
+        User user = appUserService.getUserByUsername(currentEmail);
+        UserDto ret = mapper.userToUserDto(user);
         return Ok(ret);
       }
 
