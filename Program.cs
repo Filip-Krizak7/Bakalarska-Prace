@@ -150,16 +150,7 @@ using Microsoft.OpenApi.Models;
                 //RegistrationDto request = new RegistrationDto("coordinator@student.osu.cz", "Testing", "Tester", 2, "123456789", "secret_passwd123", "coordinator");
                 //UserLoginDto req = new UserLoginDto("r93452@student.osu.cz", "secret_passwd123");
                 //appService.login(req, HttpContext);
-                //regService.register(request);
-                
-                /*List<User> usersOnPractice = ctx.Users
-                        .Include(u => u.AttendedPractices)
-                        .Where(u => u.AttendedPractices.Any(p => p.PracticeId == 1))
-                        .ToList();
-                foreach (var user in usersOnPractice)
-                    {
-                        Console.WriteLine(user.Username);
-                    }*/
+                //regService.register(request); 
 
                 var practices = ctx.Practices.ToList();
                 foreach (var practice in practices)

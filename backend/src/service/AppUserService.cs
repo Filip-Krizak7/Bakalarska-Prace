@@ -143,14 +143,19 @@ namespace TeacherPractise.Service
         public User login(UserLoginDto request)
         {
             User appUser;
+            if (request.username == null) throw new Exception("Uživatelské jméno nevyplněno");
+            if (request.password == null) throw new Exception("Heslo nevyplněno");
 
             try
             {
                 appUser = getUserByCredentials(request.username, request.password);
+                if (appUser == null) throw new Exception("Chybné přihlášení");
+                if (!appUser.Enabled) throw new Exception("Účet není plně aktivován. Potvrďte e-mailovou adresu.");
+                if (appUser.Locked) throw new Exception("Účet není plně aktivován. Kontaktujte koordinátora.");       
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
-                throw new Exception(ex.Message, ex);
+                throw new Exception("Překlep v atributech username nebo password");
             }
 
             return appUser;

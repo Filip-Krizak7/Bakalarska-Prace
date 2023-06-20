@@ -146,6 +146,7 @@ namespace TeacherPractise.Controller
         }
 
         [HttpPost("registerCoordinator")]
+        [AllowAnonymous]
         public IActionResult register([FromBody] RegistrationDto request)
         {
             return Ok(coordinatorService.register(request));

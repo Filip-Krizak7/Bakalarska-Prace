@@ -23,7 +23,6 @@ namespace TeacherPractise.Controller
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public IActionResult register(RegistrationDto request)
         {
             string ret;
@@ -40,7 +39,6 @@ namespace TeacherPractise.Controller
         }
 
         [HttpGet("schools")]
-        [AllowAnonymous]
         public IActionResult getAll()
         {
             List<School> ret = schoolService.getSchools();
@@ -48,7 +46,6 @@ namespace TeacherPractise.Controller
         }
 
         [HttpGet("confirm")]
-        [AllowAnonymous]
         public IActionResult confirmUser(string token)
         {
             return Ok(regService.confirmToken(token));

@@ -59,7 +59,7 @@ class AuthService {
 
         return axios({
             url: REGISTER_COORDINATOR_URL,
-            headers: {'content-type': 'application/json', 'Authorization': localStorage.getItem("token")},
+            headers: {'content-type': 'application/json'}, //'Authorization': localStorage.getItem("token")
             withCredentials: true,
             method: "POST",
             data: formData,
@@ -127,7 +127,7 @@ class AuthService {
 
         return axios({
             url: FORGOT_PASSWORD_URL,
-            headers: {'content-type': 'application/json', 'Authorization': localStorage.getItem("token") },
+            headers: {'content-type': 'application/json',  }, //'Authorization': localStorage.getItem("token")
             withCredentials: true,
             method: "POST",
             data: form,

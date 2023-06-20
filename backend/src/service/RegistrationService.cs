@@ -51,8 +51,8 @@ namespace TeacherPractise.Service
                     lastName = request.lastName;
                     phoneNumber = null;
                     role = Roles.ROLE_STUDENT;
-                    locked = false;
-                    enabled = true;
+                    locked = true;
+                    enabled = false;
                     break;
                 case "teacher":
                     email = request.email;
@@ -62,8 +62,8 @@ namespace TeacherPractise.Service
                     phoneNumber = request.phoneNumber;
                     schId = (int)request.school;
                     role = Roles.ROLE_TEACHER;
-                    locked = false;
-                    enabled = true;
+                    locked = true;
+                    enabled = false;
                     break;
                 case "coordinator":
                     email = request.email;
@@ -137,7 +137,7 @@ namespace TeacherPractise.Service
                 var user = ctx.Users.Where(q => q.Id == confirmationToken.ConfirmationTokenId).FirstOrDefault()
                     ?? throw AppUserService.CreateException($"User with ID {confirmationToken.ConfirmationTokenId} does not exist.");
 
-                appUserService.enableAppUser(user.Username); //nastavit pote aby se user automaticky nastavil na enabled = false
+                appUserService.enableAppUser(user.Username);
             }
 
             return "E-mail byl úspěšně ověřen.";
