@@ -169,9 +169,10 @@ namespace TeacherPractise.Service
 
                 if (practice != null)
                 {
-                    var folderPath = $"{FileUtil.reportsFolderPath}{id}";
+                    string folderPath = Path.Combine(FileUtil.reportsFolderPath, id.ToString());
+                    DirectoryInfo folder = new DirectoryInfo(folderPath);
 
-                    if (!Directory.Exists(folderPath))
+                    if (!folder.Exists)
                     {
                         try
                         {
@@ -183,12 +184,12 @@ namespace TeacherPractise.Service
                             return null;
                         }
                     }
-                    var files = Directory.GetFiles(folderPath);
+                    var files = folder.GetFiles();
 
                     if (files == null || files.Length == 0)
                         return null;
 
-                    return Path.GetFileName(files[0]);
+                    return files[0].Name;
                 }
                 else
                 {

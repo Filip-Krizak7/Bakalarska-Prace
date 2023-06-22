@@ -166,7 +166,7 @@ namespace TeacherPractise.Controller
               return NotFound();
           }
 
-          var fileStream = new FileStream(name, FileMode.Open, FileAccess.Read);
+          var fileStream = new FileStream(name, FileMode.Open, FileAccess.Read, FileShare.Read);
           var contentType = "application/octet-stream";
 
           return File(fileStream, contentType, file.Name);

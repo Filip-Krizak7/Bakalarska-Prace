@@ -32,9 +32,8 @@ namespace TeacherPractise.Service.FileService
         {
             try
             {
-                string[] files = Directory.GetFiles(Path.Combine(FileUtil.reportsFolderPath, id.ToString()));
-                string fileName = files.FirstOrDefault();
-                return fileName;
+                var files = Directory.GetFiles(Path.Combine(FileUtil.reportsFolderPath, id.ToString()));
+                return files.FirstOrDefault();
             }
             catch (Exception e)
             {

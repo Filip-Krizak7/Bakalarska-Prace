@@ -90,7 +90,7 @@ namespace TeacherPractise.Controller.FileManagement
         }
 
         [HttpPost("report/upload")]
-        public async Task<IActionResult> uploadReport([FromForm] long id, [FromForm] List<IFormFile> files)
+        public async Task<IActionResult> uploadReport([FromForm] long id, [FromForm] List<IFormFile> file)
         {
             try
             {
@@ -98,18 +98,18 @@ namespace TeacherPractise.Controller.FileManagement
                 var userFilePath = new DirectoryInfo(Path.Combine(FileUtil.folderPath, id.ToString()));
                 createDirIfNotExist(userFolderPath);
                 var maxFiles = AppConfig.MAXIMUM_NUMBER_OF_REPORTS;
-                var numberOfFilesUploaded = files.Count;
+                var numberOfFilesUploaded = file.Count;
 
                 var filesNum = FileUtil.getNumberOfReportsInFolder(id);
                 if ((filesNum + numberOfFilesUploaded) > maxFiles)
                 {
                     var name = fileService.figureOutReportNameFor(id);
 
-                    var file = new FileInfo(name);
+                    var fileReport = new FileInfo(name);
 
-                    if (file.Exists)
+                    if (fileReport.Exists)
                     {
-                        file.Delete();
+                        fileReport.Delete();
                         Console.WriteLine("File deleted successfully");
                     }
                     else
@@ -120,23 +120,25 @@ namespace TeacherPractise.Controller.FileManagement
 
                 var fileNames = new List<string>();
 
-                foreach (var file in files)
+                foreach (var f in file)
                 {
-                    byte[] bytes;
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        await file.CopyToAsync(memoryStream);
-                        bytes = memoryStream.ToArray();
-                    }
+                    var fileName = Path.GetFileName(f.FileName);
+                    var filePath = Path.Combine(userFolderPath.FullName, fileName);
 
-                    var fileName = file.FileName;
                     var path = new FileInfo(Path.Combine(FileUtil.folderPath, id.ToString(), fileName));
+                    
                     if (fileExists(id, fileName))
                     {
                         fileName = renameExistingFile(userFilePath, fileName);
+                        filePath = Path.Combine(userFolderPath.FullName, fileName);
                     }
-                    await System.IO.File.WriteAllBytesAsync(path.FullName, bytes);
-                    fileNames.Add(file.FileName);
+                    
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await f.CopyToAsync(stream);
+                    }
+
+                    fileNames.Add(fileName);
                 }
 
                 return Ok(new FileUploadResponse("Soubory byly úspěšně nahrány: " + string.Join(", ", fileNames)));
