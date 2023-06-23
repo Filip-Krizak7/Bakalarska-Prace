@@ -1,0 +1,22 @@
+.accordion-header-coord {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .accordion-button::after {
+        position: absolute;
+        width: 0;
+    }
+    .listed-practices-row{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.styles-dl{
+    margin-top: 10px;
+}
+@media (min-width: 1200px){
+.my-cstm-flex{
+    display: flex!important;
+}}

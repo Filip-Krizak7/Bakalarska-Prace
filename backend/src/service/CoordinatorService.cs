@@ -1,0 +1,339 @@
+using System;
+using Microsoft.AspNetCore.Mvc;
+using TeacherPractise.Dto.Response;
+using TeacherPractise.Dto.Request;
+using TeacherPractise.Config;
+using TeacherPractise.Mapper;
+using TeacherPractise.Domain;
+using TeacherPractise.Model;
+
+namespace TeacherPractise.Service
+{
+    public class CoordinatorService
+    {
+        private readonly AppUserService appUserService;
+        private readonly TeacherService teacherService;
+        private readonly RegistrationService registrationService;
+        private readonly CustomMapper mapper;
+
+        public CoordinatorService(
+            [FromServices] AppUserService appUserService, 
+            [FromServices] TeacherService teacherService,
+            [FromServices] RegistrationService registrationService, 
+            [FromServices] CustomMapper mapper)
+        {
+            this.appUserService = appUserService;
+            this.teacherService = teacherService;
+            this.registrationService = registrationService;
+            this.mapper = mapper;
+        }
+
+        public List<UserDto> getWaitingList() {
+            using (var ctx = new Context())
+	        {
+                var users = ctx.Users.Where(q => q.Locked == true).ToList();
+                return mapper.usersToUserDtos(users);
+            }
+        }
+        
+        public string addSubject(SubjectDto subjectDto)
+        {
+            string subjectName = subjectDto.name;
+
+            using (var ctx = new Context())
+	        {
+                if (ctx.Subjects.ToList().Any(q => q.Name == subjectName.ToLower()))
+                {
+                    throw AppUserService.CreateException($"Předmět {subjectName} již existuje.");
+                }
+                else
+                {
+                    Subject subject = mapper.subjectDtoToSubject(subjectDto);
+                    ctx.Subjects.Add(subject);
+                    ctx.SaveChanges();
+                }
+            }
+
+            return "Předmět byl zapsán.";
+        }
+
+        public string addSchool(SchoolDto schoolDto)
+        {
+            string schoolName = schoolDto.name;
+
+            using (var ctx = new Context())
+	        {
+                if (ctx.Schools.ToList().Any(q => q.Name == schoolName.ToLower()))
+                {
+                    throw AppUserService.CreateException($"Škola {schoolName} již existuje.");
+                }
+                else
+                {
+                    School school = mapper.schoolDtoToSchool(schoolDto);
+                    ctx.Schools.Add(school);
+                    ctx.SaveChanges();
+                }
+            }
+
+            return "Škola byla přidána.";
+        }
+
+        public List<StudentPracticeDto> getPracticesList(DateTime date, long subjectId, int pageNumber, int pageSize)
+        {
+            using (var ctx = new Context())
+	        {
+                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId);
+                if(!practices.Any()) 
+                {
+                    practices = ctx.Practices.ToList();
+                }
+
+                practices.OrderBy(p => p.Date);
+
+                var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
+                var toDelete = new List<PracticeDomain>();
+
+                foreach (PracticeDomain p in practicesDomain)
+                {
+                    p.SetNumberOfReservedStudents();
+                    p.SetStudentNames(teacherService.getStudentNamesByPractice(p));
+                    p.SetFileNames(appUserService.getTeacherFiles(p.teacher.username));
+                    p.SetStudentEmails(teacherService.getStudentEmailsByPractice(p));
+                    toDelete.Add(p);
+                }
+
+                foreach (PracticeDomain practiceDomain in toDelete)
+                {
+                    if (practiceDomain.RemoveNotPassedPractices())
+                    {
+                        practicesDomain.Remove(practiceDomain);
+                    }
+                }
+
+                return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
+            }
+        }
+
+        public List<StudentPracticeDto> getPracticesListPast(DateTime date, long subjectId, int pageNumber, int pageSize)
+        {
+            using (var ctx = new Context())
+	        {
+                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId);
+                if(!practices.Any()) 
+                {
+                    practices = ctx.Practices.ToList();
+                }
+
+                practices.OrderBy(p => p.Date);
+
+                List<PracticeDomain> practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
+                List<PracticeDomain> toDelete = new List<PracticeDomain>();
+
+                foreach (PracticeDomain p in practicesDomain)
+                {
+                    p.SetNumberOfReservedStudents();
+                    p.SetStudentNames(teacherService.getStudentNamesByPractice(p));
+                    p.SetFileNames(appUserService.getTeacherFiles(p.teacher.username));
+                    p.SetStudentEmails(teacherService.getStudentEmailsByPractice(p));
+                    string report = appUserService.getPracticeReport(p.id);
+                    p.SetReport(report);
+                    toDelete.Add(p);
+                }
+
+                foreach (PracticeDomain practiceDomain in toDelete)
+                {
+                    if (practiceDomain.RemovePassedPractices())
+                    {
+                        practicesDomain.Remove(practiceDomain);
+                    }
+                }
+
+                return mapper.practicesDomainToStudentPracticesDto(practicesDomain);
+            }
+        }
+
+        public string removeSchool(string schoolName)
+        {
+            using (var ctx = new Context())
+	        {
+                School school = ctx.Schools.Where(q => q.Name == schoolName.ToLower()).FirstOrDefault();
+                if (school != null)
+                {
+                    ctx.Users.Where(u => u.SchoolId == school.Id).ToList().ForEach(u => {
+                        u.School = null;
+                        u.SchoolId = null;
+                    });
+                    ctx.Schools.Remove(school);
+                    int rowsAffected = ctx.SaveChanges();
+                    if (rowsAffected >= 1) return "School deleted";
+                    else return "Something went wrong";
+                }
+                else return "School was not deleted";
+            }
+        }
+
+        public string removeSubject(string subjectName)
+        {
+            using (var ctx = new Context())
+	        {
+                Subject subject = ctx.Subjects.Where(q => q.Name == subjectName.ToLower()).FirstOrDefault();
+                if (subject != null)
+                {
+                    ctx.Practices.Where(p => p.SubjectId == subject.Id).ToList().ForEach(p => {
+                        p.Subject = null;
+                        p.SubjectId = null;
+                    });
+                    ctx.Subjects.Remove(subject);
+                    int rowsAffected = ctx.SaveChanges();
+                    if (rowsAffected >= 1) return "Subject deleted";
+                    else return "Something went wrong";
+                }
+                else return "Subject was not deleted";
+            }
+        }
+
+        public string editSubject(string originalSubject, string newSubject)
+        {
+            using (var ctx = new Context())
+	        {
+                Subject subject = ctx.Subjects.Where(q => q.Name == originalSubject.ToLower()).FirstOrDefault();
+                if (subject != null)
+                {
+                    subject.Name = newSubject;
+                    int rowsAffected = ctx.SaveChanges();
+                    if (rowsAffected >= 1) return "Subject changed";
+                    else return "Something went wrong";
+                }
+                else return "Subject was not changed";
+            }
+        }
+
+        public string editSchool(string originalSchool, string newSchool)
+        {
+            using (var ctx = new Context())
+	        {
+                School school = ctx.Schools.Where(q => q.Name == originalSchool.ToLower()).FirstOrDefault();
+                if (school != null)
+                {
+                    school.Name = newSchool;
+                    int rowsAffected = ctx.SaveChanges();
+                    if (rowsAffected >= 1) return "School changed";
+                    else return "Something went wrong";
+                }
+                else return "School was not changed";
+            }
+        }
+
+        public string assignSchool(AssignSchoolDto request)
+        {
+            using (var ctx = new Context())
+	        {
+                School school = ctx.Schools.Where(q => q.Name == request.school.ToLower()).FirstOrDefault();
+                if (school != null)
+                {
+                    User user = ctx.Users.Where(q => q.Username == request.username.ToLower()).FirstOrDefault();
+                    if (user != null)
+                    {
+                        user.SchoolId = school.Id;
+                        user.School = school;
+                        ctx.SaveChanges();
+                        return "School assigned.";
+                    }
+                    else return "Something went wrong";
+                }
+                else return "School was not assigned.";
+            }
+        }
+
+        public List<UserDto> getTeachersWithoutSchool()
+        {
+            using (var ctx = new Context())
+	        {
+                var users = ctx.Users.Where(q => q.SchoolId == null && q.Role == Roles.ROLE_TEACHER).ToList();
+                return mapper.usersToUserDtos(users);
+            }
+        }
+
+        public string changePhoneNumber(string username, string phoneNumber)
+        {
+            using (var ctx = new Context())
+	        {
+                User user = ctx.Users.Where(q => q.Username == username.ToLower()).FirstOrDefault();
+                if (user != null)
+                {
+                    user.PhoneNumber = phoneNumber;
+                    ctx.SaveChanges();
+                    return "Phone number changed.";
+                }
+                else return "Phone number was not changed.";
+            }        
+        }
+
+       public string register(RegistrationDto request)
+        {
+            if(!(appUserService.checkEmail(request.email, Roles.ROLE_COORDINATOR)))
+            {
+                throw AppUserService.CreateException($"Email is in the wrong format.", null);
+            }
+
+            string email, password, firstName, lastName, phoneNumber;
+            Roles role;
+            bool locked, enabled;
+
+            email = request.email;
+            password = Guid.NewGuid().ToString();
+            firstName = request.firstName;
+            lastName = request.lastName;
+            phoneNumber = request.phoneNumber;
+            role = Roles.ROLE_COORDINATOR;
+            locked = false;
+            enabled = true;
+
+            appUserService.signUpCoordinator(new User(email, password, firstName, lastName, phoneNumber, role, locked, enabled));
+
+            return "Účet byl úspěšně vytvořen.";
+        }
+
+        public string deleteCoordinator(long id)
+        {
+            using (var ctx = new Context())
+	        {
+                string loggedUserEmail = appUserService.getCurrentUserEmail();
+                User coordinator = ctx.Users.Where(q => q.Id == (int)id).FirstOrDefault();
+
+                if (loggedUserEmail.Equals(coordinator.Username)) throw AppUserService.CreateException($"Nelze smazat vlastní účet!", null);
+
+                if (coordinator != null)
+                {
+                    ctx.Users.Remove(coordinator);
+                    int rowsAffected = ctx.SaveChanges();
+                    if (rowsAffected == 1) return "Koordinátor byl úspěšně smazán.";
+                    else return "Došlo k chybě. Koordinátora nelze smazat.";
+                }
+                else return "Došlo k chybě. Koordinátor nebyl nalezen.";
+            }
+        }
+
+        public List<Dictionary<long, List<ReviewDto>>> getAllReviews()
+        {
+            List<Dictionary<long, List<ReviewDto>>> mappedReviews = new List<Dictionary<long, List<ReviewDto>>>();
+
+            using (var ctx = new Context())
+	        {
+                List<Practice> practices = ctx.Practices.ToList();
+
+                foreach (Practice practice in practices)
+                {
+                    List<Review> reviews = ctx.Reviews.Where(r => r.PracticeId == practice.PracticeId).ToList();
+                    List<ReviewDto> revDtos = mapper.reviewsToReviewDtos(reviews);
+
+                    mappedReviews.Add(new Dictionary<long, List<ReviewDto>>
+                    {
+                        { practice.PracticeId, revDtos }
+                    });
+                } 
+                return mappedReviews;
+            }        
+        }
+    }
+}    
