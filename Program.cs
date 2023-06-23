@@ -133,38 +133,7 @@ using Microsoft.OpenApi.Models;
             
             builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
             builder.Services.AddControllers();
-            
-            using (var ctx = new Context())
-            {
-                //private readonly RegistrationService regService;
-                /*RegistrationService regService;
-                SchoolService schService;
-                AppUserService appService;*/
 
-                //User appUser = new User("coordinator@student.osu.cz", "secret_passwd123", "Testing", "Tester", 1, "123456789", Roles.ROLE_COORDINATOR, false, true);
-                //User user = ctx.Users.Where(q => q.Username == "coordinator@student.osu.cz").FirstOrDefault();
-                /*var school1 = new School() { Id = 1, Name = "ZŠ Dobrá" };
-                ctx.Schools.Add(school1);
-                ctx.SaveChanges();*/
-
-                //RegistrationDto request = new RegistrationDto("coordinator@student.osu.cz", "Testing", "Tester", 2, "123456789", "secret_passwd123", "coordinator");
-                //UserLoginDto req = new UserLoginDto("r93452@student.osu.cz", "secret_passwd123");
-                //appService.login(req, HttpContext);
-                //regService.register(request); 
-
-                var practices = ctx.Practices.ToList();
-                foreach (var practice in practices)
-                {
-                    Console.WriteLine($"Datum: {practice.Date}, Čas začátku: {practice.Start}, Poznamka: {practice.Note}, SubjectID: {practice.SubjectId}, TeacherID: {practice.TeacherId}");
-                }
-
-                var reviews = ctx.Reviews.ToList();
-                foreach (var rev in reviews)
-                {
-                    Console.WriteLine($"User ID: {rev.UserId}, Text: {rev.Text}");
-                }
-            }
-            
             var app = builder.Build();
 
             //app.UseHttpsRedirection();

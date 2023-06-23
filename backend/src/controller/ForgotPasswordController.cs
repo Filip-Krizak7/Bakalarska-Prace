@@ -70,13 +70,19 @@ namespace TeacherPractise.Controller
                 return BadRequest("Neplatný ověřovací odkaz.");
             }
 
-            var user = appUserService.getUserByPasswordResetToken(passwordDto.token);
+            var userId = appUserService.getUserByPasswordResetToken(passwordDto.token);
 
-            if (user != null)
+            if (userId != null)
             {
-                appUserService.changeUserPassword(user, passwordDto.newPassword);
-                appUserService.deleteByToken(passwordDto.token);
-                return Ok("Heslo bylo změněno úspěšně");
+                using (var ctx = new Context())
+	            {
+                    User user = ctx.Users.ToList().FirstOrDefault(q => q.Id == userId)
+                	    ?? throw AppUserService.CreateException($"Uživatel s ID {userId} neexistuje.");
+
+                    appUserService.changeUserPassword(user.Username, passwordDto.newPassword);
+                    appUserService.deleteByToken(passwordDto.token);
+                    return Ok("Heslo bylo změněno úspěšně");
+                }
             }
             else
             {

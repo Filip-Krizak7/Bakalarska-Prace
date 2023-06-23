@@ -34,6 +34,9 @@ namespace TeacherPractise.Controller
         [AllowAnonymous]
         public async Task<IActionResult> login(UserLoginDto request)
         {
+            if (request.password == null || request.username == null) {
+                throw AppUserService.CreateException($"Uživatelské jméno nebo heslo nevyplněno.");
+            }
             User appUser = appUserService.login(request);
             string token = securityService.BuildJwtToken(appUser);
 

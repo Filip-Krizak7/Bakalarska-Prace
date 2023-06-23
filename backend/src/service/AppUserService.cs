@@ -418,7 +418,7 @@ namespace TeacherPractise.Service
             }
         }
         
-        public User? getUserByPasswordResetToken(string token) //mozna bude treba vracet pouze userId
+        public int? getUserByPasswordResetToken(string token)
         {
             using (var ctx = new Context())
 	        {
@@ -426,16 +426,17 @@ namespace TeacherPractise.Service
 
                 if (passwordToken != null)
                 {
-                    return passwordToken.User;
+                    return passwordToken.UserId;
                 }
                 else return null;
             }
         }
 
-        public void changeUserPassword(User user, string password) 
+        public void changeUserPassword(string username, string password) 
         {
             using (var ctx = new Context())
 	        {
+                User user = ctx.Users.Where(q => q.Username == username.ToLower()).FirstOrDefault();
                 var hashedPassword = securityService.HashPassword(password);
                 user.Password = hashedPassword;
                 ctx.SaveChanges();
@@ -460,6 +461,13 @@ namespace TeacherPractise.Service
                 ctx.PasswordResetTokens.Remove(passwordToken);
                 ctx.SaveChanges();
             }
+        }
+
+        public string testValid()
+        {
+            if (securityService.VerifyPassword("secret_passwd123", "$2a$11$eCsYR.5x0FN2j6Vv0KEHh.ZT6C3Q8hLATmpWTW2LPi8JYXvZoLxl6"))
+                return "true";
+            else { return "false"; }
         }
     }
 }
