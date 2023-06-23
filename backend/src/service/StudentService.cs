@@ -233,13 +233,12 @@ namespace TeacherPractise.Service
                 Practice practice = ctx.Practices.ToList().FirstOrDefault(q => q.PracticeId == practiceId)
                 	?? throw AppUserService.CreateException($"Požadovaná praxe nebyla nalezena.");
 
-                User student = ctx.Users.ToList().FirstOrDefault(q => q.Username == name.ToLower())
-                	?? throw AppUserService.CreateException($"Student {name} nenalezen.");
+                User student = ctx.Users.ToList().FirstOrDefault(q => q.Username == name.ToLower());
 
                 if(student != null) {
-                    var existingReview = ctx.Reviews.ToList().Where(q => q.UserId == student.Id && q.PracticeId == practiceId);
+                    var existingReview = ctx.Reviews.ToList().Where(q => q.UserId == student.Id && q.PracticeId == practiceId).FirstOrDefault();
                     if(existingReview != null) {
-                        return "Již jste jedno hodnocení této praxi napsal.";
+                        return "Napsal/a jste již jedno hodnocení pro tuto praxi.";
                     }
 
                     Review review = new Review(student.Id, (int)practiceId, text);

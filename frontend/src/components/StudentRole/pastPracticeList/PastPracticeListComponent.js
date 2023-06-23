@@ -108,11 +108,11 @@ export const PastPracticeListComponent = () => {
         const postReview = async (practiceId, review) => {
             console.log("review text", review);
             const response = await axios({
-                headers: {'content-type': 'text/plain', 'Authorization': localStorage.getItem("token")},
+                headers: {'content-type': 'application/json', 'Authorization': localStorage.getItem("token")},
                 url: `${URL}/student/practices/${practiceId}/submitReview`,
                 withCredentials: true,
                 method: "POST",
-                data: review
+                data: { text: review }
             }).catch((err) => {
                 setErrorMessage(err.response.data.message);
                 setSuccessMessage("");

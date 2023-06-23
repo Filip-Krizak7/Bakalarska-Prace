@@ -75,10 +75,10 @@ namespace TeacherPractise.Controller
         }
 
         [HttpPost("practices/{id}/submitReview")]
-        public IActionResult submitReview([FromRoute] long id, [FromBody] string text)
+        public IActionResult submitReview([FromRoute] long id, [FromBody] ReviesDto reviewDto)
         {
             string currentEmail = appUserService.getCurrentUserEmail();
-            return Ok(studentService.submitReview(currentEmail, id, text));
+            return Ok(studentService.submitReview(currentEmail, id, reviewDto.text));
         }
 
         [HttpGet("practices-slice")]

@@ -157,6 +157,12 @@ using Microsoft.OpenApi.Models;
                 {
                     Console.WriteLine($"Datum: {practice.Date}, Čas začátku: {practice.Start}, Poznamka: {practice.Note}, SubjectID: {practice.SubjectId}, TeacherID: {practice.TeacherId}");
                 }
+
+                var reviews = ctx.Reviews.ToList();
+                foreach (var rev in reviews)
+                {
+                    Console.WriteLine($"User ID: {rev.UserId}, Text: {rev.Text}");
+                }
             }
             
             var app = builder.Build();
