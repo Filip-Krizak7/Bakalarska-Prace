@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using TeacherPractise.Config;
 using TeacherPractise.Model;
 using Newtonsoft.Json;
-//using System.Web.Http.Cors;
+using System;
 using Microsoft.AspNetCore.Cors;
 
 namespace TeacherPractise.Controller
@@ -35,7 +35,7 @@ namespace TeacherPractise.Controller
         public async Task<IActionResult> login(UserLoginDto request)
         {
             if (request.password == null || request.username == null) {
-                throw AppUserService.CreateException($"Uživatelské jméno nebo heslo nevyplněno.");
+                throw new UnauthorizedAccessException($"Uživatelské jméno nebo heslo nevyplněno.");
             }
             User appUser = appUserService.login(request);
             string token = securityService.BuildJwtToken(appUser);
@@ -50,7 +50,7 @@ namespace TeacherPractise.Controller
             HttpContext.Response.StatusCode = 200;
             HttpContext.Response.ContentType = "application/json";
 
-            var responseJson = JsonConvert.SerializeObject(new Dictionary<string, string> { { "role", appUser.Role.ToString() }, { "token", "Bearer " + token } });
+            var responseJson = JsonConvert.SerializeObject(new Dictionary<string, string> { { "role", appUser.Role.ToString() } });
 
             await HttpContext.Response.WriteAsync(responseJson);
 

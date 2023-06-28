@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Globalization;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,8 @@ namespace TeacherPractise.Service
         {
             using (var ctx = new Context())
 	        {
-                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId);
+                var practices = ctx.Practices.ToList().Where(q => q.Date == DateTime.ParseExact(date.ToString("yyyy-MM-dd"), 
+                    "yyyy-MM-dd", CultureInfo.InvariantCulture) || q.SubjectId == subjectId);
                 if(!practices.Any()) 
                 {
                     practices = ctx.Practices.ToList();
@@ -140,7 +142,8 @@ namespace TeacherPractise.Service
         {
             using (var ctx = new Context())
 	        {
-                List<Practice> practices = ctx.Practices.Where(q => q.Date == date || q.SubjectId == subjectId).ToList();
+                var practices = ctx.Practices.Where(q => q.Date == DateTime.ParseExact(date.ToString("yyyy-MM-dd"), 
+                    "yyyy-MM-dd", CultureInfo.InvariantCulture) || q.SubjectId == subjectId).ToList();
                 if(!practices.Any()) 
                 {
                     practices = ctx.Practices.ToList();
@@ -188,7 +191,6 @@ namespace TeacherPractise.Service
 
                 registeredStudents.Add(student);
                 practice.UsersOnPractice = registeredStudents;
-                //student.AttendedPractices.Add(practice);
 
                 ctx.SaveChanges();
             }
