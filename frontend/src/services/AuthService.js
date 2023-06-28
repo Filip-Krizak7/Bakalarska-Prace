@@ -8,6 +8,18 @@ const CHANGE_PASSWORD_URL = `${process.env.REACT_APP_AXIOS_URL}/user/changePassw
 const EMAIL_FOR_RESET_URL = `${process.env.REACT_APP_AXIOS_URL}/forgotPassword/reset`;
 const FORGOT_PASSWORD_URL = `${process.env.REACT_APP_AXIOS_URL}/forgotPassword/save`;
 
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            const token = cookie.substring(name.length + 1);
+            return 'Bearer ' + token;
+        }
+    }
+    return null;
+}
+
 class AuthService {
     login(username, password) {
         const formData = JSON.stringify({username, password});
@@ -21,7 +33,8 @@ class AuthService {
         }).then((response) => {
             if (response) {
                 localStorage.setItem("user", JSON.stringify(response.data));
-                localStorage.setItem("token", response.data.token);
+                const token = getCookie("access_token");
+                localStorage.setItem("token", token);
                 if (response.data.role === "ROLE_COORDINATOR") {
                     localStorage.setItem("role", "ROLE_COORDINATOR");
                 } else if (response.data.role === "ROLE_STUDENT") {

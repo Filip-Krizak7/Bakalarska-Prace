@@ -143,7 +143,7 @@ using Microsoft.OpenApi.Models;
             app.UseCookiePolicy();
             app.UseCors(AllowSpecificOrigin);
 
-            //app.UseHsts(); //------
+            //app.UseHsts();
             app.UseMvc();
             app.UseStaticFiles();
             app.UseRouting();

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -64,7 +65,9 @@ namespace TeacherPractise.Service
                 User teacher = ctx.Users.ToList().FirstOrDefault(q => q.Username == teacherUsername.ToLower())
                 	?? throw AppUserService.CreateException($"Učitel {teacherUsername} nenalezen.");
 
-                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == teacher.Id);
+                var practices = ctx.Practices.ToList().Where(q => q.Date == DateTime.ParseExact(date.ToString("yyyy-MM-dd"), 
+                    "yyyy-MM-dd", CultureInfo.InvariantCulture) || q.SubjectId == subjectId || q.TeacherId == teacher.Id);
+                
                 practices.OrderBy(p => p.Date);
 
                 var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());
@@ -98,7 +101,8 @@ namespace TeacherPractise.Service
                 User teacher = ctx.Users.ToList().FirstOrDefault(q => q.Username == teacherUsername.ToLower())
                 	?? throw AppUserService.CreateException($"Učitel {teacherUsername} nenalezen.");
 
-                var practices = ctx.Practices.ToList().Where(q => q.Date == date || q.SubjectId == subjectId || q.TeacherId == teacher.Id);
+                var practices = ctx.Practices.ToList().Where(q => q.Date == DateTime.ParseExact(date.ToString("yyyy-MM-dd"), 
+                    "yyyy-MM-dd", CultureInfo.InvariantCulture) || q.SubjectId == subjectId || q.TeacherId == teacher.Id);
                 practices.OrderBy(p => p.Date);
 
                 var practicesDomain = mapper.practicesToPracticesDomain(practices.ToList());

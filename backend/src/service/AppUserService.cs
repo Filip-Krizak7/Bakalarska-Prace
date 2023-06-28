@@ -105,10 +105,10 @@ namespace TeacherPractise.Service
             using (var ctx = new Context())
 	        {
 		        User appUser = ctx.Users.ToList().FirstOrDefault(q => q.Username == username.ToLower())
-                	?? throw CreateException($"Username {username} does not exist.");
+                	?? throw new UnauthorizedAccessException($"Uživatel {username} neexistuje.");
 
             	if (!this.securityService.VerifyPassword(password, appUser.Password))
-                	throw CreateException($"Credentials are not valid.");
+                	throw new UnauthorizedAccessException($"Chybné přihlášení.");
 
             	return appUser;
             }
@@ -143,19 +143,18 @@ namespace TeacherPractise.Service
         public User login(UserLoginDto request)
         {
             User appUser;
-            if (request.username == null) throw new Exception("Uživatelské jméno nevyplněno");
-            if (request.password == null) throw new Exception("Heslo nevyplněno");
+            if (request.username == null) throw new UnauthorizedAccessException("Uživatelské jméno nevyplněno");
+            if (request.password == null) throw new UnauthorizedAccessException("Heslo nevyplněno");
 
             try
             {
                 appUser = getUserByCredentials(request.username, request.password);
-                if (appUser == null) throw new Exception("Chybné přihlášení");
-                if (!appUser.Enabled) throw new Exception("Účet není plně aktivován. Potvrďte e-mailovou adresu.");
-                if (appUser.Locked) throw new Exception("Účet není plně aktivován. Kontaktujte koordinátora.");       
+                if (!appUser.Enabled) throw new UnauthorizedAccessException("Účet není plně aktivován. Potvrďte e-mailovou adresu.");
+                if (appUser.Locked) throw new UnauthorizedAccessException("Účet není plně aktivován. Kontaktujte koordinátora.");       
             }
             catch (IOException ex)
             {
-                throw new Exception("Překlep v atributech username nebo password");
+                throw new UnauthorizedAccessException("Překlep v atributech username nebo password");
             }
 
             return appUser;
@@ -312,15 +311,13 @@ namespace TeacherPractise.Service
 
         public string getCurrentUserEmail()
         {
-            string authHeader = httpContextAccessor.HttpContext.Request.Headers["Authorization"].ToString();
+            string token = httpContextAccessor.HttpContext.Request.Cookies[SecurityConfig.COOKIE_NAME].ToString();
 
-            if (string.IsNullOrEmpty(authHeader))
+            if (string.IsNullOrEmpty(token))
             {
                 return "No one is logged in!";
             }
             else{
-                string token = authHeader.Split(' ').Last().Replace("Bearer ", "");
-
                 string currentEmail = new JwtSecurityTokenHandler()
                     .ReadJwtToken(token)
                     .Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
@@ -336,7 +333,6 @@ namespace TeacherPractise.Service
                 User user = ctx.Users.Where(q => q.Username == username.ToLower()).FirstOrDefault();
                 if (user != null)
                 {
-                    //Console.WriteLine("before token removal" + " " + username);
                     confirmationTokenService.deleteConfirmationTokenById(user.Id);
                     ctx.Users.Remove(user);
                     int rowsAffected = ctx.SaveChanges();
