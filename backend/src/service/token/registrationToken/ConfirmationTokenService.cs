@@ -25,14 +25,34 @@ namespace TeacherPractise.Service.Token.RegistrationToken
             }
         }
 
-        public void deleteByExpiresAtLessThan(DateTime now) //nastavit do program.cs jako cron
+        public void deleteExpiredConfirmationTokens()
         {
             using (var ctx = new Context())
 	        {
                 var confTokens = ctx.ConfirmationTokens.ToList();
                 foreach (var confToken in confTokens)
                 {
-                    if (confToken.ExpiresAt < now) ctx.ConfirmationTokens.Remove(confToken);
+                    if (confToken.ExpiresAt < DateTime.Now) 
+                    {
+                        ctx.ConfirmationTokens.Remove(confToken);
+                        ctx.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        public void deleteExpiredPasswordResetTokens()
+        {
+            using (var ctx = new Context())
+	        {
+                var resetTokens = ctx.PasswordResetTokens.ToList();
+                foreach (var resetToken in resetTokens)
+                {
+                    if (resetToken.ExpiryDate < DateTime.Now) 
+                    {
+                        ctx.PasswordResetTokens.Remove(resetToken);
+                        ctx.SaveChanges();
+                    }
                 }
             }
         }
