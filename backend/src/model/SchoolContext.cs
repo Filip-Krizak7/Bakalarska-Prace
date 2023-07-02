@@ -7,7 +7,6 @@ namespace TeacherPractise.Model
 {
     public class Context : DbContext
     {
-        //sql server - localhost/mssqlserver_bp
         public Context(): base("SchoolDB")
         {
             Database.SetInitializer<Context>(new DropCreateDatabaseIfModelChanges<Context>());
@@ -34,10 +33,6 @@ namespace TeacherPractise.Model
                             cs.ToTable("UserPractice");
                         });
 
-            /*modelBuilder.Entity<Practice>()
-                .Property(e => e.DateValue)
-                .HasColumnType("date");*/
-                
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
     }
