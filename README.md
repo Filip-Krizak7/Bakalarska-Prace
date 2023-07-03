@@ -10,3 +10,4 @@ Deployment steps:
 - a new email has been created, if you want to change it, you can do it in AppConfig.cs
 - to generate ASP.NET production build run command "dotnet publish -c Release -o ./publish"
 - to generate ReactJS production build run command "npm run build"
+- database migration tutorial - https://www.entityframeworktutorial.net/code-first/code-based-migration-in-code-first.aspx
