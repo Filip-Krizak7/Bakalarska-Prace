@@ -130,13 +130,19 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-var timer = new System.Timers.Timer
+var timerTokens = new System.Timers.Timer
 {
     Interval = TimeSpan.FromHours(24).TotalMilliseconds, 
     AutoReset = true
 };
 
-timer.Elapsed += (sender, args) =>
+var timerUser = new System.Timers.Timer
+{
+    Interval = TimeSpan.FromMinutes(10).TotalMilliseconds,
+    AutoReset = true
+};
+
+timerTokens.Elapsed += (sender, args) =>
 {
     var now = DateTime.Now;
     if (now.Hour == 3 && now.Minute == 0)
@@ -150,7 +156,21 @@ timer.Elapsed += (sender, args) =>
     }
 };
 
-timer.Start();
+timerUser.Elapsed += (sender, args) =>
+{
+    var now = DateTime.Now;
+    if (now.Minute % 10 == 0)
+    {
+        var appUserService = app.Services.GetRequiredService<AppUserService>();
+
+        Console.WriteLine("Deleting user with expired tokens: " + DateTime.Now);
+
+        appUserService.deleteUserByExpiredConfirmationToken();
+    }
+};
+
+timerTokens.Start();
+timerUser.Start();
 
 //app.UseHttpsRedirection();
 

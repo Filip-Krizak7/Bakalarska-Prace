@@ -465,5 +465,21 @@ namespace TeacherPractise.Service
                 return "true";
             else { return "false"; }
         }
+
+        public void deleteUserByExpiredConfirmationToken()
+        {
+            using (var ctx = new Context())
+            {
+                var users = ctx.Users
+                    .ToList()
+                    .Where(u => u.ConfirmationToken != null && u.ConfirmationToken.ExpiresAt < DateTime.Now);
+
+                foreach (var user in users)
+                {
+                    ctx.Users.Remove(user);
+                    ctx.SaveChanges();
+                }
+            }
+        }
     }
 }
