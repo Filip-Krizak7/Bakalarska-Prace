@@ -454,7 +454,7 @@ export class RegistrationComponent extends Component {
                             </div>
                         )}
                         <span className={"account-a"}>
-              <p>Máte účet? <a className={"login-link"} href="login">Přihlašte se</a>
+              <p>Máte účet? <a className={"login-link"} href="login">Přihlaste se</a>
               </p>
             </span>
                     </section>
@@ -648,7 +648,7 @@ export class RegistrationComponent extends Component {
 
                         <br/>
                         <span className={"account-a"}>
-              <p>Máte účet?   <a className={"login-link"} href="login">Přihlašte se</a>
+              <p>Máte účet?   <a className={"login-link"} href="login">Přihlaste se</a>
               </p>
             </span>
                     </section>

@@ -2,7 +2,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { Container, Nav } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Logo from "../../../resources/OUbile.png";
+import Logo from "../../../resources/OSUbile.png";
 import "./NavbarStyles.css";
 import { BsFillHouseFill, BsFillPersonFill } from "react-icons/bs";
 import LoginControlComponent from "../login/logincontrol/LoginControlComponent";
@@ -60,18 +60,30 @@ const NavbarComponent = () => {
                         />
                     </Navbar.Brand>
                     <Nav className="navbar-links">
+                    {localStorage.getItem("token") && (
                         <Nav.Link className="nav-link">
-                            <span className="my-hover" onClick={() => redirectBasedOnRoleMainView()} id="prehled">
-                                <BsFillHouseFill className="icon" style={iconStyles} />
-                                <p className={"p-margin"}>Domů</p>
+                            <span
+                            className="my-hover"
+                            onClick={() => redirectBasedOnRoleMainView()}
+                            id="prehled"
+                            >
+                            <BsFillHouseFill className="icon" style={iconStyles} />
+                            <p className={"p-margin"}>Domů</p>
                             </span>
                         </Nav.Link>
-                        <Nav.Link className="nav-link">
-                            <span className="my-hover" onClick={() => redirectBasedOnRolePersonalPage()} id="prehled">
+                        )}
+                        {localStorage.getItem("token") && (
+                            <Nav.Link className="nav-link">
+                                <span
+                                className="my-hover"
+                                onClick={() => redirectBasedOnRolePersonalPage()}
+                                id="prehled"
+                                >
                                 <BsFillPersonFill className="icon" style={iconStyles} />
                                 <p className={"p-margin"}>Účet</p>
-                            </span>
-                        </Nav.Link>
+                                </span>
+                            </Nav.Link>
+                            )}
                     </Nav>
                     <Navbar.Collapse className="margin-left-cstm-nav">
                         <Nav>

@@ -84,7 +84,6 @@ namespace TeacherPractise.Controller
         [HttpPost("removeUser")]
         public IActionResult removeUser([FromBody] string request)
         {
-            //string result = request.Substring(1, request.Length - 2);
             return Ok(appUserService.removeUser(request));
         }
         
@@ -123,7 +122,6 @@ namespace TeacherPractise.Controller
         [HttpPost("unlockUser")]
         public IActionResult unlockUser([FromBody] string request)
         {
-            //string result = request.Substring(1, request.Length - 2);
             return Ok(appUserService.unlockUser(request));
         }
 

@@ -44,6 +44,7 @@ class AuthService {
                 } else if (response.data.role === "ROLE_ADMIN"){
                     localStorage.setItem("role", "ROLE_ADMIN");
                 }
+                window.location.reload();
             }
             return response.data;
         });
@@ -78,6 +79,7 @@ class AuthService {
             data: formData,
         }).then((response) => {
             if (response) {
+                window.location.reload();
             }
             return response.data;
         });
