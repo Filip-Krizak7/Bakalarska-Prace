@@ -16,6 +16,7 @@ import "../../UnspecifiedRoles/registration/RegistrationComponent.css";
 
 const notRegistered = "Zaregistrovat koordinátora";
 const waiting = "Zpracování požadavku..."
+const errorMsg = "Tento email je již zaregistrován";
 const finished = "Na e-mail bylo zasláno ověření";
 
 const URL = `${process.env.REACT_APP_AXIOS_URL}`;
@@ -169,16 +170,29 @@ export class RegistrationComponent extends Component {
                     });
                 },
                 (error) => {
-                    const resMessage = error.response.data.message.split(":")[1];
-                    error.toString();
-                    console.log("Server Error Message:", resMessage)
-                    this.setState({
-                        loading: false,
-                        message: resMessage,
-                        message_success: "",
-                        disable: false,
-                        btnMessage: notRegistered,
-                    });
+                    if (error.response && error.response.data && error.response.data.message) {
+                        const errorMessage = error.response.data.message;
+                        if (errorMessage.includes("already exists")) {
+                            this.setState({
+                                loading: false,
+                                message: "Chybné přihlášení.",
+                                message_success: "",
+                                disable: false,
+                                btnMessage: notRegistered,
+                            });
+                        } else {
+                            // handle other errors
+                            console.log("Server Error Message:", errorMessage);
+                        }
+                    } else {
+                        this.setState({
+                            loading: false,
+                            message: errorMsg,
+                            message_success: "",
+                            disable: false,
+                            btnMessage: notRegistered,
+                        });
+                    }
                 }
             );
         } else {
