@@ -12,6 +12,7 @@ import RegisterView from "./views/register/RegisterView";
 import { UserContextProvider } from "./userContext";
 import AdminHomeView from "./views/adminHome/AdminHomeView";
 import AdminPersonalPageView from "./views/adminPersonalPage/AdminPersonalPageView";
+import AdminAddCoordinatorComponent from "./components/AdminRole/AdminAddCoordinator/AdminAddCoordinatorComponent";
 import {useState} from "react";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
             <Route path="/teacherPersonal" element={<TeacherPersonalPageView />} />
             <Route path="/coordinatorPersonal" element={<CoordinatorPersonalPageView />} />
             <Route path="/contact" element={<ContactPageView />} />
+            <Route path="/addCoordinator" element={<AdminAddCoordinatorComponent />} />
           </Routes>
         </BrowserRouter>
       </UserContextProvider>

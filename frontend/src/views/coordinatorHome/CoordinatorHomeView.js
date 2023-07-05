@@ -25,28 +25,25 @@ const CoordinatorHomeView = () => {
                 <Tab eventKey="tab1" title="Uživatelé čekající na potvrzení">
                     <WaitingListComponent />
                 </Tab>
-                <Tab eventKey="tab2" title="Přidání koordinátora">
-                    <AdminAddCoordinatorComponent />
-                </Tab>
-                <Tab eventKey="tab3" title="Školy">
+                <Tab eventKey="tab2" title="Školy">
                     <AddSchoolComponent />
                 </Tab>
-                <Tab eventKey="tab4" title="Předměty">
+                <Tab eventKey="tab3" title="Předměty">
                     <AddSubjectComponent />
                 </Tab>
-                <Tab eventKey="tab5" title="Vypsané praxe">
+                <Tab eventKey="tab4" title="Vypsané praxe">
                     <PracticesListCoordinator />
                 </Tab>
-                <Tab eventKey="tab6" title="Proběhlé praxe">
+                <Tab eventKey="tab5" title="Proběhlé praxe">
                     <PassedPracticesCoordinator />
                 </Tab>
-                <Tab eventKey="tab7" title="Studenti">
+                <Tab eventKey="tab6" title="Studenti">
                     <ShowStudents />
                 </Tab>
-                <Tab eventKey="tab8" title="Učitelé">
+                <Tab eventKey="tab7" title="Učitelé">
                     <ShowTeachers />
                 </Tab>
-                <Tab eventKey="tab9" title="Koordinátoři">
+                <Tab eventKey="tab8" title="Koordinátoři">
                     <ShowCoordinators />
                 </Tab>
             </Tabs>

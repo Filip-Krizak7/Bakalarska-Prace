@@ -1,3 +1,12 @@
 .cstm-padding-views {
   margin: 10px;
 }
+
+.add-coordinator-btn {
+  background-color: rgb(52, 80, 105);
+  color: white;
+  width: 185px;
+  height: 42px;
+  font-size: 16px;
+  border-radius: 5px;
+}
