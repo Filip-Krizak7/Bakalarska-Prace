@@ -23,5 +23,8 @@ namespace TeacherPractise.Config
         //public const string BASE_DNS_PRODUCTION = "https://rezervace.prf.osu.cz/";
         public const string EMAIL_SMTP_SERVER = "smtp.gmail.com";
         public const int SMTP_SERVER_PORT = 465;
+
+        public const string FOLDER_PATH = "/home/student/project/myproject/backend/user-files/";
+        public const string REPORTS_FOLDER_PATH = "/home/student/project/myproject/backend/report-files/";
     }
 }
