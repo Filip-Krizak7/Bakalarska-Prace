@@ -3,6 +3,7 @@
 
 Database model diagram
 https://dbdiagram.io/d/639b990799cb1f3b55a1b98c
+![image](https://github.com/Filip-Krizak7/Bakalarska-Prace/assets/121099068/2e4a2f72-ec2e-4393-989b-3f7895e27534)
 
 Deployment steps:
 - change REACT_APP_AXIOS_URL in .env.production
