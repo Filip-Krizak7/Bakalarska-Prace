@@ -10,7 +10,7 @@ const GET_COORDINATORS_URL = `${URL}/user/coordinators`;
 const REMOVE_COORDINATOR_URL = `${URL}/coordinator/deleteCoordinator`;
 
 function ShowCoordinators() {
-    //create const for teachers
+    const userRole = localStorage.getItem("role");
     const [coordinators, setCoordinators] = React.useState([]);
     const [chosenCoordinatorId, setChosenCoordinatorId] = React.useState();
     const [chosenCoordinatorName, setChosenCoordinatorName] = React.useState("");
@@ -131,7 +131,11 @@ function ShowCoordinators() {
             {DisplayData}
             </tbody>
         </table>
-        <button className="add-coordinator-btn" onClick={() => redirectOnAddCoordinator()}>Přidání koordinátora</button>
+        <button className="add-coordinator-btn" 
+            onClick={() => redirectOnAddCoordinator()}
+            style={{ display: userRole === "ROLE_COORDINATOR" ? "block" : "none" }}
+            >Přidání koordinátora
+        </button>
         <CreateModal
             show={modalShow}
             onHide={() => setModalShow(false)}

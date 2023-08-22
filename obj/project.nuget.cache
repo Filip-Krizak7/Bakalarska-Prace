@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "g+MsM51G2p0hnkIkYO7Bt8XWA7ivnGM7pCazmQeL3ZGh99EAO9U6/NKiYreDMJ7T5owOb9DbwuNWoG5zhU1/mQ==",
+  "dgSpecHash": "+/oQuZFiS3WNNdMyNRbJRUQboIWpL137T092CS4pBej9CfLskspvTX+icjvQMWjs9AjFe9X0UPn/d8BC9YnTOw==",
   "success": true,
-  "projectFilePath": "A:\\Projekty\\Bakalarka_latest\\Bakalarska-Prace\\Bakalarska-Prace.csproj",
+  "projectFilePath": "A:\\Projekty\\bakalarka_posledni_oprava\\Bakalarska-Prace\\Bakalarska-Prace.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Všichni\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Všichni\\.nuget\\packages\\bouncycastle.cryptography\\2.1.1\\bouncycastle.cryptography.2.1.1.nupkg.sha512",
