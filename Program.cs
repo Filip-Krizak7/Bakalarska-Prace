@@ -1,26 +1,20 @@
 using TeacherPractise.Service;
+using TeacherPractise.Dto.Request;
 using TeacherPractise.Service.Token.RegistrationToken;
-using TeacherPractise.Model;
 using TeacherPractise.Service.Email;
 using TeacherPractise.Mapper;
-using TeacherPractise.Dto.Request;
-using TeacherPractise.Dto.Response;
 using TeacherPractise.Service.FileService;
-using TeacherPractise.Mapper;
 using TeacherPractise.Service.CsvReport;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Http;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Security.Claims;
-using System.Text;
-using System;
+using TeacherPractise.Config;
+using TeacherPractise.Model;
 
-//var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";  
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
@@ -171,6 +165,21 @@ timerUser.Elapsed += (sender, args) =>
 
 timerTokens.Start();
 timerUser.Start();
+
+using (var ctx = new Context())
+{
+    if(!ctx.Users.ToList().Any()) 
+    {
+        var registrationService = app.Services.GetRequiredService<RegistrationService>();
+
+        School school1 = new School(1, "Ostravská univerzita"); 
+        ctx.Schools.Add(school1);
+        ctx.SaveChanges();  
+
+        RegistrationDto request = new RegistrationDto(AppConfig.CONFIRMATION_EMAIL_ADDRESS, "Koordinátor", "Default", 1, "123456789", AppConfig.COORDINATOR_EMAIL_PASSWORD, "coordinator");
+        registrationService.register(request);
+    }  
+}
 
 //app.UseHttpsRedirection();
 

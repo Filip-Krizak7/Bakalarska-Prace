@@ -2,14 +2,11 @@ using System.Net;
 using TeacherPractise.Model;
 using TeacherPractise.Config;
 using TeacherPractise.Service;
-using TeacherPractise.Dto.Request;
 using TeacherPractise.Service.FileManagement;
-using TeacherPractise.Dto.Response;
 using TeacherPractise.Service.FileService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
 namespace TeacherPractise.Controller.FileManagement

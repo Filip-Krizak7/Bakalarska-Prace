@@ -1,6 +1,4 @@
 using TeacherPractise.Model;
-using Microsoft.AspNetCore.Mvc;
-using TeacherPractise.Dto.Response;
 
 namespace TeacherPractise.Service
 {

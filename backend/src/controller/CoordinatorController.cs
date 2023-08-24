@@ -1,8 +1,4 @@
 using System.Net;
-using System.IO;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Net.Http.Headers;
-using TeacherPractise.Model;
 using TeacherPractise.Service;
 using TeacherPractise.Service.CsvReport;
 using TeacherPractise.Dto.Response;

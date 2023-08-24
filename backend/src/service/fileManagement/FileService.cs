@@ -1,6 +1,3 @@
-using System.IO;
-using System.Linq;
-using TeacherPractise.Service;
 using TeacherPractise.Model;
 using TeacherPractise.Service.FileManagement;
 

@@ -4,13 +4,9 @@ using TeacherPractise.Service.Token.PasswordResetToken;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
-using System.Buffers.Text;
 using System.IdentityModel.Tokens.Jwt;
-using System.IO.IsolatedStorage;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace TeacherPractise.Service
 {

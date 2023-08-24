@@ -1,5 +1,3 @@
-using System;
-
 namespace TeacherPractise.Exceptions
 {
     [Serializable]

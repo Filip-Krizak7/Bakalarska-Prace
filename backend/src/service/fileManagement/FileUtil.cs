@@ -1,5 +1,3 @@
-using System.IO;
-using System.Linq;
 using TeacherPractise.Config;
 
 namespace TeacherPractise.Service.FileManagement

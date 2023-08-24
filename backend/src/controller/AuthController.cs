@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Http;
 using TeacherPractise.Config;
 using TeacherPractise.Model;
 using Newtonsoft.Json;
-using System;
-using Microsoft.AspNetCore.Cors;
 
 namespace TeacherPractise.Controller
 {

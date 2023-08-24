@@ -1,13 +1,9 @@
 using TeacherPractise.Config;
-using TeacherPractise.Dto.Response;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Service.Email;
 using TeacherPractise.Model;
 using TeacherPractise.Service.Token.RegistrationToken;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
-using System.Transactions;
 
 namespace TeacherPractise.Service
 {

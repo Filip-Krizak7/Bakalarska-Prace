@@ -2,15 +2,11 @@ using TeacherPractise.Service;
 using TeacherPractise.Dto.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using TeacherPractise.Config;
 using TeacherPractise.Model;
 using TeacherPractise.Service.Email;
 using TeacherPractise.Service.Token.RegistrationToken;
-using TeacherPractise.Service.Token.PasswordResetToken;
-using Newtonsoft.Json;
 using System.Net.Mail;
-using Microsoft.AspNetCore.Cors;
 
 namespace TeacherPractise.Controller
 {

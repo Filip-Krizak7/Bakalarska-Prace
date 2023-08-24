@@ -8,13 +8,7 @@ using TeacherPractise.Dto.Response;
 using TeacherPractise.Mapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Newtonsoft.Json;
 
-using System;
-using System.IO;
-using System.Linq;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.IdentityModel.Tokens.Jwt;
 

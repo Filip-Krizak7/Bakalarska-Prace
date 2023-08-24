@@ -1,18 +1,11 @@
 using TeacherPractise.Model;
 using TeacherPractise.Service;
-using TeacherPractise.Config;
 using TeacherPractise.Mapper;
 using TeacherPractise.Dto.Response;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Service.FileService;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Linq;
-using System.IO;
 
 namespace TeacherPractise.Controller
 {
