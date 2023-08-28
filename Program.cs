@@ -65,12 +65,12 @@ builder.Services.AddSwaggerGen(option =>
 });
 
 //builder.Services.AddCors();
-var  AllowSpecificOrigin = "_myAllowSpecificOrigins";
+var AllowSpecificOrigin = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: AllowSpecificOrigin, policy =>
     {
-        policy.WithOrigins("http://localhost:80", "http://localhost:5000", "http://localhost:5000/login", "http://localhost") 
+        policy.WithOrigins("http://localhost:80", "http://localhost:5000", "http://localhost:5000/login", "http://localhost")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -90,11 +90,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddAuthentication(opt =>
-    {
-        opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
     .AddJwtBearer(opt =>
     {
         var key = new SymmetricSecurityKey(securityService.Key);
@@ -126,7 +126,7 @@ var app = builder.Build();
 
 var timerTokens = new System.Timers.Timer
 {
-    Interval = TimeSpan.FromHours(24).TotalMilliseconds, 
+    Interval = TimeSpan.FromHours(24).TotalMilliseconds,
     AutoReset = true
 };
 
@@ -168,17 +168,17 @@ timerUser.Start();
 
 using (var ctx = new Context())
 {
-    if(!ctx.Users.ToList().Any()) 
+    if (!ctx.Users.ToList().Any())
     {
         var registrationService = app.Services.GetRequiredService<RegistrationService>();
 
-        School school1 = new School(1, "Ostravsk√° univerzita"); 
+        School school1 = new School(1, "Ostravsk· univerzita");
         ctx.Schools.Add(school1);
-        ctx.SaveChanges();  
+        ctx.SaveChanges();
 
-        RegistrationDto request = new RegistrationDto(AppConfig.CONFIRMATION_EMAIL_ADDRESS, "Koordin√°tor", "Default", 1, "123456789", AppConfig.COORDINATOR_EMAIL_PASSWORD, "coordinator");
+        RegistrationDto request = new RegistrationDto(AppConfig.CONFIRMATION_EMAIL_ADDRESS, "Koordin·tor", "Default", 1, "123456789", AppConfig.COORDINATOR_EMAIL_PASSWORD, "coordinator");
         registrationService.register(request);
-    }  
+    }
 }
 
 //app.UseHttpsRedirection();
@@ -196,6 +196,6 @@ app.UseRouting();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseDeveloperExceptionPage();
-
 app.MapControllers();
+
 app.Run();
