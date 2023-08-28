@@ -208,5 +208,20 @@ namespace TeacherPractise.Service
                     "\n" +
                     "</div></div>";
         }
+        public void inicializeDb()
+        {
+            using (var ctx = new Context())
+            {
+                if (!ctx.Users.ToList().Any())
+                {
+                    School school1 = new School(1, "Ostravská univerzita");
+                    ctx.Schools.Add(school1);
+                    ctx.SaveChanges();
+
+                    RegistrationDto request = new RegistrationDto(AppConfig.CONFIRMATION_EMAIL_ADDRESS, "Koordinátor", "Default", 1, "123456789", AppConfig.COORDINATOR_EMAIL_PASSWORD, "coordinator");
+                    register(request);
+                }
+            }
+        }
     }
 }

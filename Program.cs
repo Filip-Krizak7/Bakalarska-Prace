@@ -1,19 +1,13 @@
 using TeacherPractise.Service;
-using TeacherPractise.Dto.Request;
 using TeacherPractise.Service.Token.RegistrationToken;
 using TeacherPractise.Service.Email;
 using TeacherPractise.Mapper;
 using TeacherPractise.Service.FileService;
 using TeacherPractise.Service.CsvReport;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using TeacherPractise.Config;
-using TeacherPractise.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +28,6 @@ builder.Services.AddSingleton<EmailService>();
 builder.Services.AddSingleton<CustomMapper>();
 builder.Services.AddSingleton<ForgotPasswordService>();
 
-builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen(option =>
 {
@@ -64,7 +57,6 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 
-//builder.Services.AddCors();
 var AllowSpecificOrigin = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
@@ -120,7 +112,10 @@ builder.Services.AddAuthorization(options =>
 });
 
 builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
+
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -166,22 +161,12 @@ timerUser.Elapsed += (sender, args) =>
 timerTokens.Start();
 timerUser.Start();
 
-using (var ctx = new Context())
+if (app.Environment.IsDevelopment())
 {
-    if (!ctx.Users.ToList().Any())
-    {
-        var registrationService = app.Services.GetRequiredService<RegistrationService>();
-
-        School school1 = new School(1, "Ostravská univerzita");
-        ctx.Schools.Add(school1);
-        ctx.SaveChanges();
-
-        RegistrationDto request = new RegistrationDto(AppConfig.CONFIRMATION_EMAIL_ADDRESS, "Koordinátor", "Default", 1, "123456789", AppConfig.COORDINATOR_EMAIL_PASSWORD, "coordinator");
-        registrationService.register(request);
-    }
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -192,10 +177,7 @@ app.UseCors(AllowSpecificOrigin);
 app.UseMvc();
 app.UseStaticFiles();
 app.UseRouting();
-
-app.UseSwagger();
-app.UseSwaggerUI();
 app.UseDeveloperExceptionPage();
-app.MapControllers();
 
+app.MapControllers();
 app.Run();

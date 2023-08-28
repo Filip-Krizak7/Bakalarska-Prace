@@ -31,25 +31,28 @@ namespace TeacherPractise.Controller
         this.mapper = mapper;
       }
 
-      [HttpGet]
+      [HttpPost("/inicialize")]
       [AllowAnonymous]
-      public IActionResult getUserNames() 
+      public IActionResult inicializeDb() 
       {
-        List<string> ret = appUserService.getUsers()
-          .Select(q => q.Username[..q.Username.IndexOf("@")])
-          .ToList();
-        return Ok(ret);
+        registrationService.inicializeDb();
+        return Ok();
       }
 
-      [HttpGet("all")]
-      [AllowAnonymous] 
+      [HttpPost("/check")]
+      [AllowAnonymous]
+      public IActionResult statusCheck()
+      {
+          return Ok("Hello World!");
+      }
+
+        [HttpGet("all")]
       public IActionResult getAll()
       {
         List<User> ret = appUserService.getUsers();
         return Ok(ret);
       }
 
-      [Authorize]
       [HttpGet("data")]
       public IActionResult getUserData() 
       {

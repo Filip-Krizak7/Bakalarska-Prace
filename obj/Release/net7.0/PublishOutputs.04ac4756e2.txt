@@ -7,8 +7,6 @@ C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\frontend\build
 C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\frontend\package-lock.json
 C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\frontend\package.json
 C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\frontend\public\manifest.json
-C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\package-lock.json
-C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\package.json
 C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\ucitelske-praxe.dll
 C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\ucitelske-praxe.deps.json
 C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\ucitelske-praxe.runtimeconfig.json
@@ -24,15 +22,7 @@ C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\System.Net.Htt
 C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\System.Web.Http.dll
 C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\System.Web.Http.Cors.dll
 C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\Microsoft.AspNetCore.JsonPatch.dll
-C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
 C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\Microsoft.AspNetCore.OpenApi.dll
-C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\Microsoft.AspNetCore.Razor.Language.dll
-C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\Microsoft.CodeAnalysis.dll
-C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\Microsoft.CodeAnalysis.Razor.dll
-C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\Microsoft.DotNet.PlatformAbstractions.dll
-C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\Microsoft.Extensions.DependencyModel.dll
 C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\Microsoft.IdentityModel.Logging.dll
 C:\Users\Všichni\Desktop\ucitelske-praxe\ucitelske-praxe\publish\Microsoft.IdentityModel.Protocols.dll

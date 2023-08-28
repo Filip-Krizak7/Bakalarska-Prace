@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Všichni\\Desktop\\bakarkaProjekt\\ucitelske-praxe.csproj": {}
+    "C:\\Users\\Všichni\\Desktop\\gitProjekt\\ucitelske-praxe.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Všichni\\Desktop\\bakarkaProjekt\\ucitelske-praxe.csproj": {
+    "C:\\Users\\Všichni\\Desktop\\gitProjekt\\ucitelske-praxe.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Všichni\\Desktop\\bakarkaProjekt\\ucitelske-praxe.csproj",
+        "projectUniqueName": "C:\\Users\\Všichni\\Desktop\\gitProjekt\\ucitelske-praxe.csproj",
         "projectName": "ucitelske-praxe",
-        "projectPath": "C:\\Users\\Všichni\\Desktop\\bakarkaProjekt\\ucitelske-praxe.csproj",
+        "projectPath": "C:\\Users\\Všichni\\Desktop\\gitProjekt\\ucitelske-praxe.csproj",
         "packagesPath": "C:\\Users\\Všichni\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Všichni\\Desktop\\bakarkaProjekt\\obj\\",
+        "outputPath": "C:\\Users\\Všichni\\Desktop\\gitProjekt\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -69,26 +69,6 @@
               "target": "Package",
               "version": "[7.0.10, )"
             },
-            "Microsoft.AspNetCore.Cors": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Microsoft.AspNetCore.Http": {
-              "target": "Package",
-              "version": "[2.2.2, )"
-            },
-            "Microsoft.AspNetCore.Identity": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Microsoft.AspNetCore.Mvc": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
-            "Microsoft.AspNetCore.Mvc.Core": {
-              "target": "Package",
-              "version": "[2.2.5, )"
-            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.10, )"
@@ -104,10 +84,6 @@
             "Microsoft.Extensions.Logging": {
               "target": "Package",
               "version": "[7.0.0, )"
-            },
-            "Microsoft.OpenApi": {
-              "target": "Package",
-              "version": "[1.6.6, )"
             },
             "MimeKit": {
               "target": "Package",
