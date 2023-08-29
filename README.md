@@ -6,7 +6,7 @@ Database model diagram
 
 Deployment steps:
 - change REACT_APP_AXIOS_URL in .env.production
-- change BASE_URL_PRODUCTION in AppConfig.cs
+- change BASE_URL_PRODUCTION in AppConfig.cs to your frontend address
 - a new email has been created, if you want to change it, you can do it in AppConfig.cs
 - in Program.cs add new Cors (policy.WithOrigins("your_frontend_address"))
 - to generate ASP.NET production build run command "dotnet publish -c Release -o ./publish"
