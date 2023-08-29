@@ -2,9 +2,9 @@ import Navbar from "react-bootstrap/Navbar";
 import { Container, Nav } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Logo from "../../../resources/OUbile.png";
+import Logo from "../../../resources/OSUbile.png";
 import "./NavbarStyles.css";
-import { BsFillHouseFill, BsFillPersonFill } from "react-icons/bs";
+import { BsFillHouseFill, BsFillPersonFill, BsTelephoneFill } from "react-icons/bs";
 import LoginControlComponent from "../login/logincontrol/LoginControlComponent";
 
 let iconStyles = { fontSize: "2.5em" };
@@ -47,6 +47,11 @@ const NavbarComponent = () => {
                 return window.location.href = '/login';
         }
     }
+
+    const redirectOnContactPage = () => {
+        return window.location.href = '/contact';
+    }
+
     return (
         <div className="navbar-main">
             <Navbar>
@@ -60,18 +65,53 @@ const NavbarComponent = () => {
                         />
                     </Navbar.Brand>
                     <Nav className="navbar-links">
+                    {localStorage.getItem("token") && (
                         <Nav.Link className="nav-link">
-                            <span className="my-hover" onClick={() => redirectBasedOnRoleMainView()} id="prehled">
-                                <BsFillHouseFill className="icon" style={iconStyles} />
-                                <p className={"p-margin"}>Domů</p>
+                            <span
+                            className="my-hover"
+                            onClick={() => redirectBasedOnRoleMainView()}
+                            id="prehled"
+                            >
+                            <BsFillHouseFill className="icon" style={iconStyles} />
+                            <p className={"p-margin"}>Domů</p>
                             </span>
                         </Nav.Link>
-                        <Nav.Link className="nav-link">
-                            <span className="my-hover" onClick={() => redirectBasedOnRolePersonalPage()} id="prehled">
+                        )}
+                        {localStorage.getItem("token") && (
+                            <Nav.Link className="nav-link">
+                                <span
+                                className="my-hover"
+                                onClick={() => redirectBasedOnRolePersonalPage()}
+                                id="prehled"
+                                >
                                 <BsFillPersonFill className="icon" style={iconStyles} />
                                 <p className={"p-margin"}>Účet</p>
+                                </span>
+                            </Nav.Link>
+                            )}
+                        {localStorage.getItem("token") ? (
+                            <Nav.Link className="nav-link" style={{ marginLeft: "16px" }}>
+                            <span
+                                className="my-hover"
+                                onClick={() => redirectOnContactPage()}
+                                id="prehled"
+                            >
+                                <BsTelephoneFill className="icon" style={iconStyles} />
+                                <p className={"p-margin"}>Kontakt</p>
                             </span>
-                        </Nav.Link>
+                            </Nav.Link>
+                        ) : (
+                            <Nav.Link className="nav-link">
+                            <span
+                                className="my-hover"
+                                onClick={() => redirectOnContactPage()}
+                                id="prehled"
+                            >
+                                <BsTelephoneFill className="icon" style={iconStyles} />
+                                <p className={"p-margin"}>Kontakt</p>
+                            </span>
+                            </Nav.Link>
+                        )}
                     </Nav>
                     <Navbar.Collapse className="margin-left-cstm-nav">
                         <Nav>
@@ -84,46 +124,6 @@ const NavbarComponent = () => {
             </Navbar>
         </div>
     );
-    // return (
-    //     <div className={"navbar-main"}>
-    //         <Navbar collapseOnSelect expand="md" variant="light">
-    //             <Container fluid className="max-height-css">
-    //                 <Navbar.Brand href="#">
-    //                     <img
-    //                         onClick={refreshPage}
-    //                         width="90px"
-    //                         height="90px"
-    //                         className="img-responsive"
-    //                         src={Logo}
-    //                         alt="logo"
-    //                     />
-    //                 </Navbar.Brand>
-    //                 <Nav className="me-auto">
-    //                         <Nav.Link className="ms-md-5">
-    //                             <span onClick={() => redirectBasedOnRoleMainView()} id="prehled">
-    //                                 <BsFillHouseFill style={iconStyles} />
-    //                                 <p className={"p-margin"}>Domů</p>
-    //                             </span>
-    //                         </Nav.Link>
-    //                         <Nav.Link className="ms-md-5">
-    //                             <span onClick={() => redirectBasedOnRolePersonalPage()} id="prehled">
-    //                                 <BsFillPersonFill style={iconStyles} />
-    //                                 <p className={"p-margin"}>Účet</p>
-    //                             </span>
-    //                         </Nav.Link>
-    //                     </Nav>
-    //                 <Navbar.Toggle aria-controls="responsive-navbar-nav margin-left-cstm-nav" />
-    //                 <Navbar.Collapse id="responsive-navbar-nav" className="margin-left-cstm-nav">
-    //                     <Nav>
-    //                         <Nav eventkey={2} className="navbar-text white">
-    //                             <LoginControlComponent />
-    //                         </Nav>
-    //                     </Nav>
-    //                 </Navbar.Collapse>
-    //             </Container>
-    //         </Navbar>
-    //     </div>
-    // );
 };
 
 export default NavbarComponent;

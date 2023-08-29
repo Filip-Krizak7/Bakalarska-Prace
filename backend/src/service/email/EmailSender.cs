@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 namespace TeacherPractise.Service.Email
 {
     public interface EmailSender

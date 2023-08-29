@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using CsvHelper;
-using Microsoft.AspNetCore.Mvc;
-using TeacherPractise.Service;
 using TeacherPractise.Model;
 
 namespace TeacherPractise.Service.CsvReport

@@ -1,7 +1,5 @@
 using TeacherPractise.Dto.Response;
-using TeacherPractise.Model;
 using System.Globalization;
-using System;
 
 namespace TeacherPractise.Dto.Request
 {

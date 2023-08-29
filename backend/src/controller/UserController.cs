@@ -1,18 +1,11 @@
 using TeacherPractise.Model;
 using TeacherPractise.Service;
-using TeacherPractise.Config;
 using TeacherPractise.Mapper;
 using TeacherPractise.Dto.Response;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Service.FileService;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Linq;
-using System.IO;
 
 namespace TeacherPractise.Controller
 {
@@ -39,7 +32,6 @@ namespace TeacherPractise.Controller
       }
 
       [HttpGet]
-      [AllowAnonymous]
       public IActionResult getUserNames() 
       {
         List<string> ret = appUserService.getUsers()
@@ -49,11 +41,8 @@ namespace TeacherPractise.Controller
       }
 
       [HttpGet("all")]
-      [AllowAnonymous] 
       public IActionResult getAll()
       {
-        /*RegistrationDto request = new RegistrationDto("coordinator@student.osu.cz", "Testing", "Tester", 1, "123456789", "secret_passwd123", "coordinator");
-        registrationService.register(request);*/ //jen pro rychle vytvoreni koordinatora v pripade zmeny --> vymazani databaze
         List<User> ret = appUserService.getUsers();
         return Ok(ret);
       }

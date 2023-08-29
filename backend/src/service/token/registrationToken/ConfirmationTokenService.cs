@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using TeacherPractise.Model;
 
 namespace TeacherPractise.Service.Token.RegistrationToken

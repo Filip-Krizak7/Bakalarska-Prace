@@ -4,10 +4,6 @@ using TeacherPractise.Domain;
 using TeacherPractise.Model;
 using TeacherPractise.Service;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TeacherPractise.Mapper
 {

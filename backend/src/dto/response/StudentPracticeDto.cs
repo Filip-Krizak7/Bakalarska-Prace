@@ -1,5 +1,3 @@
-using TeacherPractise.Model;
-
 namespace TeacherPractise.Dto.Response
 {
     public class StudentPracticeDto { 

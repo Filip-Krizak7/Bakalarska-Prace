@@ -1,5 +1,4 @@
 using TeacherPractise.Dto.Response;
-using TeacherPractise.Model;
 
 namespace TeacherPractise.Domain
 {

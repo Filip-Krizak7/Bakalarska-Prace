@@ -1,6 +1,3 @@
-using System.Net;
-using System.IO;
-using TeacherPractise.Model;
 using TeacherPractise.Service;
 using TeacherPractise.Dto.Request;
 using TeacherPractise.Dto.Response;
@@ -8,7 +5,6 @@ using TeacherPractise.Service.FileService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
 
 namespace TeacherPractise.Controller
 {

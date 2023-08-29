@@ -7,7 +7,7 @@ namespace TeacherPractise.Model
 {
     public class Context : DbContext
     {
-        public Context(): base("SchoolDB")
+        public Context(): base("SchoolDBConnectionString")
         {
             Database.SetInitializer<Context>(new DropCreateDatabaseIfModelChanges<Context>());
             Configuration.LazyLoadingEnabled = false;

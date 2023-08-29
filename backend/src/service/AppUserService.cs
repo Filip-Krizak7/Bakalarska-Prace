@@ -8,13 +8,7 @@ using TeacherPractise.Dto.Response;
 using TeacherPractise.Mapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Newtonsoft.Json;
 
-using System;
-using System.IO;
-using System.Linq;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -464,6 +458,22 @@ namespace TeacherPractise.Service
             if (securityService.VerifyPassword("secret_passwd123", "$2a$11$eCsYR.5x0FN2j6Vv0KEHh.ZT6C3Q8hLATmpWTW2LPi8JYXvZoLxl6"))
                 return "true";
             else { return "false"; }
+        }
+
+        public void deleteUserByExpiredConfirmationToken()
+        {
+            using (var ctx = new Context())
+            {
+                var users = ctx.Users
+                    .ToList()
+                    .Where(u => u.ConfirmationToken != null && u.ConfirmationToken.ExpiresAt < DateTime.Now);
+
+                foreach (var user in users)
+                {
+                    ctx.Users.Remove(user);
+                    ctx.SaveChanges();
+                }
+            }
         }
     }
 }

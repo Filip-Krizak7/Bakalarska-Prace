@@ -1,11 +1,6 @@
-using System;
-using System.Linq;
 using System.Globalization;
 using System.Data.Entity;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using TeacherPractise.Dto.Request;
 using TeacherPractise.Dto.Response;
 using TeacherPractise.Config;
 using TeacherPractise.Mapper;

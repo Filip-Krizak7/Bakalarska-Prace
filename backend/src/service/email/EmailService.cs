@@ -4,7 +4,6 @@ using MimeKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace TeacherPractise.Service.Email
 {

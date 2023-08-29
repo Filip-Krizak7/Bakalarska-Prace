@@ -44,6 +44,7 @@ class AuthService {
                 } else if (response.data.role === "ROLE_ADMIN"){
                     localStorage.setItem("role", "ROLE_ADMIN");
                 }
+                window.location.reload();
             }
             return response.data;
         });
@@ -51,7 +52,6 @@ class AuthService {
 
     register(email, firstName, lastName, school, phoneNumber, password, role) {
         const formData = JSON.stringify({email, firstName, lastName, school, phoneNumber, password, role});
-        console.log(formData);
 
         return axios({
             url: REGISTER_URL,
@@ -68,7 +68,6 @@ class AuthService {
 
     registerCoordinator(email, firstName, lastName, password, role) {
         const formData = JSON.stringify({email, firstName, lastName, password, role});
-        console.log(formData);
 
         return axios({
             url: REGISTER_COORDINATOR_URL,
@@ -78,6 +77,7 @@ class AuthService {
             data: formData,
         }).then((response) => {
             if (response) {
+                window.location.reload();
             }
             return response.data;
         });
@@ -98,7 +98,6 @@ class AuthService {
 
     changePassword(oldPassword, newPassword) {
         const formData = JSON.stringify({oldPassword, newPassword});
-        console.log(formData);
 
         return axios({
             url: CHANGE_PASSWORD_URL,

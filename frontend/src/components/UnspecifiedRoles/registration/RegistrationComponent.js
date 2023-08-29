@@ -454,7 +454,7 @@ export class RegistrationComponent extends Component {
                             </div>
                         )}
                         <span className={"account-a"}>
-              <p>Máte účet? <a className={"login-link"} href="login">Přihlašte se</a>
+              <p>Máte účet? <a className={"login-link"} href="login">Přihlaste se</a>
               </p>
             </span>
                     </section>
@@ -551,13 +551,19 @@ export class RegistrationComponent extends Component {
                   </OverlayTrigger>
                   <b>Škola</b>
                 </span>
-                                <span className="span-input">
-                  <Select name="school" id="school" onChange={this.onChangeSchool} className="form-control"
-                          placeholder="Vyberte školu">
+                    <span className="span-input">
+                    <Select
+                    name="school"
+                    id="school"
+                    onChange={this.onChangeSchool}
+                    className="form-control"
+                    placeholder="Vyberte školu"
+                    >
+                    <option value=""> </option> {/* Prázdné pole */}
                     {this.state.schoolList.map((item, index) => (
                         <option value={item.id}>{item.name}</option>
                     ))}
-                  </Select>
+                    </Select>
                 </span>
 
                             </label>
@@ -648,7 +654,7 @@ export class RegistrationComponent extends Component {
 
                         <br/>
                         <span className={"account-a"}>
-              <p>Máte účet?   <a className={"login-link"} href="login">Přihlašte se</a>
+              <p>Máte účet?   <a className={"login-link"} href="login">Přihlaste se</a>
               </p>
             </span>
                     </section>

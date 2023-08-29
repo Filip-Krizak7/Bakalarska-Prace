@@ -1,12 +1,11 @@
-using System.IO;
-using System.Linq;
+using TeacherPractise.Config;
 
 namespace TeacherPractise.Service.FileManagement
 {
     public static class FileUtil
     {
-        public static readonly string folderPath = "/home/student/project/myproject/backend/user-files/";
-        public static readonly string reportsFolderPath = "/home/student/project/myproject/backend/report-files/";
+        public static readonly string folderPath = AppConfig.FOLDER_PATH;
+        public static readonly string reportsFolderPath = AppConfig.REPORTS_FOLDER_PATH;
         public static readonly string filePath = Path.GetFullPath(folderPath);
 
         public static long getNumberOfFilesInFolder(long id)

@@ -1,5 +1,3 @@
-using System.Data.Entity;
-
 using System.ComponentModel.DataAnnotations;
 
 namespace TeacherPractise.Model

@@ -15,9 +15,9 @@ const GET_SCHOOLS_URL = `${URL}/user/schools`;
 const GET_TEACHERS_WITHOUT_SCHOOL_URL = `${URL}/coordinator/getTeachersWithoutSchool`;
 const ADD_SCHOOL_URL = `${URL}/coordinator/addSchool`;
 
-const MAX_TEXT_LENGTH = 50;
-const MIN_TEXT_LENGTH = 5;
-const LENGTH_ERROR_MSG = "Špatná délka školy (5 - 50 znaků)";
+const MAX_TEXT_LENGTH = 75;
+const MIN_TEXT_LENGTH = 2;
+const LENGTH_ERROR_MSG = "Špatná délka školy (2 - 75 znaků)";
 
 
 export const AddSchoolComponent = () => {
