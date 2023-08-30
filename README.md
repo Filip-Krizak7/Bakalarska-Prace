@@ -16,3 +16,5 @@ Deployment steps:
 - install ASP.NET Hosting Bundle to run API on IIS - https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-7.0.10-windows-hosting-bundle-installer
 
 - change User Files and Reports folder path in AppConfig.cs if you want (if path doesn't exist, the folders are created automatically)
+- you can change where API runs in appsettings.json
+- if you need you can change the connection string to MS SQL Server database in App.config
