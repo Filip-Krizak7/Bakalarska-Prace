@@ -1,4 +1,4 @@
-# Bakalarska-Prace
+# IS for teacheching practices
 # Filip Křižák
 
 Database model diagram
